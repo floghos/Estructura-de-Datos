@@ -21,22 +21,51 @@ Busqueda::Busqueda(int n) {
 }
 
 Busqueda::~Busqueda(){
-  delete this->vec;
+ 	delete this->vec;
 }
 int Busqueda::size(){
-  return this->tam;
+ 	return this->tam;
 }
 
 int Busqueda::lineal(int num){
-	int * pos = this->vec;
-  for (int i = 0; i < this->tam; i++) {
-	  if (*(pos+i) == num) return i;
-  }
-  return -1;
+	int *pos = this->vec;
+	for (int i = 0; i < this->tam; i++) {
+		if (*(pos+i) == num) return i;
+	}
+	return -1;
 }
 
 int Busqueda::binaria(int num){
-	return 0;
+	int lower = 0;
+	int higher = this->tam - 1;
+	int mid = (higher - lower)/2;
+	bool in_progress = true;
+
+	while (higher >= lower) {
+		mid = (higher + lower)/2;
+
+		// cout << "middle = " << *((this->vec) + mid) << endl;
+		if (*((this->vec) + mid) < num) {
+			lower = mid + 1;
+		} else if (*((this->vec) + mid) > num) {
+			higher = mid - 1;
+		} else if (*((this->vec) + mid) == num) { //encontramos una aparicion en "mid"
+
+			if (mid == 0) { //si "mid" es 0, sabemos que es la primera
+				return mid;
+			} else {
+
+				if (*((this->vec) + mid - 1) != num) {
+					return mid;
+				} else {
+					higher = mid - 1;
+				}
+
+			}
+
+		}
+	}
+	return -1;
 }
 
 int Busqueda::testSTL(int num){

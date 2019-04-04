@@ -23,10 +23,10 @@ int main(){
   time = ((double)clock() - start) / CLOCKS_PER_SEC;
   printf("Lineal: %d\n%.10f\n\n",pos, time/(double)rep);
 
-  // start = clock();
-  // for(int i=0;i<rep;i++)  pos = b.binaria(num);
-  // time = ((double)clock() - start) / CLOCKS_PER_SEC;
-  // printf("Binaria: %d\n%.10f\n\n",pos, time/(double)rep);
+  start = clock();
+  for(int i=0;i<rep;i++)  pos = b.binaria(num);
+  time = ((double)clock() - start) / CLOCKS_PER_SEC;
+  printf("Binaria: %d\n%.10f\n\n",pos, time/(double)rep);
 
   start = clock();
   for(int i=0;i<rep;i++)  pos = b.testSTL(num);
