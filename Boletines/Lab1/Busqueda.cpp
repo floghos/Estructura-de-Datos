@@ -15,8 +15,8 @@ Busqueda::Busqueda(int n) {
   sort(this->vec,this->vec + this->tam);
 
   // DESCOMENTAR ESTAS LINEAS PARA IMPRIMIR
-  for(int i=0;i<this->tam;i++) cout<<this->vec[i]<<" ";
-  puts("");
+  // for(int i=0;i<this->tam;i++) cout<<this->vec[i]<<" ";
+  // puts("");
 
 }
 

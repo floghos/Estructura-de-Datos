@@ -16,5 +16,5 @@ class clase {
 	public:
 		clase(int myInt);
 		int getMyInt();
-    void incInt(int val);
+    	void incInt(int val);
 };
