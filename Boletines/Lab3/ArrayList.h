@@ -8,7 +8,11 @@ private:
 	int capacity;
 public:
 	ArrayList();
+	//requeridas
 	void push_back(int num);
 	int at(int i);
 	int size();
+	//adicionales
+
+	
 };
