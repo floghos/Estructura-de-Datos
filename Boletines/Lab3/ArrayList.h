@@ -1,13 +1,13 @@
 #include "ListADT.h"
 
 
-class ArrayList: public List {
+class ArrayList: public ListADT {
 private:
-	int _size;
+	int tam;
 	int *array;
-
+	int capacity;
 public:
-	ArrayList(int n);
+	ArrayList();
 	void push_back(int num);
 	int at(int i);
 	int size();

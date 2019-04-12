@@ -2,11 +2,11 @@
 #define LISTA_H
 
 
-class List {
+class ListADT {
 public:
-	virtual void push_back() = 0;
+	virtual void push_back(int) = 0;
 	virtual int at(int) = 0;
-	virtual int size(int) = 0;
+	virtual int size() = 0;
 };
 
 #endif
