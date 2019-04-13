@@ -7,6 +7,7 @@ public:
 	virtual void push_back(int) = 0;
 	virtual int at(int) = 0;
 	virtual int size() = 0;
+	virtual void remove(int) = 0;
 };
 
 #endif

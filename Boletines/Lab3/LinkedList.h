@@ -1,16 +1,14 @@
-#include "ListADT"
+#include "ListADT.h"
 
 struct node {
-	int n;
+	int data;
 	node *next;
 };
 
-class LinkedList: public List {
+class LinkedList: public ListADT {
 private:
-	node ini;
-	// node end;
 	int _size;
-
+	node *last;
 public:
 	LinkedList();
 	//requeridas
@@ -20,4 +18,4 @@ public:
 
 	//adicionales
 	void remove(int i);
-}
+};

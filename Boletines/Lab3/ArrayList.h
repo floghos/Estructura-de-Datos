@@ -13,6 +13,6 @@ public:
 	int at(int i);
 	int size();
 	//adicionales
+	void remove(int i);
 
-	
 };

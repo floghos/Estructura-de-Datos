@@ -6,13 +6,7 @@
 // properties:
 // int _size;
 // int *array;
-//
-//
-// methods:
-// ArrayList(int n);
-// void push_back(int num);
-// int at(int i);
-// int size();
+// int capacity;
 
 
 // Don't forget to 'delete' (or 'delete[]') every array you allocate with 'new'.
@@ -49,4 +43,8 @@ int ArrayList::at(int i) {
 
 int ArrayList::size() {
 	return tam;
+}
+
+void ArrayList::remove(int i) {
+
 }
