@@ -6,6 +6,13 @@
 
 using namespace std;
 
+// int n;
+// int *arr;
+
+// myClass(int val);
+// void mostrar();
+// int suma();
+
 myClass::myClass(int val) {
   n = val;
   arr = new int[val];
@@ -14,7 +21,7 @@ myClass::myClass(int val) {
     arr[i] = rand() % 100;
   }
 }
-
+std::cout << "/* message */" << '\n';
 void myClass::mostrar() {
   for (int i = 0; i < n; i++) {
     cout << arr[i] << " ";

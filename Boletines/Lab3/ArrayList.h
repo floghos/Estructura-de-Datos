@@ -3,7 +3,7 @@
 
 class ArrayList: public ListADT {
 private:
-	int tam;
+	int _size;
 	int *array;
 	int capacity;
 public:
