@@ -12,7 +12,7 @@
 // Don't forget to 'delete' (or 'delete[]') every array you allocate with 'new'.
 ArrayList::ArrayList() {
 	_size = 0;
-	capacity = 64;
+	capacity = 4;
 	array = new (std::nothrow) int[capacity]; //arbitrary starting capacity
 }
 

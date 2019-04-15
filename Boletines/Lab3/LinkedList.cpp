@@ -7,7 +7,7 @@ using namespace std;
 // node *last;
 // int _size;
 
-LinkedList:: LinkedList() {
+LinkedList::LinkedList() {
 	last = NULL;
 	_size = 0;
 }
