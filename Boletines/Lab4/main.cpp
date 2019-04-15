@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 #include "ArrayStack.h"
-#include "ListStack.h"
+#include "LinkedStack.h"
 
 using namespace std;
 
@@ -8,7 +8,7 @@ int main(){
   int n;
   srand(time(NULL));
   ArrayStack as;
-  ListStack ls;
+  LinkedStack ls;
 
   cout<<"Cantidad de numeros a insertar"<<endl;
   cin>>n;
@@ -18,7 +18,7 @@ int main(){
   }
   clock_t t2 = clock();
   double tiempo = (double)(t2-t1)/CLOCKS_PER_SEC;
-  cout<<"Insercion ArrayStack: "<<tiempo<<endl;
+  printf("Insercion ArrayStack: %.10f\n", tiempo);
 
   t1 = clock();
   for(int i = 0; i<n; i++){
@@ -26,23 +26,23 @@ int main(){
   }
   t2 = clock();
   tiempo = (double)(t2-t1)/CLOCKS_PER_SEC;
-  cout<<"Insercion ListStack: "<<tiempo<<endl;
+  printf("Insercion LinkedStack: %.10f\n", tiempo);
 
   t1 = clock();
-  while(!as.empty()){
+  while(!as.isEmpty()){
     as.pop();
   }
   t2 = clock();
   tiempo = (double)(t2-t1)/CLOCKS_PER_SEC;
-  cout<<"Pop ArrayStack: "<<tiempo<<endl;
+  printf("Pop ArrayStack: %.10f\n", tiempo);
 
   t1 = clock();
-  while(!ls.empty()){
+  while(!ls.isEmpty()){
     ls.pop();
   }
   t2 = clock();
   tiempo = (double)(t2-t1)/CLOCKS_PER_SEC;
-  cout<<"Pop ListStack: "<<tiempo<<endl;
+  printf("Pop LinkedStack: %.10f\n", tiempo);
 
   return 0;
 }
