@@ -1,5 +1,4 @@
 #include "myQueue.h"
-#include <stack>
 
 myQueue::myQueue() {
 }
