@@ -1,10 +1,10 @@
 #include "ADTQueue.h"
-#include <stack>
+#include <vector>
 
 class myQueue: public ADTQueue {
 private:
-    std::stack<int> mainS;
-    std::stack<int> auxS;
+    std::vector<int> mainS;
+    std::vector<int> auxS;
 public:
     myQueue();
     void push(int data);

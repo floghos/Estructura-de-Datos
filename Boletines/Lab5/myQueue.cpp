@@ -4,41 +4,41 @@ myQueue::myQueue() {
 }
 
 void myQueue::push(int data) {
-    mainS.push(data);
+    mainS.push_back(data);
 }
 
 void myQueue::pop() {
     int n = mainS.size();
     for (int i = 0; i < n; i++) {
-        auxS.push(mainS.top() );
-        mainS.pop();
+        auxS.push_back(mainS.back() );
+        mainS.pop_back();
     }
-    auxS.pop();
+    auxS.pop_back();
 
     n = auxS.size();
     for (int i = 0; i < n; i++) {
-        mainS.push(auxS.top() );
-        auxS.pop();
+        mainS.push_back(auxS.back() );
+        auxS.pop_back();
     }
 }
 
 int myQueue::front() {
     int n = mainS.size();
     for (int i = 0; i < n; i++) {
-        auxS.push(mainS.top() );
-        mainS.pop();
+        auxS.push_back(mainS.back() );
+        mainS.pop_back();
     }
-    int num = auxS.top();
+    int num = auxS.back();
 
     for (int i = 0; i < n; i++) {
-        mainS.push(auxS.top() );
-        auxS.pop();
+        mainS.push_back(auxS.back() );
+        auxS.pop_back();
     }
     return num;
 }
 
 int myQueue::back() {
-    return mainS.top();
+    return mainS.back();
 }
 
 int myQueue::size() {
