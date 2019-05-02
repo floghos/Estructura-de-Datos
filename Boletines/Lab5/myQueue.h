@@ -1,6 +1,7 @@
 #include "ADTQueue.h"
 #include <vector>
 
+
 class myQueue: public ADTQueue {
 private:
     std::vector<int> mainS;
@@ -13,4 +14,5 @@ public:
     int back();
     int size();
     bool empty();
+    std::vector<int>::iterator elements();
 };

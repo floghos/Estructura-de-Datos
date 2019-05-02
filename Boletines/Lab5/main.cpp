@@ -14,6 +14,12 @@ int main(int argc, char const *argv[]) {
     cout << q.size() << '\n';
     cout << q.empty() << "\n\n";
 
+    //vector<int>::iterator p = q.elements();
+
+    myQueue::iterator p = q.elements();
+    ++p;
+    cout << *p << '\n';
+
     for (int i = 0; i < n; i++) {
         cout << q.front();
         q.pop();
@@ -22,6 +28,7 @@ int main(int argc, char const *argv[]) {
     cout << '\n';
     cout << q.size() << '\n';
     cout << q.empty() << '\n';
+
 
     return 0;
 }

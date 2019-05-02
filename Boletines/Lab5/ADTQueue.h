@@ -10,4 +10,5 @@ public:
     virtual int size() = 0;
     virtual bool empty() = 0;
 };
+
 #endif

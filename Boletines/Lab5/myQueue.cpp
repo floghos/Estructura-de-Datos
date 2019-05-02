@@ -48,3 +48,18 @@ int myQueue::size() {
 bool myQueue::empty() {
     return mainS.empty();
 }
+
+// std::vector<int>::iterator myQueue::elements() {
+//     return mainS.begin();
+// }
+
+class iterator {
+    vector<int>::iterator it = mainS.begin();
+
+    type operator*() const {
+        return *it;
+    }
+    iterator& operator++() const {
+        ++it;
+    }
+};
