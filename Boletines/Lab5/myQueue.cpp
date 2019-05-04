@@ -1,4 +1,7 @@
 #include "myQueue.h"
+// #include "iterador.h"
+#include <bits/stdc++.h>
+
 
 myQueue::myQueue() {
 }
@@ -49,17 +52,26 @@ bool myQueue::empty() {
     return mainS.empty();
 }
 
-// std::vector<int>::iterator myQueue::elements() {
-//     return mainS.begin();
-// }
+qIterator* myQueue::elements() {
+	return new qIterator(this);
+}
 
-class iterator {
-    vector<int>::iterator it = mainS.begin();
+qIterator::qIterator(myQueue *cola) {
+	v = &(cola->mainS);
+	it = v->begin();
+}
 
-    type operator*() const {
-        return *it;
-    }
-    iterator& operator++() const {
-        ++it;
-    }
-};
+bool qIterator::hasNext() {
+	std::vector<int>::iterator aux = it;
+	++aux;
+	return (aux != v->end());
+}
+
+int qIterator::next() {
+	++it;
+	return *it;
+}
+
+void qIterator::reset() {
+	it = v->begin();
+}

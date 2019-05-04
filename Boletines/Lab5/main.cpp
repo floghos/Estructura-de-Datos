@@ -8,27 +8,31 @@ int main(int argc, char const *argv[]) {
     int n = 20;
 
     cout << q.empty() << "\n\n";
-    for (int i = 0; i < n; i++) {
+    for (int i = 0; i < n; i++) { //llenar la queue
         q.push(i);
     }
-    cout << q.size() << '\n';
-    cout << q.empty() << "\n\n";
+    cout << "size? " << q.size() << '\n';
+	cout << "empty? " << q.empty() << "\n\n";
 
-    //vector<int>::iterator p = q.elements();
 
-    myQueue::iterator p = q.elements();
-    ++p;
-    cout << *p << '\n';
-
-    for (int i = 0; i < n; i++) {
-        cout << q.front();
-        q.pop();
-        cout << "(" << q.size() << ") ";
-    }
-    cout << '\n';
-    cout << q.size() << '\n';
-    cout << q.empty() << '\n';
+	qIterator *it = q.elements();
+	for (int i = 0; i < n; i++) {
+		cout << "tiene siguiente? " << it->hasNext() << '\n';
+		if (it->hasNext()) {
+			cout << it->next() << '\n';
+		}
+	}
 
 
     return 0;
 }
+
+
+// for (int i = 0; i < n; i++) { //vaciar la queue
+	//     cout << q.front();
+	//     q.pop();
+	//     cout << "(" << q.size() << ") ";
+	// }
+	// cout << '\n';
+	// cout << q.size() << '\n';
+	// cout << q.empty() << '\n';
