@@ -57,6 +57,7 @@ qIterator* myQueue::elements() {
 }
 
 qIterator::qIterator(myQueue *cola) {
+	first = true;
 	v = &(cola->mainS);
 	it = v->begin();
 }
@@ -68,10 +69,15 @@ bool qIterator::hasNext() {
 }
 
 int qIterator::next() {
-	++it;
+	if (first) {
+		first = false;
+	} else {
+		++it;
+	}
 	return *it;
 }
 
 void qIterator::reset() {
 	it = v->begin();
+	first = true;
 }

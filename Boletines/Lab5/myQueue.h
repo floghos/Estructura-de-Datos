@@ -20,6 +20,7 @@ public:
 
 class qIterator {
 private:
+	bool first;
 	std::vector<int> *v;
 	std::vector<int>::iterator it;
 public:
@@ -27,6 +28,4 @@ public:
 	bool hasNext();
 	int next();
 	void reset();
-	// bool hasPrev();
-	// int prev();
 };
