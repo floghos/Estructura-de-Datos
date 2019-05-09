@@ -49,7 +49,7 @@ void KdTree::construir(vector<pair<int, int> > v) {
         r.push_back(v[i]);
     }
 
-    root = new node();
+    root = new node;
     root->x = v[median].first;
     root->y = -1;
     root->left = construir(l, 1);
@@ -73,7 +73,7 @@ node * KdTree::construir(vector<pair<int, int> > v, int depth) {
             r.push_back(v[i]);
         }
 
-        node nuevoNodo = new node();
+        node nuevoNodo = new node;
         if (axis) { //division en eje y
             nuevoNodo->y = v[median].second;
             nuevoNodo->x = -1;
@@ -87,9 +87,13 @@ node * KdTree::construir(vector<pair<int, int> > v, int depth) {
 
         return nuevoNodo;
     } else {
-        node nuevoNodo = new node();
+        node nuevoNodo = new node;
         nuevoNodo->x = v->first;
         nuevoNodo->y = v->second;
+        nuevoNodo->left = NULL;
+        nuevoNodo->right = NULL;
+
+        return nuevoNodo;
     }
 
 }
