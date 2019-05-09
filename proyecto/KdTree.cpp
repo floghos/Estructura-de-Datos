@@ -7,36 +7,41 @@ KdTree::KdTree() {
     root = NULL;
 }
 
-void KdTree::sort(vector<pair<int, int> > * v, int axis) {
-    for (int i = 1; i < v->size(); ++i) {
-        int j = i;
-        pair<int, int> aux;
-        if (axis) {//eje y
-            while (v[j].second < v[j-1].second) {
-                swap(&v[j], &v[j-1]);
-                j--;
-                if (j == 0) break;
-            }
-        } else { //equivale a: axis == 0 (eje x
-            while (v[j].first < v[j-1].first) {
-                swap(&v[j], &v[j-1]);
-                j--;
-                if (j == 0) break;
-            }
-        }
-    }
-}
+// void KdTree::sort(vector<pair<int, int> > * v, int axis) {
+//     for (int i = 1; i < v->size(); ++i) {
+//         int j = i;
+//         pair<int, int> aux;
+//         if (axis) {//eje y
+//             while (v[j].second < v[j-1].second) {
+//                 KdTree::swap(&v[j], &v[j-1]);
+//                 j--;
+//                 if (j == 0) break;
+//             }
+//         } else { //equivale a: axis == 0 (eje x
+//             while (v[j].first < v[j-1].first) {
+//                 KdTree::swap(&v[j], &v[j-1]);
+//                 j--;
+//                 if (j == 0) break;
+//             }
+//         }
+//     }
+// }
+//
+// void KdTree::swap(pair<int, int> *a, pair<int, int> *b) {
+//     //queremos cambiar los contenidos de a con los de b, no las direcciones de memoria
+//     pair<int, int> aux;
+//     aux = *a;
+//     *a = *b;
+//     *b = aux;
+// }
 
-void KdTree::swap(pair<int, int> *a, pair<int, int> *b) {
-    //queremos cambiar los contenidos de a con los de b, no las direcciones de memoria
-    pair<int, int> aux;
-    aux = *a;
-    *a = *b;
-    *b = aux;
+bool sortbysec(const pair<int,int> &a, const pair<int,int> &b) {
+    return (a.second < b.second);
 }
 
 void KdTree::construir(vector<pair<int, int> > v) {
-    sort(&v, 0);
+    // KdTree::sort(&v, 0);
+    sort(v.begin(), v.end());
     int median = (v.size() - 1) / 2;
 
     vector<pair<int, int> > l;
@@ -58,11 +63,17 @@ void KdTree::construir(vector<pair<int, int> > v) {
 
 node * KdTree::construir(vector<pair<int, int> > v, int depth) {
     int axis = depth % 2; //0, 1 dependiendo si es par o impar (0 = x, 1 = y)
-    sort(v, axis); //ordenamos respecto a axis
+    if (axis) {
+        sort(v.begin(), v.end(), sortbysec);
+    } else {
+        sort(v.begin(), v.end());
+    }
+
+    // sort(v, axis); //ordenamos respecto a axis
 
     int median = (v.size() - 1) / 2;
 
-    if (v->size() > 1) {
+    if (v.size() > 1) {
         vector<pair<int, int> > l; //mitad izquierda
         for (int i = 0; i <= median; ++i) {
             l.push_back(v[i]);
@@ -73,7 +84,7 @@ node * KdTree::construir(vector<pair<int, int> > v, int depth) {
             r.push_back(v[i]);
         }
 
-        node nuevoNodo = new node;
+        node *nuevoNodo = new node;
         if (axis) { //division en eje y
             nuevoNodo->y = v[median].second;
             nuevoNodo->x = -1;
@@ -87,9 +98,9 @@ node * KdTree::construir(vector<pair<int, int> > v, int depth) {
 
         return nuevoNodo;
     } else {
-        node nuevoNodo = new node;
-        nuevoNodo->x = v->first;
-        nuevoNodo->y = v->second;
+        node *nuevoNodo = new node;
+        nuevoNodo->x = v[0].first;
+        nuevoNodo->y = v[0].second;
         nuevoNodo->left = NULL;
         nuevoNodo->right = NULL;
 
@@ -99,6 +110,6 @@ node * KdTree::construir(vector<pair<int, int> > v, int depth) {
 }
 
 
-vector<point> KdTree::buscar(int x1, int y1, int x2, int y2) {
+vector<pair<int, int> > KdTree::buscar(int x1, int y1, int x2, int y2) {
 
 }
