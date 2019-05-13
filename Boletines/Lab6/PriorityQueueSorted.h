@@ -13,7 +13,7 @@ public:
     PriorityQueueSorted();
     int top();
     void pop();
-    void push(int data);
+    void push(int newData);
     int size();
     bool empty();
 };

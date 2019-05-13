@@ -15,33 +15,32 @@ void PriorityQueueSorted::pop() {
         node *aux = head;
         head = head->next;
         delete aux;
+        _size--;
     }
-
 }
 
-void PriorityQueueSorted::push(int data) {
+void PriorityQueueSorted::push(int newData) {
     node *temp = new node;
-    temp->data = data;
-    if (_size) {
+    temp->data = newData;
+    if (_size) { //the list is not empty
         node *current;
         node *prev = NULL;
         current = head;
-        while (current->data < data) {
+        while (current->data < newData) {
             prev = current;
             current = current->next;
         }
         if (prev == NULL) { //smaller than the first element
             temp->next = head;
             head = temp;
-        } else { //somewhere within the list
-
+        } else { //somewhere within the list, between prev and current
+            prev->next = temp;
+            temp->next = current;
         }
     } else { //the list is empty
         temp->next = NULL;
         head = temp;
     }
-
-
     _size++;
 }
 
