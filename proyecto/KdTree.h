@@ -18,6 +18,6 @@ private:
     // void swap(pair<int, int> *a, pair<int, int> *b);
 public:
     KdTree();
-    void construir(std::vector<pair<int, int> > v);
-    vector<pair<int, int> > buscar(int x1, int y1, int x2, int y2);
+    void construir(vector<pair<int, int> > v);
+    vector<pair<int, int> > * buscar(int x1, int y1, int x2, int y2);
 };
