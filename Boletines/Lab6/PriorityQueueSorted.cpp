@@ -21,15 +21,9 @@ void PriorityQueueSorted::pop() {
 
 void PriorityQueueSorted::push(int newData) {
     node *temp = new node;
-<<<<<<< HEAD
-    temp->data = data;
-    if (_size) {
-        node *current = NULL;
-=======
     temp->data = newData;
     if (_size) { //the list is not empty
         node *current;
->>>>>>> 8b49dac2c04f20c083eb109d8488f317978616a5
         node *prev = NULL;
         current = head;
         while (current->data < newData) {
@@ -39,15 +33,9 @@ void PriorityQueueSorted::push(int newData) {
         if (prev == NULL) { //smaller than the first element
             temp->next = head;
             head = temp;
-<<<<<<< HEAD
         } else { //somewhere within the list, between "prev" and "current"
 			temp->next = current;
 			prev->next = temp;
-=======
-        } else { //somewhere within the list, between prev and current
-            prev->next = temp;
-            temp->next = current;
->>>>>>> 8b49dac2c04f20c083eb109d8488f317978616a5
         }
     } else { //the list is empty
         temp->next = NULL;
