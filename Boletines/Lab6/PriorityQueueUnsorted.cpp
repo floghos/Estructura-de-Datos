@@ -1,6 +1,11 @@
 #include "PriorityQueueUnsorted.h"
 #include <bits/stdc++.h>
 
+
+PriorityQueueUnsorted::PriorityQueueUnsorted() {
+	
+}
+
 int PriorityQueueUnsorted::top() {
     int min = unsortedQ.front();
     for (int i = 1; i < unsortedQ.size(); ++i) {

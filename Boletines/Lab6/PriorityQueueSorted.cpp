@@ -23,7 +23,7 @@ void PriorityQueueSorted::push(int data) {
     node *temp = new node;
     temp->data = data;
     if (_size) {
-        node *current;
+        node *current = NULL;
         node *prev = NULL;
         current = head;
         while (current->data < data) {
@@ -33,8 +33,9 @@ void PriorityQueueSorted::push(int data) {
         if (prev == NULL) { //smaller than the first element
             temp->next = head;
             head = temp;
-        } else { //somewhere within the list
-
+        } else { //somewhere within the list, between "prev" and "current"
+			temp->next = current;
+			prev->next = temp;
         }
     } else { //the list is empty
         temp->next = NULL;
