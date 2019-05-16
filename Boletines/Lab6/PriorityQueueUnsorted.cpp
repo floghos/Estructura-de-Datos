@@ -28,8 +28,8 @@ void PriorityQueueUnsorted::pop() {
     }
 }
 
-void PriorityQueueUnsorted::push(int data) {
-    unsortedQ.push_back(data);
+void PriorityQueueUnsorted::push(int newData) {
+    unsortedQ.push_back(newData);
 }
 
 int PriorityQueueUnsorted::size() {
