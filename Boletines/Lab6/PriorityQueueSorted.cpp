@@ -1,5 +1,6 @@
 #include "PriorityQueueSorted.h"
 #include <bits/stdc++.h>
+using namespace std;
 
 PriorityQueueSorted::PriorityQueueSorted() {
     head = NULL;
@@ -23,19 +24,19 @@ void PriorityQueueSorted::push(int newData) {
     node *temp = new node;
     temp->data = newData;
     if (_size) { //the list is not empty
-        node *current;
+        node *current = head;
         node *prev = NULL;
-        current = head;
-        while (current->data < newData) {
+        while (current != NULL && current->data < newData) { //looking for where to insert the new node
             prev = current;
             current = current->next;
         }
-        if (prev == NULL) { //smaller than the first element
+
+        if (prev == NULL) { //the new data smaller than the first element
             temp->next = head;
             head = temp;
         } else { //somewhere within the list, between "prev" and "current"
-			temp->next = current;
 			prev->next = temp;
+			temp->next = current;
         }
     } else { //the list is empty
         temp->next = NULL;
