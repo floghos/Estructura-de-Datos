@@ -29,7 +29,13 @@ PriorityQueueHeap::PriorityQueueHeap() {
 }
 
 int PriorityQueueHeap::top() {
-    if (heap.size()) return heap[1];
+    if (heap.size()) {
+		return heap[1];
+	} else {
+		std::cout << "Priority Queue is Empty.\nReturning 0 as default..." << '\n';
+		return 0;
+	}
+
 }
 
 void PriorityQueueHeap::pop() {
