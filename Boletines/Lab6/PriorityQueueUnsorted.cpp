@@ -3,12 +3,12 @@
 
 
 PriorityQueueUnsorted::PriorityQueueUnsorted() {
-	
+	_size = 0;
 }
 
 int PriorityQueueUnsorted::top() {
     int min = unsortedQ.front();
-    for (int i = 1; i < unsortedQ.size(); ++i) {
+    for (int i = 1; i < _size; ++i) {
         if (min > unsortedQ[i]) min = unsortedQ[i];
     }
     return min;
@@ -17,27 +17,30 @@ int PriorityQueueUnsorted::top() {
 void PriorityQueueUnsorted::pop() {
     int min = unsortedQ.front();
     int pos = 0;
-    for (int i = 1; i < unsortedQ.size(); ++i) {
+	int oldSize = _size;
+    for (int i = 1; i < oldSize; ++i) {
         if (min > unsortedQ[i])  {
             min = unsortedQ[i];
             pos = i;
         }
     }
-    for (int i = pos; i < unsortedQ.size()-1; ++i) {
-        unsortedQ[i] = unsortedQ[i+1];
+    for (int i = pos; i < oldSize-1; ++i) {
+        unsortedQ[i] = unsortedQ[i + 1];
     }
+	_size--;
 }
 
 void PriorityQueueUnsorted::push(int newData) {
     unsortedQ.push_back(newData);
+	_size++;
 }
 
 int PriorityQueueUnsorted::size() {
-    return unsortedQ.size();
+    return _size;
 }
 
 bool PriorityQueueUnsorted::empty() {
-    return unsortedQ.empty();
+    return !_size;
 }
 
 // public:

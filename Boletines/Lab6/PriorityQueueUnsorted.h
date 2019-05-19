@@ -4,6 +4,7 @@
 
 class PriorityQueueUnsorted: public ADTPriorityQueue {
 private:
+	int _size;
     std::vector<int> unsortedQ;
 public:
 	PriorityQueueUnsorted();
