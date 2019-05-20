@@ -14,11 +14,12 @@ bool sortbysec(const pair<int,int> &a, const pair<int,int> &b) {
 void KdTree::construir(vector<pair<int, int> > v) {
     sort(v.begin(), v.end());
     int median = (v.size() - 1) / 2;
-	cout << "Primer ordenamiento:" << endl; //debug
-	cout << "x  y" << '\n'; //debug
-	for (int i = 0; i < v.size(); i++) { //debug
-		cout << v[i].first << "  " << v[i].second << '\n';//debug
-	}//debug
+	
+	// cout << "Primer ordenamiento:" << endl; //debug
+	// cout << "x  y" << '\n'; //debug
+	// for (int i = 0; i < v.size(); i++) { //debug
+	// 	cout << v[i].first << "  " << v[i].second << '\n';//debug
+	// }//debug
 
     vector<pair<int, int> > l; // mitad izquierda
     for (int i = 0; i <= median; ++i) { //llenamos l con los puntos de la primera mitad del vector (ordenado respecto a v.frist)
@@ -34,7 +35,7 @@ void KdTree::construir(vector<pair<int, int> > v) {
     root->x = v[median].first; //indica que contamos el es espacio respecto a la fila del punto v[median] (fila = x, columna = y)
     root->y = -1; // Dato basura
 
-	cout << "Corta en x=" << root->x << '\n'; //debug
+	// cout << "Corta en x=" << root->x << '\n'; //debug
 
 
     root->left = construir(l, 1);
@@ -51,11 +52,11 @@ node * KdTree::construir(vector<pair<int, int> > v, int depth) { //recibimos una
 
     int median = (v.size() - 1) / 2;
 
-	cout << "Profundidad " << depth << '\n'; //debug
-	cout << "x  y" << '\n'; //debug
-	for (int i = 0; i < v.size(); i++) { //debug
-		cout << v[i].first << "  " << v[i].second << '\n';//debug
-	}//debug
+	// cout << "Profundidad " << depth << '\n'; //debug
+	// cout << "x  y" << '\n'; //debug
+	// for (int i = 0; i < v.size(); i++) { //debug
+	// 	cout << v[i].first << "  " << v[i].second << '\n';//debug
+	// }//debug
 
 
     if (v.size() > 1) {
@@ -78,12 +79,12 @@ node * KdTree::construir(vector<pair<int, int> > v, int depth) { //recibimos una
             nuevoNodo->y = -1;
         }
 
-		cout << "Corta en "; //debug
-		if (axis) {//debug
-			cout << "y=" << v[median].second << '\n';//debug
-		} else {//debug
-			cout << "x=" << v[median].first << '\n';//debug
-		}//debug
+		// cout << "Corta en "; //debug
+		// if (axis) {//debug
+		// 	cout << "y=" << v[median].second << '\n';//debug
+		// } else {//debug
+		// 	cout << "x=" << v[median].first << '\n';//debug
+		// }//debug
 
         nuevoNodo->left = construir(l, depth+1);
         nuevoNodo->right = construir(r, depth+1);
@@ -98,7 +99,7 @@ node * KdTree::construir(vector<pair<int, int> > v, int depth) { //recibimos una
         nuevoNodo->right = NULL;
 
 
-		cout << "Punto guardado: x=" << v[median].first << "  y=" << v[median].second << '\n';//debug
+		// cout << "Punto guardado: x=" << v[median].first << "  y=" << v[median].second << '\n';//debug
 		//debug
 
         return nuevoNodo;
