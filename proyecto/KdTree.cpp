@@ -12,9 +12,13 @@ bool sortbysec(const pair<int,int> &a, const pair<int,int> &b) {
 }
 
 void KdTree::construir(vector<pair<int, int> > v) {
+/*
+	FALTA INCLUIR CASOS PARA CONJUNTO DE PUNTOS <= 1!!!!!!!!!!!!!!!!!!!!!!!
+*/
+
     sort(v.begin(), v.end());
     int median = (v.size() - 1) / 2;
-	
+
 	// cout << "Primer ordenamiento:" << endl; //debug
 	// cout << "x  y" << '\n'; //debug
 	// for (int i = 0; i < v.size(); i++) { //debug
