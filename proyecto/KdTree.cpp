@@ -107,28 +107,52 @@ node * KdTree::construir(vector<pair<int, int> > v, int depth) { //recibimos una
 }
 
 vector<pair<int, int> > * KdTree::buscar(int x1, int y1, int x2, int y2) {
-	vector<pair<int, int> > * puntosEncontrados;
-	/*
-	if root->x < x1 {
-		vector<pair<int, int> > * puntosPrevios;
-		puntosPrevios = buscar(x1, y1, x2, y2, right);
-		puntosEncontrados.push_back(puntosPrevios);
-	} else if  x1 < root->x < x2 {
-		vector<pair<int, int> > * puntosPrevios;
-		puntosPrevios = buscar(x1, y1, x2, y2, left);
-		puntosEncontrados.push_back(puntosPrevios);
+	vector<pair<int, int> > puntosEncontrados = new vector<pair<int, int> >;
+	if (x2 < x1) swap(x1, x2);
+	if (y2 < y1) swap(y1, y2);
 
-		puntosPrevios = buscar(x1, y1, x2, y2, right);
-		puntosEncontrados.push_back(puntosPrevios);
-	} else if root->x > x2{
-		vector<pair<int, int> > * puntosPrevios;
-		puntosPrevios = buscar(x1, y1, x2, y2, left);
-		puntosEncontrados.push_back(puntosPrevios);
+	if (root->x < x2) {
+		buscar(x1, y1, x2, y2, root->left, puntosEncontrados);
 	}
-	*/ //falta implementar la llamada recursiva de buscar() que sobrecarga este metodo
+	if  (root->x > x1) {
+		buscar(x1, y1, x2, y2, root->right, puntosEncontrados);
+	}
+	 //falta implementar la llamada recursiva de buscar() que sobrecarga este metodo
 
-	return puntosEncontrados; 
+	return puntosEncontrados;
 }
+
+void KdTree::buscar(int x1, int y1, int x2, int y2, node * nodo, vector<pair<int, int> > &puntosEncontrados) {
+	if (nodo->x == -1) {
+		if (nodo->y < y2) {
+			buscar(x1, y1, x2, y2, nodo->left, puntosEncontrados);
+		}
+		if  (nodo->y > y1) {
+			buscar(x1, y1, x2, y2, nodo->right, puntosEncontrados);
+		}
+	} else if (nodo->y == -1){
+		if (nodo->x < x2) {
+			buscar(x1, y1, x2, y2, nodo->left, puntosEncontrados);
+		}
+		if  (nodo->x > x1) {
+			buscar(x1, y1, x2, y2, nodo->right, puntosEncontrados);
+		}
+	} else {
+		pair<int, int> punto;
+		punto.first = nodo->x;
+		punto.second = nodo->y;
+		puntosEncontrados.push_back(punto);
+	}
+}
+
+
+
+
+
+
+
+
+
 
 // void KdTree::sort(vector<pair<int, int> > * v, int axis) {
 	//     for (int i = 1; i < v->size(); ++i) {
@@ -150,10 +174,10 @@ vector<pair<int, int> > * KdTree::buscar(int x1, int y1, int x2, int y2) {
 						//     }
 						// }
 						//
-						// void KdTree::swap(pair<int, int> *a, pair<int, int> *b) {
-							//     //queremos cambiar los contenidos de a con los de b, no las direcciones de memoria
-							//     pair<int, int> aux;
-							//     aux = *a;
-							//     *a = *b;
-							//     *b = aux;
-							// }
+// void KdTree::swap(pair<int, int> *a, pair<int, int> *b) {
+	//     //queremos cambiar los contenidos de a con los de b, no las direcciones de memoria
+	//     pair<int, int> aux;
+	//     aux = *a;
+	//     *a = *b;
+	//     *b = aux;
+	// }
