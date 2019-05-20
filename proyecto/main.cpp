@@ -24,7 +24,7 @@ int main(int argc, char const *argv[]) {
 	int x1, y1, x2, y2;
 	cin >> x1 >> y1 >> x2 >> y2;
 
-	vector<pair<int, int> > puntosEncontrados = *kT.buscar(x1,y1, x2, y2);
+	vector<pair<int, int> > puntosEncontrados = kT.buscar(x1,y1, x2, y2);
 
 	cout << "\n\nLos puntos encontrados dentro de el rago dado son: " << '\n';
 	for (int i = 0; i < puntosEncontrados.size(); i++) {

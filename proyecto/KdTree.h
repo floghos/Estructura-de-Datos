@@ -13,12 +13,12 @@ class KdTree: public ADTSearchTree {
 private:
     node *root;
     node * construir(vector<pair<int, int> > v, int depth);
-	void buscar(int x1, int y1, int x2, int y2, node * nodo, vector<pair<int, int> > &puntosEncontrados);
+	vector<pair<int, int> > buscarR(int x1, int y1, int x2, int y2, node * nodo);
     // bool sortbysec(const pair<int,int> &a, const pair<int,int> &b);
     // void sort(vector<pair<int, int> > * v, int axis);
     // void swap(pair<int, int> *a, pair<int, int> *b);
 public:
     KdTree();
     void construir(vector<pair<int, int> > v);
-    vector<pair<int, int> > * buscar(int x1, int y1, int x2, int y2);
+    vector<pair<int, int> > buscar(int x1, int y1, int x2, int y2);
 };

@@ -106,44 +106,69 @@ node * KdTree::construir(vector<pair<int, int> > v, int depth) { //recibimos una
 
 }
 
-vector<pair<int, int> > * KdTree::buscar(int x1, int y1, int x2, int y2) {
-	vector<pair<int, int> > puntosEncontrados = new vector<pair<int, int> >;
+vector<pair<int, int> > KdTree::buscar(int x1, int y1, int x2, int y2) {
+	vector<pair<int, int> > puntosEncontrados;
 	if (x2 < x1) swap(x1, x2);
 	if (y2 < y1) swap(y1, y2);
 
-	if (root->x < x2) {
-		buscar(x1, y1, x2, y2, root->left, puntosEncontrados);
+	vector<pair<int, int> > puntosPrevios;
+	if (root->x <= x2) {
+		puntosPrevios = buscarR(x1, y1, x2, y2, root->left);
+		for (int i = 0; i < puntosPrevios.size(); i++) {
+			puntosEncontrados.push_back(puntosPrevios[i]);
+		}
 	}
-	if  (root->x > x1) {
-		buscar(x1, y1, x2, y2, root->right, puntosEncontrados);
+	if  (root->x >= x1) {
+		puntosPrevios = buscarR(x1, y1, x2, y2, root->right);
+		for (int i = 0; i < puntosPrevios.size(); i++) {
+			puntosEncontrados.push_back(puntosPrevios[i]);
+		}
 	}
-	 //falta implementar la llamada recursiva de buscar() que sobrecarga este metodo
 
 	return puntosEncontrados;
 }
 
-void KdTree::buscar(int x1, int y1, int x2, int y2, node * nodo, vector<pair<int, int> > &puntosEncontrados) {
+vector<pair<int, int> > KdTree::buscarR(int x1, int y1, int x2, int y2, node * nodo) {
+	vector<pair<int, int> > puntosEncontrados;
+	vector<pair<int, int> > puntosPrevios;
 	if (nodo->x == -1) {
-		if (nodo->y < y2) {
-			buscar(x1, y1, x2, y2, nodo->left, puntosEncontrados);
+		if (nodo->y <= y2) {
+			puntosPrevios = buscarR(x1, y1, x2, y2, nodo->right);
+			for (int i = 0; i < puntosPrevios.size(); i++) {
+				puntosEncontrados.push_back(puntosPrevios[i]);
+			}
 		}
-		if  (nodo->y > y1) {
-			buscar(x1, y1, x2, y2, nodo->right, puntosEncontrados);
+		if  (nodo->y >= y1) {
+			puntosPrevios = buscarR(x1, y1, x2, y2, nodo->left);
+			for (int i = 0; i < puntosPrevios.size(); i++) {
+				puntosEncontrados.push_back(puntosPrevios[i]);
+			}
 		}
 	} else if (nodo->y == -1){
-		if (nodo->x < x2) {
-			buscar(x1, y1, x2, y2, nodo->left, puntosEncontrados);
+		if (nodo->x <= x2) {
+			puntosPrevios = buscarR(x1, y1, x2, y2, nodo->right);
+			for (int i = 0; i < puntosPrevios.size(); i++) {
+				puntosEncontrados.push_back(puntosPrevios[i]);
+			}
 		}
-		if  (nodo->x > x1) {
-			buscar(x1, y1, x2, y2, nodo->right, puntosEncontrados);
+		if  (nodo->x >= x1) {
+			puntosPrevios = buscarR(x1, y1, x2, y2, nodo->left);
+			for (int i = 0; i < puntosPrevios.size(); i++) {
+				puntosEncontrados.push_back(puntosPrevios[i]);
+			}
 		}
 	} else {
-		pair<int, int> punto;
-		punto.first = nodo->x;
-		punto.second = nodo->y;
-		puntosEncontrados.push_back(punto);
+		if (nodo->x >= x1 && nodo->x <= x2 && nodo->y >= y1 && nodo->y <= y2) {
+			pair<int, int> punto;
+			punto.first = nodo->x;
+			punto.second = nodo->y;
+			puntosEncontrados.push_back(punto);
+		}
 	}
+
+	return puntosEncontrados;
 }
+
 
 
 
