@@ -15,43 +15,56 @@ void KdTree::construir(vector<pair<int, int> > v) {
 /*
 	FALTA INCLUIR CASOS PARA CONJUNTO DE PUNTOS <= 1!!!!!!!!!!!!!!!!!!!!!!!
 */
+	if(v.size() == 0){//significa que no hay puntos en el vector
+		root = new nodeK;
+		root->x = -1;//no guarda punto
+		root->y = -1;
+		root->left = NULL;//no tiene hijos
+		root->right = NULL;
+	}else if(v.size() == 1){//si vector tiene un solo punto
+		root = new nodeK;
+		root->x = v[0].first;//guarda el punto en la raiz
+		root->y = v[0].second;
+		root->left = NULL;//no tiene hijos
+		root->right = NULL;
+	}else{//vector tiene más de un punto
+		sort(v.begin(), v.end());//ordena el vector con respecto a x
+	    int median = (v.size() - 1) / 2;
 
-    sort(v.begin(), v.end());
-    int median = (v.size() - 1) / 2;
+		// cout << "Primer ordenamiento:" << endl; //debug
+		// cout << "x  y" << '\n'; //debug
+		// for (int i = 0; i < v.size(); i++) { //debug
+		// 	cout << v[i].first << "  " << v[i].second << '\n';//debug
+		// }//debug
 
-	// cout << "Primer ordenamiento:" << endl; //debug
-	// cout << "x  y" << '\n'; //debug
-	// for (int i = 0; i < v.size(); i++) { //debug
-	// 	cout << v[i].first << "  " << v[i].second << '\n';//debug
-	// }//debug
+	    vector<pair<int, int> > l; // mitad izquierda
+	    for (int i = 0; i <= median; ++i) { //llenamos l con los puntos de la primera mitad del vector (ordenado respecto a v.frist)
+	        l.push_back(v[i]);
+	    }
 
-    vector<pair<int, int> > l; // mitad izquierda
-    for (int i = 0; i <= median; ++i) { //llenamos l con los puntos de la primera mitad del vector (ordenado respecto a v.frist)
-        l.push_back(v[i]);
-    }
+	    vector<pair<int, int> > r; // mitad derecha
+	    for (int i = median+1; i < v.size(); ++i) { //llenamos r con los puntos de la segunda mitad del vector (ordenado respecto a v.frist)
+	        r.push_back(v[i]);
+	    }
 
-    vector<pair<int, int> > r; // mitad derecha
-    for (int i = median+1; i < v.size(); ++i) { //llenamos r con los puntos de la segunda mitad del vector (ordenado respecto a v.frist)
-        r.push_back(v[i]);
-    }
+	    root = new nodeK; //creamos el primer nodo
+	    root->x = v[median].first; //indica que contamos el es espacio respecto a la fila del punto v[median] (fila = x, columna = y)
+	    root->y = -1; // Dato basura
 
-    root = new node; //creamos el primer nodo
-    root->x = v[median].first; //indica que contamos el es espacio respecto a la fila del punto v[median] (fila = x, columna = y)
-    root->y = -1; // Dato basura
+		// cout << "Corta en x=" << root->x << '\n'; //debug
 
-	// cout << "Corta en x=" << root->x << '\n'; //debug
+	    root->left = construir(l, 1);
+	    root->right = construir(r, 1);
+	}
 
-
-    root->left = construir(l, 1);
-    root->right = construir(r, 1);
 }
 
-node * KdTree::construir(vector<pair<int, int> > v, int depth) { //recibimos una de las dos mitades del paso anterior
+nodeK * KdTree::construir(vector<pair<int, int> > v, int depth) { //recibimos una de las dos mitades del paso anterior
     int axis = depth % 2; //0, 1 dependiendo si es par o impar (0 = x, 1 = y)
     if (axis) {
-        sort(v.begin(), v.end(), sortbysec);
+        sort(v.begin(), v.end(), sortbysec);//ordena el vector con respecto a y
     } else {
-        sort(v.begin(), v.end());
+        sort(v.begin(), v.end());//ordena el vector con respecto a x
     }
 
     int median = (v.size() - 1) / 2;
@@ -62,8 +75,7 @@ node * KdTree::construir(vector<pair<int, int> > v, int depth) { //recibimos una
 	// 	cout << v[i].first << "  " << v[i].second << '\n';//debug
 	// }//debug
 
-
-    if (v.size() > 1) {
+    if (v.size() > 1) {//si vector tiene más de un punto
         vector<pair<int, int> > l; //mitad izquierda
         for (int i = 0; i <= median; ++i) {
             l.push_back(v[i]);
@@ -74,7 +86,7 @@ node * KdTree::construir(vector<pair<int, int> > v, int depth) { //recibimos una
             r.push_back(v[i]);
         }
 
-        node *nuevoNodo = new node;
+        nodeK *nuevoNodo = new nodeK;
         if (axis) { //division en eje y
             nuevoNodo->y = v[median].second;
             nuevoNodo->x = -1;
@@ -93,22 +105,19 @@ node * KdTree::construir(vector<pair<int, int> > v, int depth) { //recibimos una
         nuevoNodo->left = construir(l, depth+1);
         nuevoNodo->right = construir(r, depth+1);
 
-
         return nuevoNodo;
-    } else {
-        node *nuevoNodo = new node;
+    } else {//si vector tiene un solo punto
+        nodeK *nuevoNodo = new nodeK;
         nuevoNodo->x = v[0].first;
         nuevoNodo->y = v[0].second;
         nuevoNodo->left = NULL;
         nuevoNodo->right = NULL;
-
 
 		// cout << "Punto guardado: x=" << v[median].first << "  y=" << v[median].second << '\n';//debug
 		//debug
 
         return nuevoNodo;
     }
-
 }
 
 vector<pair<int, int> > KdTree::buscar(int x1, int y1, int x2, int y2) {
@@ -116,24 +125,34 @@ vector<pair<int, int> > KdTree::buscar(int x1, int y1, int x2, int y2) {
 	if (x2 < x1) swap(x1, x2);
 	if (y2 < y1) swap(y1, y2);
 
-	vector<pair<int, int> > puntosPrevios;
-	if (root->x <= x2) {
-		puntosPrevios = buscarR(x1, y1, x2, y2, root->left);
-		for (int i = 0; i < puntosPrevios.size(); i++) {
-			puntosEncontrados.push_back(puntosPrevios[i]);
+	if(root->x == -1 && root->y == -1){//el vector no tenía puntos, raiz no guarda nada, no tiene hijos
+		//DECIR QUE NO HACE NADA ???.................................................................................!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	}else if(root->x !=-1 && root->y !=-1){//vector tenía un punto, lo guadó en raiz, no tiene hijos
+		if(root->x >= x1 && root->x <= x2 && root->y >= y1 && root->y <= y2){//si el punto cumple con el intervalo
+			pair<int, int> punto;
+			punto.first = root->x;
+			punto.second = root->y;
+			puntosEncontrados.push_back(punto);
+		}
+	}else{//si el vactor tenía más de dos puntos se puede buscar en los hijos...
+		vector<pair<int, int> > puntosPrevios;
+		if (root->x <= x2) {
+			puntosPrevios = buscarR(x1, y1, x2, y2, root->left);
+			for (int i = 0; i < puntosPrevios.size(); i++) {
+				puntosEncontrados.push_back(puntosPrevios[i]);
+			}
+		}
+		if  (root->x >= x1) {
+			puntosPrevios = buscarR(x1, y1, x2, y2, root->right);
+			for (int i = 0; i < puntosPrevios.size(); i++) {
+				puntosEncontrados.push_back(puntosPrevios[i]);
+			}
 		}
 	}
-	if  (root->x >= x1) {
-		puntosPrevios = buscarR(x1, y1, x2, y2, root->right);
-		for (int i = 0; i < puntosPrevios.size(); i++) {
-			puntosEncontrados.push_back(puntosPrevios[i]);
-		}
-	}
-
 	return puntosEncontrados;
 }
 
-vector<pair<int, int> > KdTree::buscarR(int x1, int y1, int x2, int y2, node * nodo) {
+vector<pair<int, int> > KdTree::buscarR(int x1, int y1, int x2, int y2, nodeK * nodo) {
 	vector<pair<int, int> > puntosEncontrados;
 	vector<pair<int, int> > puntosPrevios;
 	if (nodo->x == -1) {
@@ -173,16 +192,6 @@ vector<pair<int, int> > KdTree::buscarR(int x1, int y1, int x2, int y2, node * n
 
 	return puntosEncontrados;
 }
-
-
-
-
-
-
-
-
-
-
 
 // void KdTree::sort(vector<pair<int, int> > * v, int axis) {
 	//     for (int i = 1; i < v->size(); ++i) {

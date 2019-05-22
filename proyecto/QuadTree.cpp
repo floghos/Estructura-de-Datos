@@ -19,7 +19,7 @@ void QuadTree::construir(vector<pair<int, int> > v) {
 	N = max(max_x, max_y);
 // //////////////////////////////////////////////
 	if (v.size() == 0) {
-		root = new node;
+		root = new nodeQ;
 		root->x = -1;
 		root->y = -1;
 		root->NW = NULL;
@@ -27,7 +27,7 @@ void QuadTree::construir(vector<pair<int, int> > v) {
 		root->SW = NULL;
 		root->SE = NULL;
 	} else if (v.size() == 1) {
-		root = new node;
+		root = new nodeQ;
 		root->x = v[0].first;
 		root->y = v[0].second;
 		root->NW = NULL;
@@ -35,7 +35,7 @@ void QuadTree::construir(vector<pair<int, int> > v) {
 		root->SW = NULL;
 		root->SE = NULL;
 	} else {
-		root = new node;
+		root = new nodeQ;
 		root->x = -1;
 		root->y = -1;
 		vector<pair<int, int> > north;
@@ -77,8 +77,8 @@ void QuadTree::construir(vector<pair<int, int> > v) {
 	}
 }
 
-node * QuadTree::construirR(vector<pair<int, int> > v, int x1, int x2, int y1, int y2) {
-	node nuevoNodo = new node;
+nodeQ * QuadTree::construirR(vector<pair<int, int> > v, int x1, int x2, int y1, int y2) {
+	nodeQ *nuevoNodo = new nodeQ;
 
 	if(v.size() == 1){
 		nuevoNodo->x = v[0].first;
@@ -92,15 +92,15 @@ node * QuadTree::construirR(vector<pair<int, int> > v, int x1, int x2, int y1, i
 		nuevoNodo->y = -1;
 		//OJO, HAY QUE VER SI EL RANGO ES SUFICIENTEMENTE GRANDE PARA AGREGAR HIJOS
 		if (x1 == x2) {
-			nuevoNodo->NW = construirR();
-			nuevoNodo->NE = construirR();
+			//nuevoNodo->NW = construirR();//hay que ponerle los intervalos para probar
+			//nuevoNodo->NE = construirR();
 			nuevoNodo->SW = NULL;
 			nuevoNodo->SE = NULL;
 		} else if (y1 == y2) {
 			nuevoNodo->NW = NULL;
 			nuevoNodo->NE = NULL;
-			nuevoNodo->SW = construirR();
-			nuevoNodo->SE = construirR();
+			//nuevoNodo->SW = construirR();
+			//nuevoNodo->SE = construirR();
 		}
 
 

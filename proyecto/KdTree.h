@@ -3,16 +3,16 @@
 
 using namespace std;
 
-struct node {
+struct nodeK {
     int x, y;
-    node *left, *right;
+    nodeK *left, *right;
 };
 
 class KdTree: public ADTSearchTree {
 private:
-    node *root;
-    node * construir(vector<pair<int, int> > v, int depth);
-	vector<pair<int, int> > buscarR(int x1, int y1, int x2, int y2, node * nodo);
+    nodeK *root;
+    nodeK * construir(vector<pair<int, int> > v, int depth);
+	vector<pair<int, int> > buscarR(int x1, int y1, int x2, int y2, nodeK * nodo);
 public:
     KdTree();
     void construir(vector<pair<int, int> > v);

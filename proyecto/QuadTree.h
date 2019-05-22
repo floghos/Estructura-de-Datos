@@ -3,16 +3,16 @@
 
 using namespace std;
 
-struct node {
+struct nodeQ {//le cambie el nombre porque decía que me estaba refiriendo al otro nodo :C
     int x, y;
-    node *NE, *NW, *SE, *SW;
+    nodeQ *NE, *NW, *SE, *SW;
 };
 
 class QuadTree: public ADTSearchTree {
 private:
     int N;
-    node *root;
-	node * construirR(vector<pair<int, int> > v, int x1, int y1, int x2, int y2);
+    nodeQ *root;
+	nodeQ *construirR(vector<pair<int, int> > v, int x1, int y1, int x2, int y2);
 public:
     QuadTree();
     void construir(vector<pair<int, int> > v);
