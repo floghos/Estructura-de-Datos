@@ -5,7 +5,6 @@ using namespace std;
 
 struct node {
     int x, y;
-    // node *parent;
     node *left, *right;
 };
 
