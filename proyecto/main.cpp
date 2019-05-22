@@ -1,5 +1,6 @@
 #include "ADTSearchTree.h"
 #include "KdTree.h"
+#include "QuadTree.h"
 #include <bits/stdc++.h>
 
 using namespace std;
