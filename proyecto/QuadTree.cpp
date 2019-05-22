@@ -9,7 +9,7 @@ QuadTree::QuadTree() {
 
 
 void QuadTree::construir(vector<pair<int, int> > v) {
-// //////////////////////////////////////////////
+// ////////////////////////////////////////////// para cambiar en caso de que agreguemos N x M como argumentos
 	int max_x = 0;
 	int max_y = 0;
 	for (int i = 0; i < v.size(); i++) {
@@ -90,17 +90,76 @@ nodeQ * QuadTree::construirR(vector<pair<int, int> > v, int x1, int x2, int y1, 
 	} else { //hay mas de un punto, seguimos dividiendo
 		nuevoNodo->x = -1;
 		nuevoNodo->y = -1;
+
+		vector<pair<int, int> > north;
+		vector<pair<int, int> > south;
+
+		for (int i = 0; i < v.size(); i++) {
+			if (v[i].first <= (x1+x2)/2) {
+				north.push_back(v[i]);
+			} else {
+				south.push_back(v[i]);
+			}
+		}
 		//OJO, HAY QUE VER SI EL RANGO ES SUFICIENTEMENTE GRANDE PARA AGREGAR HIJOS
+
 		if (x1 == x2) {
-			//nuevoNodo->NW = construirR();//hay que ponerle los intervalos para probar
-			//nuevoNodo->NE = construirR();
+			vector<pair<int, int> > west;
+			vector<pair<int, int> > east;
+			for (int i = 0; i < v.size(); i++) {
+				if (north[i].second <= (y1+y2)/2) {
+					west.push_back(north[i]); // oeste del norte
+				} else {
+					east.push_back(north[i]); // este del norte
+				}
+			}
+			nuevoNodo->NW = construirR(west, x1, (x1+x2)/2, y1, (y1+y2)/2);//hay que ponerle los intervalos para probar
+			nuevoNodo->NE = construirR(west, x1, (x1+x2)/2, ((y1+y2)/2)+1, y2);
 			nuevoNodo->SW = NULL;
 			nuevoNodo->SE = NULL;
 		} else if (y1 == y2) {
-			nuevoNodo->NW = NULL;
+			vector<pair<int, int> > west;
+
+			for (int i = 0; i < v.size(); i++) {
+				if (north[i].second <= N/2) {
+					west.push_back(north[i]); // oeste del norte
+				}
+			}
+			nuevoNodo->NW = construirR(west, x1, (x1+x2)/2, y1, (y1+y2)/2);
 			nuevoNodo->NE = NULL;
-			//nuevoNodo->SW = construirR();
-			//nuevoNodo->SE = construirR();
+
+			west.clear();
+			for (int i = 0; i < v.size(); i++) {
+				if (south[i].second <= N/2) {
+					west.push_back(south[i]); // oeste del sur
+				}
+			}
+			nuevoNodo->SW = construirR(west, ((x1+x2)/2)+1, x2, y1 , (y1+y2)/2);
+			nuevoNodo->SE = NULL;
+		} else {
+			vector<pair<int, int> > west;
+			vector<pair<int, int> > east;
+			for (int i = 0; i < v.size(); i++) {
+				if (north[i].second <= N/2) {
+					west.push_back(north[i]); // oeste del norte
+				} else {
+					east.push_back(north[i]); // este del norte
+				}
+			}
+			nuevoNodo->NW = construirR(west, x1, (x1+x2)/2, y1, (y1+y2)/2);//hay que ponerle los intervalos para probar
+			nuevoNodo->NE = construirR(west, x1, (x1+x2)/2, ((y1+y2)/2)+1, y2);
+
+			west.clear();
+			east.clear();
+			for (int i = 0; i < v.size(); i++) {
+				if (south[i].second <= N/2) {
+					west.push_back(south[i]); // oeste del norte
+				} else {
+					east.push_back(south[i]); // este del norte
+				}
+			}
+			nuevoNodo->SW = construirR(west, ((x1+x2)/2)+1, x2, y1 , (y1+y2)/2);
+			nuevoNodo->SE = construirR(west, ((x1+x2)/2)+1, x2, ((y1+y2)/2)+1, y2);
 		}
 
 
