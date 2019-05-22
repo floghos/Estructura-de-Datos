@@ -8,10 +8,11 @@ struct node {
     node *NE, *NW, *SE, *SW;
 };
 
-class KdTree: public ADTSearchTree {
+class QuadTree: public ADTSearchTree {
 private:
+    int N;
     node *root;
-	node * construirR(vector<pair<int, int> > v);
+	node * construirR(vector<pair<int, int> > v, int x1, int y1, int x2, int y2);
 public:
     QuadTree();
     void construir(vector<pair<int, int> > v);

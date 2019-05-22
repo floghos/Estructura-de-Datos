@@ -6,6 +6,7 @@ using namespace std;
 
 int main(int argc, char const *argv[]) {
 	KdTree kT;
+	QuadTree qT;
 	vector<pair<int, int> > puntos;
 	int n, m, p;
 	cin >> n >> m >> p;
