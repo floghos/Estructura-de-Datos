@@ -4,8 +4,12 @@
 using namespace std;
 
 struct nodeQ {//le cambie el nombre porque decía que me estaba refiriendo al otro nodo :C
-    int x, y;
-    nodeQ *NE, *NW, *SE, *SW;
+    int x = -1;
+	int y = -1;
+	nodeQ *NW = NULL;
+    nodeQ *NE = NULL;
+	nodeQ *SW = NULL;
+	nodeQ *SE = NULL;
 };
 
 class QuadTree: public ADTSearchTree {
