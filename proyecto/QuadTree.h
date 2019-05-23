@@ -17,6 +17,7 @@ private:
     int N;
     nodeQ *root;
 	nodeQ *construirR(vector<pair<int, int> > v, int x1, int y1, int x2, int y2);
+	void buscarR(int x1, int y1, int x2, int y2, nodeQ *nodo, vector<pair<int, int> > puntosEncontrados);
 public:
     QuadTree();
     void construir(vector<pair<int, int> > v);
