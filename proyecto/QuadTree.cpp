@@ -17,7 +17,7 @@ void QuadTree::construir(vector<pair<int, int> > v) {
 		if (v[i].second > max_y) max_y = v[i].second;
 	}
 	N = max(max_x, max_y);
-	cout << "Dimensiones implicitas del espacio: " << N << '\n'; //debug
+	cout << "Dimensiones acotadas del espacio: " << N << '\n'; //debug
 // //////////////////////////////////////////////
 	if (v.size() == 0) {
 		root = new nodeQ;
@@ -236,14 +236,14 @@ vector<pair<int, int> > QuadTree::buscar(int x1, int y1, int x2, int y2) {
 	vector<pair<int, int> > puntosEncontrados;
 	if (root->x == -1) {//no guarda punto, no tiene hijos
 		//no hacemos nada
-	}else if (root->x != -1 && root->NW == NULL){//guarda un punto en la raiz, no tiene hijos
+	} else if (root->x != -1 && root->NW == NULL){//guarda un punto en la raiz, no tiene hijos
 		if (root->x >= x1 && root->x <= x2 && root->y >= y1 && root->y <= y2) {
 			pair<int, int> punto;
 			punto.first = root->x;
 			punto.second = root->y;
 			puntosEncontrados.push_back(punto);
 		}
-	}else {//hay más de un punto, tiene al menos dos hijos
+	} else {//hay más de un punto, tiene al menos dos hijos
 		if (x1 <= root->x) { //buscar en el NORTE
 			if (y1 <= root->y) buscarR(x1, y1, x2, y2, root->NW, puntosEncontrados);
 			if (y2 > root->y) buscarR(x1, y1, x2, y2, root->NE, puntosEncontrados);
@@ -256,17 +256,17 @@ vector<pair<int, int> > QuadTree::buscar(int x1, int y1, int x2, int y2) {
 	return puntosEncontrados;
 }
 
-void QuadTree::buscarR(int x1, int y1, int x2, int y2, nodeQ * nodo, vector<pair<int, int> > puntosEncontrados) {
+void QuadTree::buscarR(int x1, int y1, int x2, int y2, nodeQ * nodo, vector<pair<int, int> > &puntosEncontrados) {
 	if (nodo->NW == NULL && nodo->x == -1) {//no guarda punto, no tiene hijos (NW es el unico que existe siempre al hacer divisiones)
 		//no hacemos nada
-	}else if (nodo->NW == NULL && nodo->x != -1){//guarda un punto en la raiz, no tiene hijos
+	} else if (nodo->NW == NULL && nodo->x != -1){//guarda un punto en la raiz, no tiene hijos
 		if (nodo->x >= x1 && nodo->x <= x2 && nodo->y >= y1 && nodo->y <= y2) {
 			pair<int, int> punto;
 			punto.first = nodo->x;
 			punto.second = nodo->y;
 			puntosEncontrados.push_back(punto);
 		}
-	}else {//hay division. Tiene al menos 2 hijos
+	} else {//hay division. Tiene al menos 2 hijos
 		if (x1 <= nodo->x) { //buscar en el NORTE
 			if (y1 <= nodo->y) buscarR(x1, y1, x2, y2, nodo->NW, puntosEncontrados);
 			if (y2 > nodo->y && nodo->NE != NULL) buscarR(x1, y1, x2, y2, nodo->NE, puntosEncontrados);
