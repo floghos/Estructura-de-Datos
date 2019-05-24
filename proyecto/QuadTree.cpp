@@ -234,6 +234,9 @@ nodeQ * QuadTree::construirR(vector<pair<int, int> > v, int x1, int x2, int y1, 
 
 vector<pair<int, int> > QuadTree::buscar(int x1, int y1, int x2, int y2) {
 	vector<pair<int, int> > puntosEncontrados;
+	if (x2 < x1) swap(x1, x2); //nos aseguramos de que x1 < x2 && y1 < y2
+	if (y2 < y1) swap(y1, y2);
+
 	if (root->x == -1) {//no guarda punto, no tiene hijos
 		//no hacemos nada
 	} else if (root->x != -1 && root->NW == NULL){//guarda un punto en la raiz, no tiene hijos
