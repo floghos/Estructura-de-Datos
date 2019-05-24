@@ -3,9 +3,9 @@ import numpy as np
 
 #las variables no llevan tipo definido explicitamente
 #input viene siendo la entrada
-numPuntos = int(input("ingrese cantidad de puntos: "))
-n = int(input("cantidad de columnas: "))
-m = int(input("cantidad de filas: "))
+numPuntos = int(input())
+n = int(input())
+m = int(input())
 dm = 0.18 #desviacion media
 # distribucion normal recibe promedio,desviacion estandar y cantidad
 # de elementos
@@ -17,13 +17,13 @@ arrY = np.random.normal(m*0.5,m*dm,numPuntos)
 #castear los elementos a enteros (redondear)
 arrY = arrY.astype('int')
 puntos = set(zip(arrX,arrY))
-print("cantidad de puntos", len(puntos))
+print(len(puntos))
 #aqui imprimo los puntos
 #zip(arrX,arrY) junta los dos arreglos y los convierte en
 #un arreglo de pares
 #aqui se imprimen los puntos (el for de python es distinto al de c)
 for x,y in puntos:
-    print(x, y)
+    print (x,y)
 
 
 # otras distribuciones:
