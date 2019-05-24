@@ -127,96 +127,33 @@ vector<pair<int, int> > KdTree::buscar(int x1, int y1, int x2, int y2) {
 
 	if(root->x == -1 && root->y == -1){//el vector no tenía puntos, raiz no guarda nada, no tiene hijos
 		//DECIR QUE NO HACE NADA ???.................................................................................!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	}else if(root->x !=-1 && root->y !=-1){//vector tenía un punto, lo guadó en raiz, no tiene hijos
+	} else if (root->x !=-1 && root->y !=-1){//vector tenía un punto, lo guadó en raiz, no tiene hijos
 		if(root->x >= x1 && root->x <= x2 && root->y >= y1 && root->y <= y2){//si el punto cumple con el intervalo
 			pair<int, int> punto;
 			punto.first = root->x;
 			punto.second = root->y;
 			puntosEncontrados.push_back(punto);
 		}
-	}else{//si el vactor tenía más de dos puntos se puede buscar en los hijos...
-		vector<pair<int, int> > puntosPrevios;
-		if (root->x <= x2) {
-			puntosPrevios = buscarR(x1, y1, x2, y2, root->left);
-			for (int i = 0; i < puntosPrevios.size(); i++) {
-				puntosEncontrados.push_back(puntosPrevios[i]);
-			}
-		}
-		if  (root->x >= x1) {
-			puntosPrevios = buscarR(x1, y1, x2, y2, root->right);
-			for (int i = 0; i < puntosPrevios.size(); i++) {
-				puntosEncontrados.push_back(puntosPrevios[i]);
-			}
-		}
+	} else {//si el vactor tenía más de dos puntos se puede buscar en los hijos...
+		if (root->x <= x2) buscarR(x1, y1, x2, y2, root->left, puntosEncontrados);
+		if  (root->x >= x1) buscarR(x1, y1, x2, y2, root->right, puntosEncontrados);
 	}
 	return puntosEncontrados;
 }
 
-vector<pair<int, int> > KdTree::buscarR(int x1, int y1, int x2, int y2, nodeK * nodo) {
-	vector<pair<int, int> > puntosEncontrados;
-	vector<pair<int, int> > puntosPrevios;
-	if (nodo->x == -1) {
-		if (nodo->y <= y2) {
-			puntosPrevios = buscarR(x1, y1, x2, y2, nodo->right);
-			for (int i = 0; i < puntosPrevios.size(); i++) {
-				puntosEncontrados.push_back(puntosPrevios[i]);
-			}
-		}
-		if  (nodo->y >= y1) {
-			puntosPrevios = buscarR(x1, y1, x2, y2, nodo->left);
-			for (int i = 0; i < puntosPrevios.size(); i++) {
-				puntosEncontrados.push_back(puntosPrevios[i]);
-			}
-		}
-	} else if (nodo->y == -1){
-		if (nodo->x <= x2) {
-			puntosPrevios = buscarR(x1, y1, x2, y2, nodo->right);
-			for (int i = 0; i < puntosPrevios.size(); i++) {
-				puntosEncontrados.push_back(puntosPrevios[i]);
-			}
-		}
-		if  (nodo->x >= x1) {
-			puntosPrevios = buscarR(x1, y1, x2, y2, nodo->left);
-			for (int i = 0; i < puntosPrevios.size(); i++) {
-				puntosEncontrados.push_back(puntosPrevios[i]);
-			}
-		}
-	} else {
-		if (nodo->x >= x1 && nodo->x <= x2 && nodo->y >= y1 && nodo->y <= y2) {
+void KdTree::buscarR(int x1, int y1, int x2, int y2, nodeK * nodo, vector<pair<int, int> > &puntosEncontrados) {
+	if (nodo->x == -1) { //hay division en y
+		if (nodo->y <= y2) buscarR(x1, y1, x2, y2, nodo->right, puntosEncontrados);
+		if (nodo->y >= y1) buscarR(x1, y1, x2, y2, nodo->left, puntosEncontrados);
+	} else if (nodo->y == -1){ //hay division en x
+		if (nodo->x <= x2) buscarR(x1, y1, x2, y2, nodo->right, puntosEncontrados);
+		if (nodo->x >= x1) buscarR(x1, y1, x2, y2, nodo->left, puntosEncontrados);
+	} else { //hay un punto en el nodo
+		if (nodo->x >= x1 && nodo->x <= x2 && nodo->y >= y1 && nodo->y <= y2) { //revisa si pretenece al intervalo de busqueda
 			pair<int, int> punto;
 			punto.first = nodo->x;
 			punto.second = nodo->y;
 			puntosEncontrados.push_back(punto);
 		}
 	}
-
-	return puntosEncontrados;
 }
-
-// void KdTree::sort(vector<pair<int, int> > * v, int axis) {
-	//     for (int i = 1; i < v->size(); ++i) {
-		//         int j = i;
-		//         pair<int, int> aux;
-		//         if (axis) {//eje y
-			//             while (v[j].second < v[j-1].second) {
-				//                 KdTree::swap(&v[j], &v[j-1]);
-				//                 j--;
-				//                 if (j == 0) break;
-				//             }
-				//         } else { //equivale a: axis == 0 (eje x
-					//             while (v[j].first < v[j-1].first) {
-						//                 KdTree::swap(&v[j], &v[j-1]);
-						//                 j--;
-						//                 if (j == 0) break;
-						//             }
-						//         }
-						//     }
-						// }
-						//
-// void KdTree::swap(pair<int, int> *a, pair<int, int> *b) {
-	//     //queremos cambiar los contenidos de a con los de b, no las direcciones de memoria
-	//     pair<int, int> aux;
-	//     aux = *a;
-	//     *a = *b;
-	//     *b = aux;
-	// }
