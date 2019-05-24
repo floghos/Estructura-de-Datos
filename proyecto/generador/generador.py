@@ -22,6 +22,7 @@ print(len(puntos))
 #zip(arrX,arrY) junta los dos arreglos y los convierte en
 #un arreglo de pares
 #aqui se imprimen los puntos (el for de python es distinto al de c)
+
 for x,y in puntos:
     print (x,y)
 
