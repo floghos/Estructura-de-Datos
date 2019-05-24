@@ -6,13 +6,14 @@ import numpy as np
 numPuntos = int(input("ingrese cantidad de puntos: "))
 n = int(input("cantidad de columnas: "))
 m = int(input("cantidad de filas: "))
+dm = 0.18 #desviacion media
 # distribucion normal recibe promedio,desviacion estandar y cantidad
 # de elementos
 #CUIDADO AL CAMBIAR LA DESVIACION ESTANDAR, SE PUEDE SALIR DEL RANGO
-arrX = np.random.normal(n*0.5,n*0.1,numPuntos)
+arrX = np.random.normal(n*0.5,n*dm,numPuntos)
 #castear los elementos a enteros (redondear)
 arrX = arrX.astype('int')
-arrY = np.random.normal(m*0.5,m*0.1,numPuntos)
+arrY = np.random.normal(m*0.5,m*dm,numPuntos)
 #castear los elementos a enteros (redondear)
 arrY = arrY.astype('int')
 puntos = set(zip(arrX,arrY))
@@ -22,4 +23,11 @@ print("cantidad de puntos", len(puntos))
 #un arreglo de pares
 #aqui se imprimen los puntos (el for de python es distinto al de c)
 for x,y in puntos:
-    print(x,y)
+    print(x, y)
+
+
+# otras distribuciones:
+# uniform([low, high, size])
+# zipf(a[, size])
+# normal([loc, scale, size])
+# referencias https://docs.scipy.org/doc/numpy/reference/routines.random.html
