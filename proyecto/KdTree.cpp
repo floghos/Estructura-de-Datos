@@ -31,12 +31,6 @@ void KdTree::construir(vector<pair<int, int> > v) {
 		sort(v.begin(), v.end());//ordena el vector con respecto a x
 	    int median = (v.size() - 1) / 2;
 
-		// cout << "Primer ordenamiento:" << endl; //debug
-		// cout << "x  y" << '\n'; //debug
-		// for (int i = 0; i < v.size(); i++) { //debug
-		// 	cout << v[i].first << "  " << v[i].second << '\n';//debug
-		// }//debug
-
 	    vector<pair<int, int> > l; // mitad izquierda
 	    for (int i = 0; i <= median; ++i) { //llenamos l con los puntos de la primera mitad del vector (ordenado respecto a v.frist)
 	        l.push_back(v[i]);
@@ -50,8 +44,6 @@ void KdTree::construir(vector<pair<int, int> > v) {
 	    root = new nodeK; //creamos el primer nodo
 	    root->x = v[median].first; //indica que contamos el es espacio respecto a la fila del punto v[median] (fila = x, columna = y)
 	    root->y = -1; // Dato basura
-
-		// cout << "Corta en x=" << root->x << '\n'; //debug
 
 	    root->left = construir(l, 1);
 	    root->right = construir(r, 1);
@@ -68,12 +60,6 @@ nodeK * KdTree::construir(vector<pair<int, int> > v, int depth) { //recibimos un
     }
 
     int median = (v.size() - 1) / 2;
-
-	// cout << "Profundidad " << depth << '\n'; //debug
-	// cout << "x  y" << '\n'; //debug
-	// for (int i = 0; i < v.size(); i++) { //debug
-	// 	cout << v[i].first << "  " << v[i].second << '\n';//debug
-	// }//debug
 
     if (v.size() > 1) {//si vector tiene más de un punto
         vector<pair<int, int> > l; //mitad izquierda
@@ -95,13 +81,6 @@ nodeK * KdTree::construir(vector<pair<int, int> > v, int depth) { //recibimos un
             nuevoNodo->y = -1;
         }
 
-		// cout << "Corta en "; //debug
-		// if (axis) {//debug
-		// 	cout << "y=" << v[median].second << '\n';//debug
-		// } else {//debug
-		// 	cout << "x=" << v[median].first << '\n';//debug
-		// }//debug
-
         nuevoNodo->left = construir(l, depth+1);
         nuevoNodo->right = construir(r, depth+1);
 
@@ -112,9 +91,6 @@ nodeK * KdTree::construir(vector<pair<int, int> > v, int depth) { //recibimos un
         nuevoNodo->y = v[0].second;
         nuevoNodo->left = NULL;
         nuevoNodo->right = NULL;
-
-		// cout << "Punto guardado: x=" << v[median].first << "  y=" << v[median].second << '\n';//debug
-		//debug
 
         return nuevoNodo;
     }
@@ -142,6 +118,7 @@ vector<pair<int, int> > KdTree::buscar(int x1, int y1, int x2, int y2) {
 }
 
 void KdTree::buscarR(int x1, int y1, int x2, int y2, nodeK * nodo, vector<pair<int, int> > &puntosEncontrados) {
+	
 	if (nodo->x == -1) { //hay division en y
 		if (nodo->y <= y2) buscarR(x1, y1, x2, y2, nodo->right, puntosEncontrados);
 		if (nodo->y >= y1) buscarR(x1, y1, x2, y2, nodo->left, puntosEncontrados);
