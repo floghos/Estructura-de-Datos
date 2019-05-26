@@ -31,18 +31,21 @@ int main(int argc, char const *argv[]) {
 
 	}
 
+	cout << "Creando arbol" << '\n';
 	kT.construir(puntos);
 	// qT.construir(puntos);
+	cout << "Arbol creado\n";
 
 	int x1, y1, x2, y2;
 	cin >> x1 >> y1 >> x2 >> y2;
 
 	int cant_puntos_dentro_del_rango = checkeoFuerzaBruta(puntos, x1, y1, x2, y2);
+	cout << "Puntos fuera del espacio definido: " << out_of_bounds << '\n';
+
 
 	vector<pair<int, int> > puntosEncontrados = kT.buscar(x1, y1, x2, y2);
 	// vector<pair<int, int> > puntosEncontrados = qT.buscar(x1,y1, x2, y2);
-	
-	cout << "Puntos fuera del espacio definido: " << out_of_bounds << '\n';
+
 	cout << "El total de puntos en el arbol es: " << puntos.size() << '\n';
 
 	cout << "Cantidad de puntos dentro del rango (por fuerza bruta): " << cant_puntos_dentro_del_rango << '\n';
