@@ -41,17 +41,19 @@ int main(int argc, char const *argv[]) {
 
 	vector<pair<int, int> > puntosEncontrados = kT.buscar(x1, y1, x2, y2);
 	// vector<pair<int, int> > puntosEncontrados = qT.buscar(x1,y1, x2, y2);
-	cout << "Puntos fuera de rango: " << out_of_bounds << '\n';
+	
+	cout << "Puntos fuera del espacio definido: " << out_of_bounds << '\n';
 	cout << "El total de puntos en el arbol es: " << puntos.size() << '\n';
 
 	cout << "Cantidad de puntos dentro del rango (por fuerza bruta): " << cant_puntos_dentro_del_rango << '\n';
-	cout << "Se encontraron " << puntosEncontrados.size() << " puntos dentro del rango.\nEstos son:\n";
+	cout << "Se encontraron " << puntosEncontrados.size() << " puntos dentro del rango.\n";
 
-	for (int i = 0; i < puntosEncontrados.size(); i++) {
-		cout << "(" << puntosEncontrados[i].first << ", " << puntosEncontrados[i].second << ")\n";
+	if (puntosEncontrados.size()) {
+		cout << "Estos son:\n";
+		for (int i = 0; i < puntosEncontrados.size(); i++) {
+			cout << "(" << puntosEncontrados[i].first << ", " << puntosEncontrados[i].second << ")\n";
+		}
 	}
-	// cout << '\n';
-
 
 	return 0;
 }
