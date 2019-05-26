@@ -7,8 +7,8 @@ using namespace std;
 
 int checkeoFuerzaBruta(vector<pair<int, int> > &puntos, int x1, int y1, int x2, int y2);
 int main(int argc, char const *argv[]) {
-	KdTree kT;
-	// QuadTree qT;
+	// KdTree kT;
+	QuadTree qT;
 
 	vector<pair<int, int> > puntos;
 
@@ -31,24 +31,31 @@ int main(int argc, char const *argv[]) {
 
 	}
 
-	cout << "Creando arbol" << '\n';
-	kT.construir(puntos);
-	// qT.construir(puntos);
-	cout << "Arbol creado\n";
+	// kT.construir(puntos);
+	qT.construir(puntos);
 
 	int x1 = 0,
 		y1 = 0,
 		x2 = 0,
 		y2 = 0;
-		
+
 	cin >> x1 >> y1 >> x2 >> y2;
 
 	int cant_puntos_dentro_del_rango = checkeoFuerzaBruta(puntos, x1, y1, x2, y2);
 	cout << "Puntos fuera del espacio definido: " << out_of_bounds << '\n';
 
 
-	vector<pair<int, int> > puntosEncontrados = kT.buscar(x1, y1, x2, y2);
-	// vector<pair<int, int> > puntosEncontrados = qT.buscar(x1,y1, x2, y2);
+
+	// clock_t t1 = clock();
+	// for(int i = 0; i<n; i++){
+	// 	as.push(rand()%100);
+	// }
+	// clock_t t2 = clock();
+	// double tiempo = (double)(t2-t1)/CLOCKS_PER_SEC;
+	// printf(" %.10f\n", tiempo);
+
+	// vector<pair<int, int> > puntosEncontrados = kT.buscar(x1, y1, x2, y2);
+	vector<pair<int, int> > puntosEncontrados = qT.buscar(x1,y1, x2, y2);
 
 	cout << "El total de puntos en el arbol es: " << puntos.size() << '\n';
 
