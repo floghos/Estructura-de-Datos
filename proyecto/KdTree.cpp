@@ -12,109 +12,117 @@ bool sortbysec(const pair<int,int> &a, const pair<int,int> &b) {
 }
 
 void KdTree::construir(vector<pair<int, int> > v) {
-/*
-	FALTA INCLUIR CASOS PARA CONJUNTO DE PUNTOS <= 1!!!!!!!!!!!!!!!!!!!!!!!
-*/
+	root = new nodeK;
 	if(v.size() == 0){//significa que no hay puntos en el vector
-		root = new nodeK;
-		root->x = -1;//no guarda punto
-		root->y = -1;
-		root->left = NULL;//no tiene hijos
-		root->right = NULL;
+		//no hace nada
 	}else if(v.size() == 1){//si vector tiene un solo punto
-		root = new nodeK;
 		root->x = v[0].first;//guarda el punto en la raiz
 		root->y = v[0].second;
-		root->left = NULL;//no tiene hijos
-		root->right = NULL;
 	}else{//vector tiene más de un punto
-		sort(v.begin(), v.end());//ordena el vector con respecto a x
-	    int median = (v.size() - 1) / 2;
+		vector<pair<int, int> > vX = v;//creamos un vector para ordenar respecto a x
+		vector<pair<int, int> > vY = v;//creamos un vector para ordenar respecto a y
 
-		// cout << "Primer ordenamiento:" << endl; //debug
-		// cout << "x  y" << '\n'; //debug
-		// for (int i = 0; i < v.size(); i++) { //debug
-		// 	cout << v[i].first << "  " << v[i].second << '\n';//debug
-		// }//debug
+		sort(vX.begin(), vX.end());//ordena el vector con respecto a x
+		sort(vY.begin(), vY.end(), sortbysec);//ordenamos vector con respecto a y
 
-	    vector<pair<int, int> > l; // mitad izquierda
-	    for (int i = 0; i <= median; ++i) { //llenamos l con los puntos de la primera mitad del vector (ordenado respecto a v.frist)
-	        l.push_back(v[i]);
+		vector<pair<int, int> > vX_l;//creamos un vector para pasar al recursivo
+		vector<pair<int, int> > vX_r;//creamos un vector para pasar al recursivo
+		
+		vector<pair<int, int> > vY_l;//creamos un vector para pasar al recursivo
+		vector<pair<int, int> > vY_r;//creamos un vector para pasar al recursivo
+	    
+	    int median = vX[(v.size() - 1) / 2].first;
+	    
+	    for(int i=0; i<vY.size(); i++){//recorremos los ordenados respecto a y, comparando con la media en x 
+	    	if(vY[i].first <= median){//si su x es menor o igual a la media va a la izquierda
+	    		vY_l.push_back(vY[i]);
+	    	}else{//si su x es mayor va a la derecha
+	    		vY_r.push_back(vY[i]);
+	    	}
 	    }
 
-	    vector<pair<int, int> > r; // mitad derecha
-	    for (int i = median+1; i < v.size(); ++i) { //llenamos r con los puntos de la segunda mitad del vector (ordenado respecto a v.frist)
-	        r.push_back(v[i]);
+
+	    for(int i=0; i<vX.size(); i++){//recorremos los ordenados respecto a x, comparando con la media en x 
+	    	if(vX[i].first <= median){//si su x es menor o igual a la media va a la izquierda
+	    		vX_l.push_back(vX[i]);
+	    	}else{//si su x es mayor va a la derecha
+	    		vX_r.push_back(vX[i]);
+	    	}
 	    }
-
-	    root = new nodeK; //creamos el primer nodo
-	    root->x = v[median].first; //indica que contamos el es espacio respecto a la fila del punto v[median] (fila = x, columna = y)
-	    root->y = -1; // Dato basura
-
-		// cout << "Corta en x=" << root->x << '\n'; //debug
-
-	    root->left = construir(l, 1);
-	    root->right = construir(r, 1);
+	    //root = new nodeK; //creamos el primer nodo
+	    root->x = median; //indica que cortamos el espacio respecto a la fila median (fila = x, columna = y)
+	    if(vX_l.size()) root->left = construirR(vX_l, vY_l, 1);
+	    if(vX_r.size()) root->right = construirR(vX_r, vY_r, 1);
 	}
 
 }
 
-nodeK * KdTree::construir(vector<pair<int, int> > v, int depth) { //recibimos una de las dos mitades del paso anterior
+nodeK * KdTree::construirR(vector<pair<int, int> > &vX, vector<pair<int, int> > &vY, int depth) { //recibimos una de las dos mitades del paso anterior
     int axis = depth % 2; //0, 1 dependiendo si es par o impar (0 = x, 1 = y)
+    int median;
     if (axis) {
-        sort(v.begin(), v.end(), sortbysec);//ordena el vector con respecto a y
+    	//debemos cortar en y...
+    	median = vY[(vY.size()-1)/2].second;//el punto medio es el valor guardado en la posición y media del vector vY
     } else {
-        sort(v.begin(), v.end());//ordena el vector con respecto a x
+    	//cortamos con respecto a x...
+    	median = vX[(vX.size()-1)/2].first;//el punto medio es el valor guardado en la posicion x media del vector vX
     }
+    if (vX.size() > 1) {//si vector tiene más de un punto, podemos comparar respecto a vY tambien, tienen igual tamaño
+        //vector<pair<int, int> > l; //mitad izquierda
+        vector<pair<int, int> > vX_l;//creamos un vector para pasar
+		vector<pair<int, int> > vX_r;//creamos un vector para pasar
+		
+		vector<pair<int, int> > vY_l;//creamos un vector para pasar
+		vector<pair<int, int> > vY_r;//creamos un vector para pasar
 
-    int median = (v.size() - 1) / 2;
+		//sabemos antes de entrar al if cual es la media, segun en cual partimos...
+		if(axis){//partimos respecto a y
+			for(int i=0; i<vX.size(); i++){//recorremos los ordenados respecto a X, comparando con la media en Y 
+	    		if(vX[i].second <= median){//si su y es menor o igual a la media va a la izquierda
+	    			vX_l.push_back(vX[i]);
+	    		}else{//si su y es mayor va a la derecha
+	    			vX_r.push_back(vX[i]);
+	    		}
+	    	}
+	    	for(int i=0; i<vY.size(); i++){//recorremos los ordenados respecto a y, comparando con la media en y 
+	    		if(vY[i].second <= median){//si su y es menor o igual a la media va a la izquierda
+	    			vY_l.push_back(vY[i]);
+	    		}else{//si su y es mayor va a la derecha
+	    			vY_r.push_back(vY[i]);
+	    		}
+	    	}
 
-	// cout << "Profundidad " << depth << '\n'; //debug
-	// cout << "x  y" << '\n'; //debug
-	// for (int i = 0; i < v.size(); i++) { //debug
-	// 	cout << v[i].first << "  " << v[i].second << '\n';//debug
-	// }//debug
-
-    if (v.size() > 1) {//si vector tiene más de un punto
-        vector<pair<int, int> > l; //mitad izquierda
-        for (int i = 0; i <= median; ++i) {
-            l.push_back(v[i]);
-        }
-
-        vector<pair<int, int> > r; //mitad derecha
-        for (int i = median+1; i < v.size(); ++i) {
-            r.push_back(v[i]);
-        }
-
+		}else{//partimos respecto a x
+			for(int i=0; i<vY.size(); i++){//recorremos los ordenados respecto a Y, comparando con la media en X 
+	    		if(vY[i].first <= median){//si su x es menor o igual a la media va a la izquierda
+	    			vY_l.push_back(vY[i]);
+	    		}else{//si su x es mayor va a la derecha
+	    			vY_r.push_back(vY[i]);
+	    		}
+	    	}
+	    	for(int i=0; i<vX.size(); i++){//recorremos los ordenados respecto a X, comparando con la media en x 
+	    		if(vX[i].first <= median){//si su x es menor o igual a la media va a la izquierda
+	    			vX_l.push_back(vX[i]);
+	    		}else{//si su x es mayor va a la derecha
+	    			vX_r.push_back(vX[i]);
+	    		}
+	    	}
+		}
         nodeK *nuevoNodo = new nodeK;
         if (axis) { //division en eje y
-            nuevoNodo->y = v[median].second;
-            nuevoNodo->x = -1;
+            nuevoNodo->y = median;
         } else { //division en eje x
-            nuevoNodo->x = v[median].first;
-            nuevoNodo->y = -1;
+            nuevoNodo->x = median;
         }
 
-		// cout << "Corta en "; //debug
-		// if (axis) {//debug
-		// 	cout << "y=" << v[median].second << '\n';//debug
-		// } else {//debug
-		// 	cout << "x=" << v[median].first << '\n';//debug
-		// }//debug
-
-        nuevoNodo->left = construir(l, depth+1);
-        nuevoNodo->right = construir(r, depth+1);
+        if(vX_l.size()) nuevoNodo->left = construirR(vX_l, vY_l, depth+1);//si el vector no tiene puntos, no construye hijos
+        if(vX_r.size()) nuevoNodo->right = construirR(vX_r, vY_r, depth+1);	
 
         return nuevoNodo;
     } else {//si vector tiene un solo punto
         nodeK *nuevoNodo = new nodeK;
-        nuevoNodo->x = v[0].first;
-        nuevoNodo->y = v[0].second;
-        nuevoNodo->left = NULL;
-        nuevoNodo->right = NULL;
-
-		// cout << "Punto guardado: x=" << v[median].first << "  y=" << v[median].second << '\n';//debug
-		//debug
+        nuevoNodo->x = vX[0].first;
+        nuevoNodo->y = vX[0].second;
 
         return nuevoNodo;
     }
@@ -135,19 +143,19 @@ vector<pair<int, int> > KdTree::buscar(int x1, int y1, int x2, int y2) {
 			puntosEncontrados.push_back(punto);
 		}
 	} else {//si el vactor tenía más de dos puntos se puede buscar en los hijos...
-		if (root->x <= x2) buscarR(x1, y1, x2, y2, root->left, puntosEncontrados);
-		if  (root->x >= x1) buscarR(x1, y1, x2, y2, root->right, puntosEncontrados);
+		if (root->x < x2 && root->left != NULL) buscarR(x1, y1, x2, y2, root->left, puntosEncontrados);
+		if (root->x >= x1 && root->right != NULL) buscarR(x1, y1, x2, y2, root->right, puntosEncontrados);
 	}
 	return puntosEncontrados;
 }
 
 void KdTree::buscarR(int x1, int y1, int x2, int y2, nodeK * nodo, vector<pair<int, int> > &puntosEncontrados) {
 	if (nodo->x == -1) { //hay division en y
-		if (nodo->y <= y2) buscarR(x1, y1, x2, y2, nodo->right, puntosEncontrados);
-		if (nodo->y >= y1) buscarR(x1, y1, x2, y2, nodo->left, puntosEncontrados);
+		if (nodo->y < y2 && nodo->right != NULL) buscarR(x1, y1, x2, y2, nodo->right, puntosEncontrados);
+		if (nodo->y >= y1 && nodo->left != NULL) buscarR(x1, y1, x2, y2, nodo->left, puntosEncontrados);
 	} else if (nodo->y == -1){ //hay division en x
-		if (nodo->x <= x2) buscarR(x1, y1, x2, y2, nodo->right, puntosEncontrados);
-		if (nodo->x >= x1) buscarR(x1, y1, x2, y2, nodo->left, puntosEncontrados);
+		if (nodo->x < x2 && nodo->right != NULL) buscarR(x1, y1, x2, y2, nodo->right, puntosEncontrados);
+		if (nodo->x >= x1 && nodo->left != NULL) buscarR(x1, y1, x2, y2, nodo->left, puntosEncontrados);
 	} else { //hay un punto en el nodo
 		if (nodo->x >= x1 && nodo->x <= x2 && nodo->y >= y1 && nodo->y <= y2) { //revisa si pretenece al intervalo de busqueda
 			pair<int, int> punto;
