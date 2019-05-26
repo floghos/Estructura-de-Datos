@@ -41,11 +41,13 @@ int main(int argc, char const *argv[]) {
 
 	cin >> x1 >> y1 >> x2 >> y2;
 
-
-	// x1 = 0;
-	// y1 = 0;
-	// x2 = 0;
-	// y2 = 0;
+	// for (int i = 0; i < 100) {
+	// 	x1 = rand() % n;
+	// 	y1 = rand() % m;
+	// 	x2 = x1 + (rand() % ((n-x1) / 5));
+	// 	y2 = y1 + (rand() % ((m-y1) / 5));
+	//
+	// }
 
 	//crearemos un rectangulo de busqueda con area entre 1 y 20% del total
 
