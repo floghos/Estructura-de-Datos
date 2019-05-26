@@ -7,7 +7,7 @@ using namespace std;
 
 int checkeoFuerzaBruta(vector<pair<int, int> > &puntos, int x1, int y1, int x2, int y2);
 int main(int argc, char const *argv[]) {
-	// KdTree kT;
+	KdTree kT;
 	QuadTree qT;
 
 	vector<pair<int, int> > puntos;
@@ -31,7 +31,7 @@ int main(int argc, char const *argv[]) {
 
 	}
 
-	// kT.construir(puntos);
+	kT.construir(puntos);
 	qT.construir(puntos);
 
 	int x1 = 0,
@@ -41,34 +41,52 @@ int main(int argc, char const *argv[]) {
 
 	cin >> x1 >> y1 >> x2 >> y2;
 
+	// for (int i = 0; i < 100) {
+	// 	x1 = rand() % n;
+	// 	y1 = rand() % m;
+	// 	x2 = x1 + (rand() % ((n-x1) / 5));
+	// 	y2 = y1 + (rand() % ((m-y1) / 5));
+	//
+	// }
 
 	//crearemos un rectangulo de busqueda con area entre 1 y 20% del total
+
 
 	int cant_puntos_dentro_del_rango = checkeoFuerzaBruta(puntos, x1, y1, x2, y2);
 	cout << "Puntos fuera del espacio definido: " << out_of_bounds << '\n';
 
-	// clock_t t1 = clock();
+	vector<pair<int, int> > puntosEncontrados;
+
+	clock_t t1 = clock();
+	puntosEncontrados = kT.buscar(x1, y1, x2, y2);
 	// for(int i = 0; i<n; i++){
-
 	// }
-	// clock_t t2 = clock();
-	// double tiempo = (double)(t2-t1)/CLOCKS_PER_SEC;
-	// printf("Busqueda %.10f\n", tiempo);
+	clock_t t2 = clock();
+	double tiempo = (double)(t2-t1)/CLOCKS_PER_SEC;
+	printf("Busqueda en KdTree %.10f\n", tiempo);
 
-	// vector<pair<int, int> > puntosEncontrados = kT.buscar(x1, y1, x2, y2);
-	vector<pair<int, int> > puntosEncontrados = qT.buscar(x1,y1, x2, y2);
 
-	cout << "El total de puntos en el arbol es: " << puntos.size() << '\n';
+	t1 = clock();
+	puntosEncontrados = qT.buscar(x1, y1, x2, y2);
+	// for(int i = 0; i<n; i++){
+	// }
+	t2 = clock();
+	tiempo = (double)(t2-t1)/CLOCKS_PER_SEC;
+	printf("Busqueda en QuadTree %.10f\n", tiempo);
 
-	cout << "Cantidad de puntos dentro del rango (por fuerza bruta): " << cant_puntos_dentro_del_rango << '\n';
-	cout << "Se encontraron " << puntosEncontrados.size() << " puntos dentro del rango.\n";
 
-	if (puntosEncontrados.size()) {
-		cout << "Estos son:\n";
-		for (int i = 0; i < puntosEncontrados.size(); i++) {
-			cout << "(" << puntosEncontrados[i].first << ", " << puntosEncontrados[i].second << ")\n";
-		}
-	}
+
+	// cout << "El total de puntos en el arbol es: " << puntos.size() << '\n';
+	//
+	// cout << "Cantidad de puntos dentro del rango (por fuerza bruta): " << cant_puntos_dentro_del_rango << '\n';
+	// cout << "Se encontraron " << puntosEncontrados.size() << " puntos dentro del rango.\n";
+	//
+	// if (puntosEncontrados.size()) {
+	// 	cout << "Estos son:\n";
+	// 	for (int i = 0; i < puntosEncontrados.size(); i++) {
+	// 		cout << "(" << puntosEncontrados[i].first << ", " << puntosEncontrados[i].second << ")\n";
+	// 	}
+	// }
 
 	return 0;
 }
