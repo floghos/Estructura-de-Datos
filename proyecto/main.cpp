@@ -7,8 +7,8 @@ using namespace std;
 
 int checkeoFuerzaBruta(vector<pair<int, int> > &puntos, int x1, int y1, int x2, int y2);
 int main(int argc, char const *argv[]) {
-	KdTree kT;
-	// QuadTree qT;
+	// KdTree kT;
+	QuadTree qT;
 
 	vector<pair<int, int> > puntos;
 
@@ -31,27 +31,45 @@ int main(int argc, char const *argv[]) {
 
 	}
 
-	kT.construir(puntos);
-	// qT.construir(puntos);
+	// kT.construir(puntos);
+	qT.construir(puntos);
 
-	int x1, y1, x2, y2;
+	int x1 = 0,
+		y1 = 0,
+		x2 = 0,
+		y2 = 0;
+
 	cin >> x1 >> y1 >> x2 >> y2;
 
-	int cant_puntos_dentro_del_rango = checkeoFuerzaBruta(puntos, x1, y1, x2, y2);
 
-	vector<pair<int, int> > puntosEncontrados = kT.buscar(x1, y1, x2, y2);
-	// vector<pair<int, int> > puntosEncontrados = qT.buscar(x1,y1, x2, y2);
-	cout << "Puntos fuera de rango: " << out_of_bounds << '\n';
+	//crearemos un rectangulo de busqueda con area entre 1 y 20% del total
+
+
+	int cant_puntos_dentro_del_rango = checkeoFuerzaBruta(puntos, x1, y1, x2, y2);
+	cout << "Puntos fuera del espacio definido: " << out_of_bounds << '\n';
+
+	// clock_t t1 = clock();
+	// for(int i = 0; i<n; i++){
+
+	// }
+	// clock_t t2 = clock();
+	// double tiempo = (double)(t2-t1)/CLOCKS_PER_SEC;
+	// printf("Busqueda %.10f\n", tiempo);
+
+	// vector<pair<int, int> > puntosEncontrados = kT.buscar(x1, y1, x2, y2);
+	vector<pair<int, int> > puntosEncontrados = qT.buscar(x1,y1, x2, y2);
+
 	cout << "El total de puntos en el arbol es: " << puntos.size() << '\n';
 
 	cout << "Cantidad de puntos dentro del rango (por fuerza bruta): " << cant_puntos_dentro_del_rango << '\n';
-	cout << "Se encontraron " << puntosEncontrados.size() << " puntos dentro del rango.\nEstos son:\n";
+	cout << "Se encontraron " << puntosEncontrados.size() << " puntos dentro del rango.\n";
 
-	for (int i = 0; i < puntosEncontrados.size(); i++) {
-		cout << "(" << puntosEncontrados[i].first << ", " << puntosEncontrados[i].second << ")\n";
+	if (puntosEncontrados.size()) {
+		cout << "Estos son:\n";
+		for (int i = 0; i < puntosEncontrados.size(); i++) {
+			cout << "(" << puntosEncontrados[i].first << ", " << puntosEncontrados[i].second << ")\n";
+		}
 	}
-	// cout << '\n';
-
 
 	return 0;
 }
