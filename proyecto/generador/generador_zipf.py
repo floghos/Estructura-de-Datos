@@ -14,7 +14,7 @@ arrY = arrY.astype('int') #castear los elementos a enteros (redondear)
 puntos = set(zip(arrX,arrY)) #zip(arrX,arrY) junta los dos arreglos y los convierte en
 #un arreglo de pares
 
-print(n, n)
+print(numPuntos, numPuntos)
 print(len(puntos)) #aqui imprimo la cantidad de puntos
 for x,y in puntos: #aqui se imprimen los puntos (el for de python es distinto al de c)
 	print (x,y)
