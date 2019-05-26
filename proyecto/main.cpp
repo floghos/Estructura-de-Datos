@@ -30,10 +30,10 @@ int main(int argc, char const *argv[]) {
 		}
 
 	}
-
-	kT.construir(puntos);
+	std::cout << "check1" << '\n';
 	qT.construir(puntos);
-
+	std::cout << "check2" << '\n';
+	kT.construir(puntos);
 	int x1 = 0,
 		y1 = 0,
 		x2 = 0,
@@ -44,26 +44,53 @@ int main(int argc, char const *argv[]) {
 	// for (int i = 0; i < 100) {
 	// 	x1 = rand() % n;
 	// 	y1 = rand() % m;
-	// 	x2 = x1 + (rand() % ((n-x1) / 5));
-	// 	y2 = y1 + (rand() % ((m-y1) / 5));
+	// 	x2 = x1 + (rand() % ((n-x1)/5);
+	// 	y2 = y1 + (rand() % ((m-y1)/5);
 	//
-	// }
+	// } aun no sirve
 
-	//crearemos un rectangulo de busqueda con area entre 1 y 20% del total
-
-
-	int cant_puntos_dentro_del_rango = checkeoFuerzaBruta(puntos, x1, y1, x2, y2);
-	cout << "Puntos fuera del espacio definido: " << out_of_bounds << '\n';
+	// cout << "Puntos fuera del espacio definido: " << out_of_bounds << '\n';
 
 	vector<pair<int, int> > puntosEncontrados;
+	clock_t t1;
+	clock_t t2;
+	double tiempo;
 
-	clock_t t1 = clock();
+	cout << "Zona poblada" << '\n';
+
+	x1 = 0;
+	y1 = 0;
+	x2 = n/5;
+	y2 = m/5;
+
+	int cant_puntos_dentro_del_rango = checkeoFuerzaBruta(puntos, x1, y1, x2, y2);
+	t1 = clock();
+	puntosEncontrados = kT.buscar(x1, y1, x2, y2);
+	t2 = clock();
+	tiempo = (double)(t2-t1)/CLOCKS_PER_SEC;
+	printf("Busqueda en KdTree  : %.10f\n", tiempo);
+
+	t1 = clock();
+	puntosEncontrados = qT.buscar(x1, y1, x2, y2);
+	t2 = clock();
+	tiempo = (double)(t2-t1)/CLOCKS_PER_SEC;
+	printf("Busqueda en QuadTree: %.10f\n", tiempo);
+	cout << "" << '\n';
+//////////////////////////////////////////////////////////////
+
+	cout << "\nZona despoblada" << '\n';
+	x1 = 0;
+	y1 = m - m/5;
+	x2 = n/5;
+	y2 = m;
+
+	t1 = clock();
 	puntosEncontrados = kT.buscar(x1, y1, x2, y2);
 	// for(int i = 0; i<n; i++){
 	// }
-	clock_t t2 = clock();
-	double tiempo = (double)(t2-t1)/CLOCKS_PER_SEC;
-	printf("Busqueda en KdTree %.10f\n", tiempo);
+	t2 = clock();
+	tiempo = (double)(t2-t1)/CLOCKS_PER_SEC;
+	printf("Busqueda en KdTree  : %.10f\n", tiempo);
 
 
 	t1 = clock();
@@ -72,7 +99,7 @@ int main(int argc, char const *argv[]) {
 	// }
 	t2 = clock();
 	tiempo = (double)(t2-t1)/CLOCKS_PER_SEC;
-	printf("Busqueda en QuadTree %.10f\n", tiempo);
+	printf("Busqueda en QuadTree: %.10f\n", tiempo);
 
 
 
