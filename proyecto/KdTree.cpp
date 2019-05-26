@@ -12,9 +12,6 @@ bool sortbysec(const pair<int,int> &a, const pair<int,int> &b) {
 }
 
 void KdTree::construir(vector<pair<int, int> > v) {
-/*
-	FALTA INCLUIR CASOS PARA CONJUNTO DE PUNTOS <= 1!!!!!!!!!!!!!!!!!!!!!!!
-*/
 	if(v.size() == 0){//significa que no hay puntos en el vector
 		root = new nodeK;
 		root->x = -1;//no guarda punto
