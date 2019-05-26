@@ -27,13 +27,13 @@ void KdTree::construir(vector<pair<int, int> > v) {
 
 		vector<pair<int, int> > vX_l;//creamos un vector para pasar al recursivo
 		vector<pair<int, int> > vX_r;//creamos un vector para pasar al recursivo
-		
+
 		vector<pair<int, int> > vY_l;//creamos un vector para pasar al recursivo
 		vector<pair<int, int> > vY_r;//creamos un vector para pasar al recursivo
-	    
+
 	    int median = vX[(v.size() - 1) / 2].first;
-	    
-	    for(int i=0; i<vY.size(); i++){//recorremos los ordenados respecto a y, comparando con la media en x 
+
+	    for(int i=0; i<vY.size(); i++){//recorremos los ordenados respecto a y, comparando con la media en x
 	    	if(vY[i].first <= median){//si su x es menor o igual a la media va a la izquierda
 	    		vY_l.push_back(vY[i]);
 	    	}else{//si su x es mayor va a la derecha
@@ -42,7 +42,7 @@ void KdTree::construir(vector<pair<int, int> > v) {
 	    }
 
 
-	    for(int i=0; i<vX.size(); i++){//recorremos los ordenados respecto a x, comparando con la media en x 
+	    for(int i=0; i<vX.size(); i++){//recorremos los ordenados respecto a x, comparando con la media en x
 	    	if(vX[i].first <= median){//si su x es menor o igual a la media va a la izquierda
 	    		vX_l.push_back(vX[i]);
 	    	}else{//si su x es mayor va a la derecha
@@ -71,20 +71,20 @@ nodeK * KdTree::construirR(vector<pair<int, int> > &vX, vector<pair<int, int> > 
         //vector<pair<int, int> > l; //mitad izquierda
         vector<pair<int, int> > vX_l;//creamos un vector para pasar
 		vector<pair<int, int> > vX_r;//creamos un vector para pasar
-		
+
 		vector<pair<int, int> > vY_l;//creamos un vector para pasar
 		vector<pair<int, int> > vY_r;//creamos un vector para pasar
 
 		//sabemos antes de entrar al if cual es la media, segun en cual partimos...
 		if(axis){//partimos respecto a y
-			for(int i=0; i<vX.size(); i++){//recorremos los ordenados respecto a X, comparando con la media en Y 
+			for(int i=0; i<vX.size(); i++){//recorremos los ordenados respecto a X, comparando con la media en Y
 	    		if(vX[i].second <= median){//si su y es menor o igual a la media va a la izquierda
 	    			vX_l.push_back(vX[i]);
 	    		}else{//si su y es mayor va a la derecha
 	    			vX_r.push_back(vX[i]);
 	    		}
 	    	}
-	    	for(int i=0; i<vY.size(); i++){//recorremos los ordenados respecto a y, comparando con la media en y 
+	    	for(int i=0; i<vY.size(); i++){//recorremos los ordenados respecto a y, comparando con la media en y
 	    		if(vY[i].second <= median){//si su y es menor o igual a la media va a la izquierda
 	    			vY_l.push_back(vY[i]);
 	    		}else{//si su y es mayor va a la derecha
@@ -93,14 +93,14 @@ nodeK * KdTree::construirR(vector<pair<int, int> > &vX, vector<pair<int, int> > 
 	    	}
 
 		}else{//partimos respecto a x
-			for(int i=0; i<vY.size(); i++){//recorremos los ordenados respecto a Y, comparando con la media en X 
+			for(int i=0; i<vY.size(); i++){//recorremos los ordenados respecto a Y, comparando con la media en X
 	    		if(vY[i].first <= median){//si su x es menor o igual a la media va a la izquierda
 	    			vY_l.push_back(vY[i]);
 	    		}else{//si su x es mayor va a la derecha
 	    			vY_r.push_back(vY[i]);
 	    		}
 	    	}
-	    	for(int i=0; i<vX.size(); i++){//recorremos los ordenados respecto a X, comparando con la media en x 
+	    	for(int i=0; i<vX.size(); i++){//recorremos los ordenados respecto a X, comparando con la media en x
 	    		if(vX[i].first <= median){//si su x es menor o igual a la media va a la izquierda
 	    			vX_l.push_back(vX[i]);
 	    		}else{//si su x es mayor va a la derecha
@@ -116,7 +116,7 @@ nodeK * KdTree::construirR(vector<pair<int, int> > &vX, vector<pair<int, int> > 
         }
 
         if(vX_l.size()) nuevoNodo->left = construirR(vX_l, vY_l, depth+1);//si el vector no tiene puntos, no construye hijos
-        if(vX_r.size()) nuevoNodo->right = construirR(vX_r, vY_r, depth+1);	
+        if(vX_r.size()) nuevoNodo->right = construirR(vX_r, vY_r, depth+1);
 
         return nuevoNodo;
     } else {//si vector tiene un solo punto
@@ -143,8 +143,8 @@ vector<pair<int, int> > KdTree::buscar(int x1, int y1, int x2, int y2) {
 			puntosEncontrados.push_back(punto);
 		}
 	} else {//si el vactor tenía más de dos puntos se puede buscar en los hijos...
-		if (root->x < x2 && root->left != NULL) buscarR(x1, y1, x2, y2, root->left, puntosEncontrados);
-		if (root->x >= x1 && root->right != NULL) buscarR(x1, y1, x2, y2, root->right, puntosEncontrados);
+		if (root->x < x2 && root->left != NULL) buscarR(x1, y1, x2, y2, root->right, puntosEncontrados);
+		if (root->x >= x1 && root->right != NULL) buscarR(x1, y1, x2, y2, root->left, puntosEncontrados);
 	}
 	return puntosEncontrados;
 }
