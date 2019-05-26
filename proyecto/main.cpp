@@ -5,6 +5,7 @@
 
 using namespace std;
 
+int checkeoFuerzaBruta(vector<pair<int, int> > &puntos, int x1, int y1, int x2, int y2);
 int main(int argc, char const *argv[]) {
 	KdTree kT;
 	// QuadTree qT;
@@ -14,6 +15,7 @@ int main(int argc, char const *argv[]) {
 	int n, m, p;
 	int out_of_bounds = 0;
 	cin >> n >> m >> p;
+
 
 	for (int i = 0; i < p; i++) {
 		pair<int, int> pto;
@@ -35,11 +37,15 @@ int main(int argc, char const *argv[]) {
 	int x1, y1, x2, y2;
 	cin >> x1 >> y1 >> x2 >> y2;
 
-	vector<pair<int, int> > puntosEncontrados = kT.buscar(x1,y1, x2, y2);
+	int cant_puntos_dentro_del_rango = checkeoFuerzaBruta(puntos, x1, y1, x2, y2);
+
+	vector<pair<int, int> > puntosEncontrados = kT.buscar(x1, y1, x2, y2);
 	// vector<pair<int, int> > puntosEncontrados = qT.buscar(x1,y1, x2, y2);
 	cout << "Puntos fuera de rango: " << out_of_bounds << '\n';
 	cout << "El total de puntos en el arbol es: " << puntos.size() << '\n';
-	cout << "Los puntos encontrados dentro de el rango dado son: " << '\n';
+
+	cout << "Cantidad de puntos dentro del rango (por fuerza bruta): " << cant_puntos_dentro_del_rango << '\n';
+	cout << "Se encontraron " << puntosEncontrados.size() << " puntos dentro del rango.\nEstos son:\n";
 
 	for (int i = 0; i < puntosEncontrados.size(); i++) {
 		cout << "(" << puntosEncontrados[i].first << ", " << puntosEncontrados[i].second << ")\n";
@@ -48,4 +54,18 @@ int main(int argc, char const *argv[]) {
 
 
 	return 0;
+}
+
+int checkeoFuerzaBruta(vector<pair<int, int> > &puntos, int x1, int y1, int x2, int y2) {
+	if (x2 < x1) swap(x1, x2);
+	if (y2 < y1) swap(y1, y2);
+	int cant = 0;
+
+	for (int i = 0; i < puntos.size(); i++) {
+		if (puntos[i].first >= x1 && puntos[i].first <= x2) {
+			if (puntos[i].second >= y1 && puntos[i].second <= y2) cant++;
+		}
+	}
+
+	return cant;
 }
