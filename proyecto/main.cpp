@@ -41,18 +41,19 @@ int main(int argc, char const *argv[]) {
 
 	cin >> x1 >> y1 >> x2 >> y2;
 
+
+	//crearemos un rectangulo de busqueda con area entre 1 y 20% del total
+
 	int cant_puntos_dentro_del_rango = checkeoFuerzaBruta(puntos, x1, y1, x2, y2);
 	cout << "Puntos fuera del espacio definido: " << out_of_bounds << '\n';
 
-
-
 	// clock_t t1 = clock();
 	// for(int i = 0; i<n; i++){
-	// 	as.push(rand()%100);
+
 	// }
 	// clock_t t2 = clock();
 	// double tiempo = (double)(t2-t1)/CLOCKS_PER_SEC;
-	// printf(" %.10f\n", tiempo);
+	// printf("Busqueda %.10f\n", tiempo);
 
 	// vector<pair<int, int> > puntosEncontrados = kT.buscar(x1, y1, x2, y2);
 	vector<pair<int, int> > puntosEncontrados = qT.buscar(x1,y1, x2, y2);
