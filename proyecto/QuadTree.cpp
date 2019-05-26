@@ -19,8 +19,8 @@ void QuadTree::construir(vector<pair<int, int> > v) {
 	N = max(max_x, max_y);
 	// cout << "Dimensiones acotadas del espacio: " << N << '\n'; //debug
 // //////////////////////////////////////////////
+	root = new nodeQ;
 	if (v.size() == 0) {
-		root = new nodeQ;
 		// cout << "Raiz guarda un nodo vacio, no hay puntos" << '\n'; //debug
 		// root->x = -1;
 		// root->y = -1;
@@ -30,7 +30,6 @@ void QuadTree::construir(vector<pair<int, int> > v) {
 		// root->SE = NULL;
 	} else if (v.size() == 1) { //guarda el punto
 		// cout << "Raiz guarda un solo punto: (" << v[0].first << ", " << v[0].second << ")" << '\n'; //debug
-		root = new nodeQ;
 		root->x = v[0].first;
 		root->y = v[0].second;
 		// root->NW = NULL;
@@ -40,7 +39,6 @@ void QuadTree::construir(vector<pair<int, int> > v) {
 	} else { //Tiene mas de un punto, guarda las coordenadas de la division
 		// cout << "Raiz contiene mas de un punto. Tiene hijos" << '\n'; //debug
 		// cout << "Raiz corta en: (" << N/2 << ", " << N/2 << ")" << '\n'; //debug
-		root = new nodeQ;
 		root->x = N/2; //Sabremos que no es un punto si existe un hijo en NW
 		root->y = N/2; //
 		vector<pair<int, int> > north;
