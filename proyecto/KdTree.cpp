@@ -111,14 +111,14 @@ vector<pair<int, int> > KdTree::buscar(int x1, int y1, int x2, int y2) {
 			puntosEncontrados.push_back(punto);
 		}
 	} else {//si el vactor tenía más de dos puntos se puede buscar en los hijos...
-		if (root->x <= x2) buscarR(x1, y1, x2, y2, root->left, puntosEncontrados);
-		if  (root->x >= x1) buscarR(x1, y1, x2, y2, root->right, puntosEncontrados);
+		if (root->x <= x2) buscarR(x1, y1, x2, y2, root->right, puntosEncontrados);
+		if (root->x >= x1) buscarR(x1, y1, x2, y2, root->left, puntosEncontrados);
 	}
 	return puntosEncontrados;
 }
 
 void KdTree::buscarR(int x1, int y1, int x2, int y2, nodeK * nodo, vector<pair<int, int> > &puntosEncontrados) {
-	
+
 	if (nodo->x == -1) { //hay division en y
 		if (nodo->y <= y2) buscarR(x1, y1, x2, y2, nodo->right, puntosEncontrados);
 		if (nodo->y >= y1) buscarR(x1, y1, x2, y2, nodo->left, puntosEncontrados);
