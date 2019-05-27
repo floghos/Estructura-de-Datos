@@ -12,18 +12,12 @@ bool sortbysec(const pair<int,int> &a, const pair<int,int> &b) {
 }
 
 void KdTree::construir(vector<pair<int, int> > v) {
+	root = new nodeK;
 	if(v.size() == 0){//significa que no hay puntos en el vector
-		root = new nodeK;
-		root->x = -1;//no guarda punto
-		root->y = -1;
-		root->left = NULL;//no tiene hijos
-		root->right = NULL;
+
 	}else if(v.size() == 1){//si vector tiene un solo punto
-		root = new nodeK;
 		root->x = v[0].first;//guarda el punto en la raiz
 		root->y = v[0].second;
-		root->left = NULL;//no tiene hijos
-		root->right = NULL;
 	}else{//vector tiene más de un punto
 		sort(v.begin(), v.end());//ordena el vector con respecto a x
 	    int median = (v.size() - 1) / 2;
@@ -38,17 +32,15 @@ void KdTree::construir(vector<pair<int, int> > v) {
 	        r.push_back(v[i]);
 	    }
 
-	    root = new nodeK; //creamos el primer nodo
 	    root->x = v[median].first; //indica que contamos el es espacio respecto a la fila del punto v[median] (fila = x, columna = y)
-	    root->y = -1; // Dato basura
 
-	    root->left = construir(l, 1);
-	    root->right = construir(r, 1);
+	    root->left = construirR(l, 1);
+	    root->right = construirR(r, 1);
 	}
 
 }
 
-nodeK * KdTree::construir(vector<pair<int, int> > v, int depth) { //recibimos una de las dos mitades del paso anterior
+nodeK * KdTree::construirR(vector<pair<int, int> > v, int depth) { //recibimos una de las dos mitades del paso anterior
     int axis = depth % 2; //0, 1 dependiendo si es par o impar (0 = x, 1 = y)
     if (axis) {
         sort(v.begin(), v.end(), sortbysec);//ordena el vector con respecto a y
@@ -72,22 +64,18 @@ nodeK * KdTree::construir(vector<pair<int, int> > v, int depth) { //recibimos un
         nodeK *nuevoNodo = new nodeK;
         if (axis) { //division en eje y
             nuevoNodo->y = v[median].second;
-            nuevoNodo->x = -1;
         } else { //division en eje x
             nuevoNodo->x = v[median].first;
-            nuevoNodo->y = -1;
         }
 
-        nuevoNodo->left = construir(l, depth+1);
-        nuevoNodo->right = construir(r, depth+1);
+        nuevoNodo->left = construirR(l, depth+1);
+        nuevoNodo->right = construirR(r, depth+1);
 
         return nuevoNodo;
     } else {//si vector tiene un solo punto
         nodeK *nuevoNodo = new nodeK;
         nuevoNodo->x = v[0].first;
         nuevoNodo->y = v[0].second;
-        nuevoNodo->left = NULL;
-        nuevoNodo->right = NULL;
 
         return nuevoNodo;
     }
