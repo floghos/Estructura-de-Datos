@@ -8,15 +8,16 @@ using namespace std;
 int checkeoFuerzaBruta(vector<pair<int, int> > &puntos, int x1, int y1, int x2, int y2);
 int main(int argc, char const *argv[]) {
 	KdTree kT;
-	QuadTree qT;
-
+	// QuadTree qT;
+	int x1 = 0,
+		y1 = 0,
+		x2 = 0,
+		y2 = 0;
 	vector<pair<int, int> > puntos;
-
+	vector<pair<int, int> > puntosEncontrados;
 	int n, m, p;
-	int out_of_bounds = 0;
+
 	cin >> n >> m >> p;
-
-
 	for (int i = 0; i < p; i++) {
 		pair<int, int> pto;
 		int f, c;
@@ -30,90 +31,24 @@ int main(int argc, char const *argv[]) {
 		}
 
 	}
-	std::cout << "check1" << '\n';
-	qT.construir(puntos);
-	std::cout << "check2" << '\n';
 	kT.construir(puntos);
-	int x1 = 0,
-		y1 = 0,
-		x2 = 0,
-		y2 = 0;
-
+	// qT.construir(puntos);
 	cin >> x1 >> y1 >> x2 >> y2;
-
-	// for (int i = 0; i < 100) {
-	// 	x1 = rand() % n;
-	// 	y1 = rand() % m;
-	// 	x2 = x1 + (rand() % ((n-x1)/5);
-	// 	y2 = y1 + (rand() % ((m-y1)/5);
-	//
-	// } aun no sirve
-
-	// cout << "Puntos fuera del espacio definido: " << out_of_bounds << '\n';
-
-	vector<pair<int, int> > puntosEncontrados;
-	clock_t t1;
-	clock_t t2;
-	double tiempo;
-
-	cout << "Zona poblada" << '\n';
-
-	x1 = 0;
-	y1 = 0;
-	x2 = n/5;
-	y2 = m/5;
-
 	int cant_puntos_dentro_del_rango = checkeoFuerzaBruta(puntos, x1, y1, x2, y2);
-	t1 = clock();
+
 	puntosEncontrados = kT.buscar(x1, y1, x2, y2);
-	t2 = clock();
-	tiempo = (double)(t2-t1)/CLOCKS_PER_SEC;
-	printf("Busqueda en KdTree  : %.10f\n", tiempo);
+	// puntosEncontrados = qT.buscar(x1, y1, x2, y2);
 
-	t1 = clock();
-	puntosEncontrados = qT.buscar(x1, y1, x2, y2);
-	t2 = clock();
-	tiempo = (double)(t2-t1)/CLOCKS_PER_SEC;
-	printf("Busqueda en QuadTree: %.10f\n", tiempo);
-	cout << "" << '\n';
-//////////////////////////////////////////////////////////////
+	cout << "El total de puntos en el arbol es: " << puntos.size() << '\n';
+	cout << "Cantidad de puntos dentro del rango por fuerza bruta: " << cant_puntos_dentro_del_rango << '\n';
+	cout << "El metodo buscar() encontro " << puntosEncontrados.size() << " puntos dentro del rango.\n";
 
-	cout << "\nZona despoblada" << '\n';
-	x1 = 0;
-	y1 = m - m/5;
-	x2 = n/5;
-	y2 = m;
-
-	t1 = clock();
-	puntosEncontrados = kT.buscar(x1, y1, x2, y2);
-	// for(int i = 0; i<n; i++){
-	// }
-	t2 = clock();
-	tiempo = (double)(t2-t1)/CLOCKS_PER_SEC;
-	printf("Busqueda en KdTree  : %.10f\n", tiempo);
-
-
-	t1 = clock();
-	puntosEncontrados = qT.buscar(x1, y1, x2, y2);
-	// for(int i = 0; i<n; i++){
-	// }
-	t2 = clock();
-	tiempo = (double)(t2-t1)/CLOCKS_PER_SEC;
-	printf("Busqueda en QuadTree: %.10f\n", tiempo);
-
-
-
-	// cout << "El total de puntos en el arbol es: " << puntos.size() << '\n';
-	//
-	// cout << "Cantidad de puntos dentro del rango (por fuerza bruta): " << cant_puntos_dentro_del_rango << '\n';
-	// cout << "Se encontraron " << puntosEncontrados.size() << " puntos dentro del rango.\n";
-	//
-	// if (puntosEncontrados.size()) {
-	// 	cout << "Estos son:\n";
-	// 	for (int i = 0; i < puntosEncontrados.size(); i++) {
-	// 		cout << "(" << puntosEncontrados[i].first << ", " << puntosEncontrados[i].second << ")\n";
-	// 	}
-	// }
+	if (puntosEncontrados.size()) {
+		cout << "Estos son:\n";
+		for (int i = 0; i < puntosEncontrados.size(); i++) {
+			cout << "(" << puntosEncontrados[i].first << ", " << puntosEncontrados[i].second << ")\n";
+		}
+	}
 
 	return 0;
 }
