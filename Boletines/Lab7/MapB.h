@@ -1,20 +1,25 @@
 #include "ADTMap.h"
 #include <string>
 
+struct box {
+    int val;
+    bool available;
+};
+
 class MapB: public ADTMap {
 private:
-    int *myMap;
+    box *myMap;
     int N; //current size of our array
     int _size; //occupied spaces in our array
-    int hash(std::string key);
+    int badhash(std::string key);
     void rehash();
     bool isFull();
-    double loadFactor();
+    float loadFactor();
 public:
     MapB();
-    int insert(pair<std::string, int> data);
-    void erase(std::string str);
-    int at(int i);
+    void insert(pair<std::string, int> data);
+    void erase(std::string key);
+    int at(std::string key);
     int size();
     bool empty();
 };
