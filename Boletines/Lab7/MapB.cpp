@@ -3,7 +3,7 @@
 
 //Private Methods
 int MapB::badhash(std::string key) {
-    
+	return key.back();
 }
 
 void MapB::rehash() {
@@ -11,22 +11,21 @@ void MapB::rehash() {
 }
 
 bool MapB::isFull() {
-
+	return _size == capacity;
 }
 
 float MapB::loadFactor() {
-
+	return _size/capacity;
 }
 
 //Public Methods
 MapB::MapB() {
-    N = 10;
-    mymap = new box[N];
-    _size = 0;
+    capacity = primeSizes[pIndex];
+    mymap = new box[capacity];
 }
 
 void MapB::insert(pair<std::string, int> data) {
-
+	
 }
 
 void MapB::erase(std::string key) {
