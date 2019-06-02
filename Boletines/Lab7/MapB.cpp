@@ -65,8 +65,9 @@ void MapB::erase(string key) {
 	bool error_404 = false; //key not found
 
 	int pos = badhashCode(key) % capacity;
+	int startingPos = pos;
 	while (myMap[pos].key.compare(key) != 0) { //linear probing
-		if (myMap[pos].key.empty()) {
+		if (myMap[pos].key.empty() || pos == startingPos) {
 			error_404 = true;
 			break;
 		}
@@ -86,8 +87,9 @@ int MapB::at(string key) {
 	bool error_404 = false; //key not found
 
 	int pos = badhashCode(key) % capacity;
+	int startingPos = pos;
 	while (myMap[pos].available || myMap[pos].key.compare(key) != 0) { //linear probing
-		if (myMap[pos].key.empty()) {
+		if (myMap[pos].key.empty() || pos == startingPos) {
 			error_404 = true;
 			break;
 		}
