@@ -51,8 +51,8 @@ MapG::MapG() {
 
 void MapG::insert(pair<string, int> data) {
 	int pos = goodhashCode(data.first) % capacity;
-	while (!myMap[pos].available) { //linear probing
-		pos++;
+	while (!myMap[pos].available) {
+		pos++; //linear probing
 		pos %= capacity;
 	}
 

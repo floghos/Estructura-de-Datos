@@ -17,8 +17,8 @@ void MapB::rehash() {
 			continue;
 		} else {
 			int pos = badhashCode(myMap[i].key) % newCapacity;
-			while (!newMap[pos].available) { //linear probing
-				pos++;
+			while (!newMap[pos].available) {
+				pos++; //linear probing
 				pos %= newCapacity;
 			}
 			newMap[pos].key = myMap[i].key;
