@@ -55,7 +55,7 @@ void MapB::insert(pair<string, int> data) {
 	myMap[pos].key = data.first;
 	myMap[pos].val = data.second;
 	myMap[pos].available = false;
-
+	_size++;
 	if (isFull()) {
 		rehash();
 	}
@@ -78,6 +78,7 @@ void MapB::erase(string key) {
 		cout << "Error 404: String not found\n";
 	} else {
 		myMap[pos].available = true;
+		_size--;
 	}
 }
 
