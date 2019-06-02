@@ -3,17 +3,19 @@
 #include "ADTMap.h"
 #include "MapB.h"
 #include "MapG.h"
+#include "MapDH.h"
 
 using namespace std;
 
 int main(int argc, char const *argv[]) {
 	MapB badMap;
 	MapG goodMap;
+	MapDH dhMap;
 
 	string key;
 	int n, val;
 
-	cin >> n;
+	cin >> n
 
 	for (int i = 0; i < n; i++) {
 		cin >> key >> val;
@@ -22,23 +24,15 @@ int main(int argc, char const *argv[]) {
 		data.first = key;
 		data.second = val;
 
-		goodMap.insert(data);
+		dhMap.insert(data);
 	}
-	cout << "size of our hashtable: " << goodMap.size() << '\n';
+	cout << "size of our hashtable: " << dhMap.size() << '\n';
 
-	std::cout << "Printing full table" << '\n';
-	for (int i = 0; i < goodMap.capacity; i++) {
-		cout << i << " " << goodMap.myMap[i].key << '\n';
-	}
-	std::cout << "This was it...\n" << '\n';
-	std::cout << "Now on to removing elements" << '\n';
 	while (key.compare("stop") != 0) {
 		cin >> key;
-		cout << goodMap.at(key) << '\n';
-		goodMap.erase(key);
-
+		cout << dhMap.at(key) << '\n';
+		dhMap.erase(key);
 	}
 
-	// cout << goodMap.at(key) << '\n';
     return 0;
 }
