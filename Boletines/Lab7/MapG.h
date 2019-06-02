@@ -1,14 +1,22 @@
 #include "ADTMap.h"
 #include <string>
 
+using namespace std;
+
 class MapG: public ADTMap {
 private:
-    int _size;
+	box *myMap;
+    int capacity; //current size of our array
+    int _size = 0; //occupied spaces in our array
+    int goodhashCode(string key);
     void rehash();
+    bool isFull();
+    float loadFactor();
 public:
-    int insert(pair<std::string, int> data);
-    void erase(std::string str);
-    int at(int i);
+	MapG();
+    void insert(pair<string, int> data);
+    void erase(string key);
+    int at(string key);
     int size();
     bool empty();
 };

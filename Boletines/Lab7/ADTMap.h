@@ -5,6 +5,12 @@
 
 using namespace std;
 
+struct box {
+    int val;
+	string key = string();
+    bool available = true;
+};
+
 class ADTMap {
 public:
     virtual void insert(pair<string, int>) = 0;
