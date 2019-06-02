@@ -11,7 +11,7 @@ int MapB::badhashCode(string key) {
 
 void MapB::rehash() {
 	int newCapacity = capacity * 2;
-	box *newMap = new box[capacity];
+	box *newMap = new box[newCapacity];
 	for (int i = 0; i < capacity; i++) {
 		if (myMap[i].available) {
 			continue;
