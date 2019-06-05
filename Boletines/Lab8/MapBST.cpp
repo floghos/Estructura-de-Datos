@@ -5,7 +5,7 @@
 
 using namespace std;
 //private methods
-void MapBST::erase(string key, box *node){
+void MapBST::erase(string key, box *&node){
 
 }
 

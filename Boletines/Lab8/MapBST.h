@@ -16,7 +16,7 @@ private:
     int _size = 0;
     box *root;
     void insert(std::pair<string, int> entry, box *&node);
-    void erase(std::string key, box *node);
+    void erase(std::string key, box *&node);
     int at(std::string key, box *node);
 public:
     MapBST();

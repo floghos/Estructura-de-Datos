@@ -21,5 +21,17 @@ int main(int argc, char const *argv[]) {
         mymap.insert(entry);
     }
 
+    char c;
+    cout << "Desea buscar un elemento? (y/n)" << '\n';
+    cin >> c;
+    while (c == 'y') {
+        cout << "Ingrese la clave a buscar: ";
+        cin >> key;
+        cout << key << " es " << mymap.at(key) << '\n';
+        cout << "Desea buscar otro elemento? (y/n)" << '\n';
+        cin >> c;
+    }
+
+
     return 0;
 }
