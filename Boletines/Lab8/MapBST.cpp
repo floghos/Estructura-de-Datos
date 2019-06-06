@@ -17,9 +17,9 @@ int MapBST::at(string key, box *node){
         if (node->key.compare(key) == 0) { //keys are equal
             return node->val;
         } else if (node->key.compare(key) < 0) {
-            at(key, node->right);
+            return at(key, node->right);
         } else {
-            at(key, node->left);
+            return at(key, node->left);
         }
     }
 }
@@ -59,7 +59,7 @@ void MapBST::erase(string key){
 }
 
 int MapBST::at(string key){
-    at(key, root);
+    return at(key, root);
 }
 
 
