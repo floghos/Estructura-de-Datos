@@ -27,7 +27,11 @@ int main(int argc, char const *argv[]) {
     while (c == 'y') {
         cout << "Ingrese la clave a buscar: ";
         cin >> key;
-        cout << key << " es " << mymap.at(key) << '\n';
+		if (mymap.at(key) > 0) {
+			cout << key << " es " << mymap.at(key) << '\n';
+		} else {
+			cout << "'" << key << "' doesn't exist" << '\n';
+		}
         cout << "Desea buscar otro elemento? (y/n)" << '\n';
         cin >> c;
     }

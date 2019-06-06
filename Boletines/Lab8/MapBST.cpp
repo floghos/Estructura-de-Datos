@@ -11,7 +11,7 @@ void MapBST::erase(string key, box *&node){
 
 int MapBST::at(string key, box *node){
     if (node == NULL) {
-        cout << "'" << key << "' doesn't exist" << '\n';
+        // cout << "'" << key << "' doesn't exist" << '\n';
         return -1;
     } else {
         if (node->key.compare(key) == 0) { //keys are equal
