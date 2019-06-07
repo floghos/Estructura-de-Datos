@@ -26,6 +26,11 @@ int main(int argc, char const *argv[]) {
 	}
 	cout << "is empty: " << myMap.empty() << '\n';
 
+	// std::cout << "Datos en el mapa:" << '\n';
+	// for (int i=0; i<myMap.map.size(); i++){
+	// 	cout<< i << ": " << "("<<myMap.map[i].first<<","<<myMap.map[i].second<<")"<<endl;
+	// }
+
 	// cout << "Ingrese el dato que desea buscar: ";
 	cout << "Ingrese el dato que desea borrar: ";
 	cin >> n;
