@@ -5,8 +5,33 @@
 
 using namespace std;
 //private methods
-void MapBST::erase(string key, box *&node){
+box * MapBST::predecesor(box *node) {
+	box *result;
+	string key = node->key;
+	box *currentNode = node->left; //going once to the left child
+	while (currentNode->right != NULL) { //then ALL the way to the right
+		currentNode = currentNode->right;
+	} //now currentNode will have a reference to "node"'s predecesor
+	result->key = currentNode->key;
+	result->val = currentNode->val;
+	erase(currentNode->key, currentNode);
+	return result;
+}
 
+void MapBST::erase(string key, box *&node){
+	if (node->left != NULL) {
+		box *aux = predecesor(node); //get a copy of this node's predecesor
+		node->key = aux->key;
+		node->val = aux->val;
+	} else if (node->right != NULL) {
+		box *aux = node->right;
+		delete node;
+		node = aux;
+	} else {
+		box *aux = node->right;
+		delete node;
+		node = aux;
+	}
 }
 
 int MapBST::at(string key, box *node){
@@ -55,7 +80,15 @@ void MapBST::insert(pair<string, int> entry){
 }
 
 void MapBST::erase(string key){
-    erase(key, root);
+	box *temp = root;
+	while (temp->key.compare(key) != 0) { //looking for the entry to be erased
+		if (temp->key.compare(key) < 0) {
+            temp = temp->right;
+        } else {
+			temp = temp->left;
+        }
+	}
+    erase(key, temp);
 }
 
 int MapBST::at(string key){
