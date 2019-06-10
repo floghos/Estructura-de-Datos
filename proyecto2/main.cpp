@@ -9,15 +9,22 @@ void paresAleatorios(int n, vector<pair<string, int> >& v);
 int main(int argc, char const *argv[]) {
 	int n;
 	vector<pair<string, int> > pares;
+	pair<string, int> dato;
+	string key;
+	int val;
 	MapSV myMap;
 
 	cout << "INGRESE LA CANTIDAD DE PARES A INGRESAR"<<endl;
 	cin >> n;
-	paresAleatorios(n, pares);
+	paresAleatorios(n, pares); //creacion aleatoria de datos
 	cout << "los datos creados son:" << '\n';
 	for (int i=0; i<n; i++){
 		cout<< i << ": " << "("<<pares[i].first<<","<<pares[i].second<<")"<<endl;
 	}
+	// for (int i = 0; i < n; i++) { //ingreso manual de datos
+	// 	cin >> dato.first >> dato.second;
+	// 	pares.push_back(dato);
+	// }
 
 	cout << "is empty: " << myMap.empty() << '\n';
 	for (int i = 0; i < pares.size(); i++) {
