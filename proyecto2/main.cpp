@@ -1,6 +1,7 @@
 #include <iostream>
 #include "ADTMap.h"
 #include "MapSV.h"
+#include "MapH.h"
 #include <time.h>
 
 using namespace std;
@@ -12,9 +13,10 @@ int main(int argc, char const *argv[]) {
 	pair<string, int> dato;
 	string key;
 	int val;
-	MapSV myMap;
+	// MapSV myMap;
+	MapH myMap;
 
-	cout << "INGRESE LA CANTIDAD DE PARES A INGRESAR"<<endl;
+	cerr << "INGRESE LA CANTIDAD DE PARES A INGRESAR"<<endl;
 	cin >> n;
 	paresAleatorios(n, pares); //creacion aleatoria de datos
 	cout << "los datos creados son:" << '\n';
@@ -29,8 +31,8 @@ int main(int argc, char const *argv[]) {
 	cout << "is empty: " << myMap.empty() << '\n';
 	for (int i = 0; i < pares.size(); i++) {
 		myMap.insert(pares[i]);
-		cout << "_size: " << myMap.size() << '\n';
 	}
+	cout << "_size: " << myMap.size() << '\n';
 	cout << "is empty: " << myMap.empty() << '\n';
 
 	// std::cout << "Datos en el mapa:" << '\n';
@@ -38,22 +40,22 @@ int main(int argc, char const *argv[]) {
 	// 	cout<< i << ": " << "("<<myMap.map[i].first<<","<<myMap.map[i].second<<")"<<endl;
 	// }
 
-	// cout << "Ingrese el dato que desea buscar: ";
-	cout << "Ingrese el dato que desea borrar: ";
+	cout << "Ingrese el dato que desea buscar: ";
+	// cout << "Ingrese el dato que desea borrar: ";
 	cin >> n;
 	while(n >= 0 && n < pares.size()) {
-		// cout << '\n'; //test at()
-		// if (myMap.at(pares[n].first)) {
-		// 	cout << myMap.at(pares[n].first) << '\n';
-		// }
-		// cout << "Ingrese el dato que desea buscar: ";
-		// cin >> n;
-
-		cout << '\n'; // test erase()
-		myMap.erase(pares[n].first);
-		cout << "_size: " << myMap.size() << '\n';
-		cout << "Ingrese el dato que desea borrar: ";
+		cout << '\n'; //test at()
+		if (myMap.at(pares[n].first)) {
+			cout << myMap.at(pares[n].first) << '\n';
+		}
+		cout << "Ingrese el dato que desea buscar: ";
 		cin >> n;
+
+		// cout << '\n'; // test erase()
+		// myMap.erase(pares[n].first);
+		// cout << "_size: " << myMap.size() << '\n';
+		// cout << "Ingrese el dato que desea borrar: ";
+		// cin >> n;
 
 	}
 
