@@ -18,7 +18,7 @@ box * MapBST::predecesor(box *node) {
 	return result;
 }
 
-void MapBST::erase(string key, box *&node){
+void MapBST::erase(string key, box *&node){ // WIP
 	if (node->left != NULL) {
 		box *aux = predecesor(node); //get a copy of this node's predecesor
 		node->key = aux->key;

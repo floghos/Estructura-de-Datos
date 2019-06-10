@@ -16,7 +16,7 @@ private:
     int _size = 0;
     box *root;
     void insert(pair<string, int> entry, box *&node);
-    void erase(string key, box *&node);
+    void erase(string key, box *&node); // WIP
 	box * predecesor(box *node);
     int at(string key, box *node);
 public:
