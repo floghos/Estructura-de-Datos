@@ -76,11 +76,12 @@ int main(int argc, char const *argv[]) {
 	for (int i = 0; i < data.size(); i++) {
 		cout << data[i].first << " " << data[i].second << '\n';
 	}
-
+	std::cout << "insertado..." << '\n';
 	for (int i = 0; i < data.size(); i++) { //insercion de un vector con datos
+		std::cerr << i << '\n';
         mymap.insert(data[i]);
     }
-
+	std::cout << "insert complete" << '\n';
 
     // char c;
     // cout << "Desea buscar un elemento? (y/n)" << '\n';
