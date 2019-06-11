@@ -45,7 +45,7 @@ int main(int argc, char const *argv[]) {
 	cin >> n;
 	while(n >= 0 && n < pares.size()) {
 		cout << '\n'; //test at()
-		if (myMap.at(pares[n].first != -1)) {
+		if (myMap.at(pares[n].first) != -1) {
 			cout << myMap.at(pares[n].first) << '\n';
 		} else {
 			cout << pares[n].first << " not found" << '\n';
