@@ -16,10 +16,11 @@ void MapAVL::insert(pair<string, int> p){
 		tam++;//aumento el tamaño
 	}else{
 		nodo *hijo;
+		nodo *nodoAnterior = raiz;
 		hijo = raiz;//comienzo apuntando en la raiz
 		while(1){
 			if((hijo->par.first).compare(p.first) == 0) {
-				cout<<"Hay valor asociado a la clave: "<<p.second<<")"<<endl;
+				cout<<"Hay valor asociado a la clave: "<< p.second << ")" <<endl;
 				break;
 			}else if((hijo->par.first).compare(p.first) < 0) {//debe ir a la derecha
 				//cout<<"der"<<endl;
@@ -28,10 +29,15 @@ void MapAVL::insert(pair<string, int> p){
 					nodo *nuevoNodo = new nodo;//creo un nodo nuevo
 					nuevoNodo->par.first = p.first;
 					nuevoNodo->par.second = p.second;
+					nuevoNodo->padre = nodoAnterior;
 					hijo->right = nuevoNodo;
 					tam++;//aumento tamaño
 					break;
-				}else hijo = hijo->right; //apunta al hijo derecho
+				}else {
+					nodoAnterior = hijo;
+					hijo = hijo->right;
+				}
+
 			}else if((hijo->par.first).compare(p.first) > 0) {//debe ir a la izquierda
 				//cout<<"izq"<<endl;
 				if(hijo->left == NULL){//si es nulo, puedo añadir
@@ -39,10 +45,14 @@ void MapAVL::insert(pair<string, int> p){
 					nodo *nuevoNodo = new nodo;//creo un nodo nuevo
 					nuevoNodo->par.first = p.first;
 					nuevoNodo->par.second = p.second;
+					nuevoNodo->padre = nodoAnterior;
 					hijo->left = nuevoNodo;
 					tam++;//aumento tamaño
 					break;
-				}else hijo = hijo->left;//apunta al hijo izquierdo
+				} else {
+					nodoAnterior = hijo;
+					hijo = hijo->left;
+				}
 			}
 		}
 	}

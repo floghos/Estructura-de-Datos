@@ -7,7 +7,7 @@ struct nodo{
 	nodo *left = NULL;//puntero al hijo izquierdo
 	nodo *right = NULL;//puntero al hijo derecho
 	nodo *padre = NULL;
-	int height = 0;
+	int height = 0; //representa la altura de su sub-arbol
 };
 
 class MapAVL:public ADTMap{
