@@ -12,11 +12,11 @@ void MapAVL::recPreOrder() {
 void MapAVL::recPreOrder(nodo* nodoActual) {
 	cout << nodoActual->par.first <<" se encuentra a altura " << nodoActual->height << '\n';
 	if (nodoActual->left != NULL) {
-		cout<<nodoActual->left->par.first<<" hijo Izq de: "<<nodoActual->par.first<<endl;
+		// cout<<nodoActual->left->par.first<<" es hijo Izq de: "<<nodoActual->par.first<<endl;
 		recPreOrder(nodoActual->left);
 	}
 	if (nodoActual->right != NULL) {
-		cout<<nodoActual->right->par.first<<" hijo Der de: "<<nodoActual->par.first<<endl;
+		// cout<<nodoActual->right->par.first<<" es hijo Der de: "<<nodoActual->par.first<<endl;
 		recPreOrder(nodoActual->right);
 	}
 }
@@ -32,9 +32,9 @@ void MapAVL::insert(pair<string, int> p){
 		raiz->par.first = p.first;//añado en la raiz
 		raiz->par.second = p.second;
 		tam++;//aumento el tamaño
+		// std::cout << "insertando nodo "<< tam << '\n';
 	}else{
 		nodo *hijo;
-		nodo *nodoAnterior = raiz;
 		hijo = raiz;//comienzo apuntando en la raiz
 		while(1){
 			if((hijo->par.first).compare(p.first) == 0) {
@@ -43,34 +43,32 @@ void MapAVL::insert(pair<string, int> p){
 			}else if((hijo->par.first).compare(p.first) < 0) {//debe ir a la derecha
 				//cout<<"der"<<endl;
 				if(hijo->right == NULL){//si es nulo, puedo añadir
-					//cout<<"der null, añado despues de: "<<hijo->par.first<<endl;
 					nodo *nuevoNodo = new nodo;//creo un nodo nuevo
 					nuevoNodo->par.first = p.first;
 					nuevoNodo->par.second = p.second;
-					nuevoNodo->padre = nodoAnterior;
+					nuevoNodo->padre = hijo;
 					hijo->right = nuevoNodo;
 					tam++;//aumento tamaño
+					// std::cout << "insertando nodo "<< tam << '\n';
 					actualizarAlturas(nuevoNodo);
 					break;
 				} else {
-					nodoAnterior = hijo;
 					hijo = hijo->right;
 				}
 
 			}else if((hijo->par.first).compare(p.first) > 0) {//debe ir a la izquierda
 				//cout<<"izq"<<endl;
 				if(hijo->left == NULL){//si es nulo, puedo añadir
-					//cout<<"izq null, añado antes de: "<<hijo->par.first<<endl;
 					nodo *nuevoNodo = new nodo;//creo un nodo nuevo
 					nuevoNodo->par.first = p.first;
 					nuevoNodo->par.second = p.second;
-					nuevoNodo->padre = nodoAnterior;
+					nuevoNodo->padre = hijo;
 					hijo->left = nuevoNodo;
 					tam++;//aumento tamaño
+					// std::cout << "insertando nodo "<< tam << '\n';
 					actualizarAlturas(nuevoNodo);
 					break;
 				} else {
-					nodoAnterior = hijo;
 					hijo = hijo->left;
 				}
 			}
@@ -80,9 +78,7 @@ void MapAVL::insert(pair<string, int> p){
 
 void MapAVL::actualizarAlturas(nodo *nodoActual) {
 	while (nodoActual->padre != NULL && nodoActual->height == nodoActual->padre->height) {
-		cout<<"le añado 1 a height de: "<<nodoActual->padre->par.first<<endl;
 		nodoActual->padre->height++;
-		// cout<<"res --> "<<nodoActual->padre->height<<endl;
 		nodoActual = nodoActual->padre;
 	}
 }
