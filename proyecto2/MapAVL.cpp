@@ -3,6 +3,24 @@
 #include "MapAVL.h"
 using namespace std;
 
+
+void MapAVL::recPreOrder() {
+	recPreOrder(raiz);
+
+}
+
+void MapAVL::recPreOrder(nodo* nodoActual) {
+	cout << nodoActual->par.first <<" se encuentra a altura " << nodoActual->height << '\n';
+	if (nodoActual->left != NULL) {
+		cout<<nodoActual->left->par.first<<" hijo Izq de: "<<nodoActual->par.first<<endl;
+		recPreOrder(nodoActual->left);
+	}
+	if (nodoActual->right != NULL) {
+		cout<<nodoActual->right->par.first<<" hijo Der de: "<<nodoActual->par.first<<endl;
+		recPreOrder(nodoActual->right);
+	}
+}
+
 MapAVL::MapAVL(){
 	tam = 0;
 	raiz = NULL;
@@ -32,8 +50,9 @@ void MapAVL::insert(pair<string, int> p){
 					nuevoNodo->padre = nodoAnterior;
 					hijo->right = nuevoNodo;
 					tam++;//aumento tamaño
+					actualizarAlturas(nuevoNodo);
 					break;
-				}else {
+				} else {
 					nodoAnterior = hijo;
 					hijo = hijo->right;
 				}
@@ -48,6 +67,7 @@ void MapAVL::insert(pair<string, int> p){
 					nuevoNodo->padre = nodoAnterior;
 					hijo->left = nuevoNodo;
 					tam++;//aumento tamaño
+					actualizarAlturas(nuevoNodo);
 					break;
 				} else {
 					nodoAnterior = hijo;
@@ -55,6 +75,15 @@ void MapAVL::insert(pair<string, int> p){
 				}
 			}
 		}
+	}
+}
+
+void MapAVL::actualizarAlturas(nodo *nodoActual) {
+	while (nodoActual->padre != NULL && nodoActual->height == nodoActual->padre->height) {
+		cout<<"le añado 1 a height de: "<<nodoActual->padre->par.first<<endl;
+		nodoActual->padre->height++;
+		// cout<<"res --> "<<nodoActual->padre->height<<endl;
+		nodoActual = nodoActual->padre;
 	}
 }
 
@@ -81,6 +110,7 @@ int MapAVL::at(string clave){
 		}
 	}
 }
+
 
 void MapAVL::erase(string key) {
 
