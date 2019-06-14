@@ -2,6 +2,7 @@
 #include "ADTMap.h"
 #include "MapSV.h"
 #include "MapH.h"
+#include "MapAVL.h"
 #include <time.h>
 
 using namespace std;
@@ -14,15 +15,19 @@ int main(int argc, char const *argv[]) {
 	string key;
 	int val;
 	// MapSV myMap;
-	MapH myMap;
+	// MapH myMap;
+	MapAVL myMap;
 
 	cerr << "INGRESE LA CANTIDAD DE PARES A INGRESAR"<<endl;
 	cin >> n;
 	paresAleatorios(n, pares); //creacion aleatoria de datos
-	cout << "los datos creados son:" << '\n';
-	for (int i=0; i<n; i++){
-		cout<< i << ": " << "("<<pares[i].first<<","<<pares[i].second<<")"<<endl;
-	}
+
+//impresion de los pares generados
+	// cout << "los datos creados son:" << '\n';
+	// for (int i=0; i<n; i++){
+	// 	cout<< i << ": " << "("<<pares[i].first<<","<<pares[i].second<<")"<<endl;
+	// }
+
 	// for (int i = 0; i < n; i++) { //ingreso manual de datos
 	// 	cin >> dato.first >> dato.second;
 	// 	pares.push_back(dato);
@@ -33,33 +38,43 @@ int main(int argc, char const *argv[]) {
 		myMap.insert(pares[i]);
 	}
 	cout << "_size: " << myMap.size() << '\n';
-	cout << "is empty: " << myMap.empty() << '\n';
+	// cout << "is empty: " << myMap.empty() << '\n';
 
 	// std::cout << "Datos en el mapa:" << '\n';
 	// for (int i=0; i<myMap.map.size(); i++){
 	// 	cout<< i << ": " << "("<<myMap.map[i].first<<","<<myMap.map[i].second<<")"<<endl;
 	// }
 
-	cout << "Ingrese el dato que desea buscar: ";
-	// cout << "Ingrese el dato que desea borrar: ";
-	cin >> n;
-	while(n >= 0 && n < pares.size()) {
-		cout << '\n'; //test at()
-		if (myMap.at(pares[n].first) != -1) {
-			cout << myMap.at(pares[n].first) << '\n';
-		} else {
-			cout << pares[n].first << " not found" << '\n';
+//Busqueda automatica de todos los elementos
+	std::cout << "Buscando todos los elementos" << '\n';
+	for (int i = 0; i < pares.size(); i++) {
+		// cout << "Dato " << i <<" encontrado. Valor = " << myMap.at(pares[i].first) <<'\n';
+		if (myMap.at(pares[i].first) == -1) {
+			cout << "Dato " << i <<" NO encontrado" << '\n';
 		}
-		cout << "Ingrese el dato que desea buscar: ";
-		cin >> n;
-
-		// cout << '\n'; // test erase()
-		// myMap.erase(pares[n].first);
-		// cout << "_size: " << myMap.size() << '\n';
-		// cout << "Ingrese el dato que desea borrar: ";
-		// cin >> n;
-
 	}
+
+//prueba de busqueda manual de elementos
+	// cout << "Ingrese el dato que desea buscar: ";
+	// // cout << "Ingrese el dato que desea borrar: ";
+	// cin >> n;
+	// while(n >= 0 && n < pares.size()) {
+	// 	cout << '\n'; //test at()
+	// 	if (myMap.at(pares[n].first) != -1) {
+	// 		cout << myMap.at(pares[n].first) << '\n';
+	// 	} else {
+	// 		cout << pares[n].first << " not found" << '\n';
+	// 	}
+	// 	cout << "Ingrese el dato que desea buscar: ";
+	// 	cin >> n;
+	//
+	// 	// cout << '\n'; // test erase()
+	// 	// myMap.erase(pares[n].first);
+	// 	// cout << "_size: " << myMap.size() << '\n';
+	// 	// cout << "Ingrese el dato que desea borrar: ";
+	// 	// cin >> n;
+	//
+	// }
 
 	return 0;
 }
