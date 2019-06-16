@@ -4,7 +4,7 @@
 #include <iostream>
 
 using namespace std;
-//private methods
+
 box * MapBST::predecesor(box *node) {
 	box *result;
 	string key = node->key;
@@ -51,21 +51,19 @@ int MapBST::at(string key, box *node){
 
 void MapBST::insert(pair<string, int> entry, box *&node){
     if (node == NULL) {
-        // cout << "encontramos un espacio vacio!" << '\n';
         node = new box;
         node->key = entry.first;
         node->val = entry.second;
         _size++;
     } else {
-        if (node->key.compare(entry.first) == 0) { //keys are equal
-            cout << "'" << entry.first << "' already exists" << '\n';
-        } else if (node->key.compare(entry.first) < 0) {
-            // cout << "insertando a la izq" << '\n';
-            insert(entry, node->right);
-        } else {
-            // cout << "insertando a la izq" << '\n';
-            insert(entry, node->left);
-        }
+		if (node->key.compare(entry.first) == 0) { //keys are equal
+		    // cout << "'" << entry.first << "' already exists" << '\n';
+		} else if (node->key.compare(entry.first) < 0) {
+		    insert(entry, node->right);
+		} else {
+		    insert(entry, node->left);
+		}
+
     }
 }
 
