@@ -12,11 +12,11 @@ void MapAVL::recPreOrder() {
 void MapAVL::recPreOrder(nodo* nodoActual) {
 	cout << nodoActual->par.first <<" se encuentra a altura " << nodoActual->height << '\n';
 	if (nodoActual->left != NULL) {
-		// cout<<nodoActual->left->par.first<<" es hijo Izq de: "<<nodoActual->par.first<<endl;
+		cout<<nodoActual->left->par.first<<" es hijo Izq de: "<<nodoActual->par.first<<endl;
 		recPreOrder(nodoActual->left);
 	}
 	if (nodoActual->right != NULL) {
-		// cout<<nodoActual->right->par.first<<" es hijo Der de: "<<nodoActual->par.first<<endl;
+		cout<<nodoActual->right->par.first<<" es hijo Der de: "<<nodoActual->par.first<<endl;
 		recPreOrder(nodoActual->right);
 	}
 }
@@ -36,7 +36,7 @@ void MapAVL::insert(pair<string, int> p){
 	}else{
 		nodo *hijo;
 		hijo = raiz;//comienzo apuntando en la raiz
-		while(1){
+		while(true){
 			if((hijo->par.first).compare(p.first) == 0) {
 				cout<<"Hay valor asociado a la clave: "<< p.second << ")" <<endl;
 				break;
@@ -50,7 +50,7 @@ void MapAVL::insert(pair<string, int> p){
 					hijo->right = nuevoNodo;
 					tam++;//aumento tamaño
 					// std::cout << "insertando nodo "<< tam << '\n';
-					actualizarAlturas(nuevoNodo);
+					aumentarAlturas(nuevoNodo);
 					break;
 				} else {
 					hijo = hijo->right;
@@ -66,7 +66,7 @@ void MapAVL::insert(pair<string, int> p){
 					hijo->left = nuevoNodo;
 					tam++;//aumento tamaño
 					// std::cout << "insertando nodo "<< tam << '\n';
-					actualizarAlturas(nuevoNodo);
+					aumentarAlturas(nuevoNodo);
 					break;
 				} else {
 					hijo = hijo->left;
@@ -76,11 +76,27 @@ void MapAVL::insert(pair<string, int> p){
 	}
 }
 
-void MapAVL::actualizarAlturas(nodo *nodoActual) {
+void MapAVL::aumentarAlturas(nodo *nodoActual) {
 	while (nodoActual->padre != NULL && nodoActual->height == nodoActual->padre->height) {
 		nodoActual->padre->height++;
 		nodoActual = nodoActual->padre;
 	}
+}
+
+void MapAVL::disminuirAlturas(nodo *nodoActual) {
+	nodo *dad = nodoActual->padre;
+	nodo *bro;
+	if (dad->left == nodoActual) {
+		bro = dad->right;
+	} else {
+		bro = dad->left;
+	}
+
+	if (bro->height <= nodoActual->height) {
+		dad->height--;
+		disminuirAlturas(dad);
+	}
+
 }
 
 int MapAVL::at(string clave){

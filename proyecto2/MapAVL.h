@@ -14,7 +14,8 @@ class MapAVL:public ADTMap{
 	private:
 		int tam;
 		nodo *raiz;
-		void actualizarAlturas(nodo *);
+		void aumentarAlturas(nodo *);
+		void disminuirAlturas(nodo *);
 		void recPreOrder(nodo *);
 	public:
 		MapAVL();
