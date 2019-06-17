@@ -86,16 +86,152 @@ void MapAVL::aumentarAlturas(nodo *nodoActual) {
 void MapAVL::disminuirAlturas(nodo *nodoActual) {
 	nodo *dad = nodoActual->padre;
 	nodo *bro;
-	if (dad->left == nodoActual) {
-		bro = dad->right;
+	if (dad != NULL) {
+		if (dad->left == nodoActual) {
+			bro = dad->right;
+		} else {
+			bro = dad->left;
+		}
+
+		if (bro->height <= nodoActual->height) {
+			dad->height--;
+			disminuirAlturas(dad);
+		}
+	}
+}
+
+void MapAVL::checkBalance(nodo *nodoActual) {
+	nodo *dad = nodoActual->padre;
+	nodo *bro;
+	if (dad != NULL) {
+		if (dad->left == nodoActual) { //determinamos si nuestro hermano es left o right
+			bro = dad->right;
+		} else {
+			bro = dad->left;
+		}
+
+		if (bro == NULL) {
+			if (nodoActual->height == 0) {
+				checkBalance(dad);
+			} else if(nodoActual->height >= 1) {
+				rotar(nodoActual);
+			}
+		} else {
+			if (abs(bro->height - nodoActual->height) > 1) {
+				rotar(nodoActual);
+			} else {
+				checkBalance(dad);
+			}
+		}
+	}
+}
+
+void MapAVL::rotar(nodo *nodoActual) {
+	nodo *parent = nodoActual->padre;
+	nodo *child;
+	if((nodoActual->left->height) > (nodoActual->right->height)) {
+		child = nodoActual->left;
 	} else {
-		bro = dad->left;
+		child = nodoActual->right;
 	}
 
-	if (bro->height <= nodoActual->height) {
-		dad->height--;
-		disminuirAlturas(dad);
+	if (parent->left == nodoActual) {
+		if (nodoActual->left == child) {
+			rotateLeftLeft(child);
+		} else {
+			rotateLeftRight(child);
+		}
+	} else {
+		if(nodoActual->left == child) {
+			rotateRightLeft(child);
+		} else {
+			rotateRightRight(child);
+		}
 	}
+
+}
+
+
+void MapAVL::rotateLeftLeft(nodo *nodoActual) {
+	nodo *r = nodoActual->padre->padre->padre;
+	nodo *z = nodoActual->padre->padre;
+	nodo *y = nodoActual->padre;
+	nodo *x = nodoActual;
+
+//guardando sub-arboles
+	nodo *t1 = x->left;
+	nodo *t2 = x->right;
+	nodo *t3 = y->right;
+	nodo *t4 = z->right;
+
+	if (r != NULL) {
+		if (r->left == z) r->left = y; //estamos al lado izq
+		else r->right = y; //estamos al lado der
+	} else {
+		raiz = y;
+	}
+//rotando
+	y->right = z;
+//reasignando sib-arboles
+	// x->left = t1; //no cambia
+	// x->right = t2; //no cambia
+	z->left = t3;
+	// z->right = t4; //no cambia
+
+}
+
+void MapAVL::rotateLeftRight(nodo *nodoActual) {
+	nodo *r = nodoActual->padre->padre->padre;
+	nodo *z = nodoActual->padre->padre;
+	nodo *y = nodoActual->padre;
+	nodo *x = nodoActual;
+
+//guardando sub-arboles
+	nodo *t1 = y->left;
+	nodo *t2 = x->left;
+	nodo *t3 = x->right;
+	nodo *t4 = z->right;
+
+	if (r != NULL) {
+		if (r->left == z) r->left = x;
+		else r->right = x;
+	} else {
+		raiz = x;
+	}
+//rotando
+	x->left = y;
+	x->right = z;
+//reasignandoo sub-arboles
+	// y->left = t1;
+	y->right = t2;
+	z->left = t3;
+	// z->right = t4;
+}
+
+void MapAVL::rotateRightLeft(nodo *nodoActual) {
+	nodo *r = nodoActual->padre->padre->padre;
+	nodo *z = nodoActual->padre->padre;
+	nodo *y = nodoActual->padre;
+	nodo *x = nodoActual;
+
+//guardando sub-arboles
+	nodo *t1 = z->left;
+	nodo *t2 = x->left;
+	nodo *t3 = x->right;
+	nodo *t4 = y->right;
+}
+
+void MapAVL::rotateRightRight(nodo *nodoActual) {
+	nodo *r = nodoActual->padre->padre->padre;
+	nodo *z = nodoActual->padre->padre;
+	nodo *y = nodoActual->padre;
+	nodo *x = nodoActual;
+
+//guardando sub-arboles
+	nodo *t1 = z->left;
+	nodo *t2 = y->left;
+	nodo *t3 = x->left;
+	nodo *t4 = x->right;
 
 }
 

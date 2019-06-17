@@ -11,18 +11,24 @@ struct nodo{
 };
 
 class MapAVL:public ADTMap{
-	private:
-		int tam;
-		nodo *raiz;
-		void aumentarAlturas(nodo *);
-		void disminuirAlturas(nodo *);
-		void recPreOrder(nodo *);
-	public:
-		MapAVL();
-		void insert(pair<string, int>); //Insertar un valor que tiene asociado una llave k
-		void erase(string); //Eliminar el valor asociado a una llave k
-		int at(string); //Encontrar el valor asociado a una llave k
-		int size(); //Obtener cantidad de elementos almacenados
-		bool empty(); //Verificar si estávacía
-		void recPreOrder();
+private:
+	int tam;
+	nodo *raiz;
+	void aumentarAlturas(nodo *);
+	void disminuirAlturas(nodo *);
+	void recPreOrder(nodo *);
+	void checkBalance(nodo *);
+	void rotar(nodo *);
+	void rotateLeftLeft(nodo *);
+	void rotateLeftRight(nodo *);
+	void rotateRightLeft(nodo *);
+	void rotateRightRight(nodo *);
+public:
+	MapAVL();
+	void insert(pair<string, int>); //Insertar un valor que tiene asociado una llave k
+	void erase(string); //Eliminar el valor asociado a una llave k
+	int at(string); //Encontrar el valor asociado a una llave k
+	int size(); //Obtener cantidad de elementos almacenados
+	bool empty(); //Verificar si estávacía
+	void recPreOrder();
 };
