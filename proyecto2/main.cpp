@@ -10,11 +10,12 @@ using namespace std;
 
 void paresAleatorios(int n, vector<pair<string, int> >& v);
 int main(int argc, char const *argv[]) {
-	int n;
+	int val_limit = 1000;
 	vector<pair<string, int> > data;
 	pair<string, int> dato;
 	string key;
 	int val;
+	int n;
 	// MapSV myMap;
 	// MapH myMap;
 	MapAVL myMap;
@@ -25,7 +26,7 @@ int main(int argc, char const *argv[]) {
 
 	cout<<"PARES ORDENADOS"<<endl;
 	pair<string, int> entry;
-	int val_limit = 1000;
+
 	int range = (int)ceil(pow(n, 1.f/5));
 	cout << "range: " << range << '\n';
 	char c1, c2, c3, c4 ,c5;
@@ -71,11 +72,13 @@ int main(int argc, char const *argv[]) {
 //Insertar elementos
 	cout << "is empty: " << myMap.empty() << '\n';
 	for (int i = 0; i < n; i++) {
+		std::cout << "insertando elemento " << i << '\n';
 		myMap.insert(data[i]);
 	}
 	cout << "_size: " << myMap.size() << '\n';
 
-	myMap.recPreOrder();
+	// myMap.recPreOrder();
+
 	// cout << "is empty: " << myMap.empty() << '\n';
 
 	// std::cout << "Datos en el mapa:" << '\n';
