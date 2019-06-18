@@ -72,12 +72,12 @@ int main(int argc, char const *argv[]) {
 //Insertar elementos
 	cout << "is empty: " << myMap.empty() << '\n';
 	for (int i = 0; i < n; i++) {
-		std::cout << "insertando elemento " << i << '\n';
+		// std::cout << "insertando elemento " << i << '\n';
 		myMap.insert(data[i]);
 	}
 	cout << "_size: " << myMap.size() << '\n';
 
-	// myMap.recPreOrder();
+	// myMap.recPreOrder(); //imprimir recorrido pre-order
 
 	// cout << "is empty: " << myMap.empty() << '\n';
 
@@ -86,16 +86,16 @@ int main(int argc, char const *argv[]) {
 	// 	cout<< i << ": " << "("<<myMap.map[i].first<<","<<myMap.map[i].second<<")"<<endl;
 	// }
 
-//Busqueda automatica de todos los elementos
-	// std::cout << "Buscando todos los elementos" << '\n';
-	// for (int i = 0; i < data.size(); i++) {
-	// 	// cout << "Dato " << i <<" encontrado. Valor = " << myMap.at(data[i].first) <<'\n';
-	// 	if (myMap.at(data[i].first) == -1) {
-	// 		cout << "Dato " << i <<" NO encontrado" << '\n';
-	// 	}
-	// }
+// Busqueda automatica de todos los elementos
+	std::cout << "Buscando todos los elementos" << '\n';
+	for (int i = 0; i < n; i++) {
+		// cout << "Dato " << i <<" encontrado. Valor = " << myMap.at(data[i].first) <<'\n';
+		if (myMap.at(data[i].first) == -1) {
+			cout << "Dato " << i <<" NO encontrado" << '\n';
+		}
+	}
 
-//prueba de busqueda manual de elementos
+//Busqueda manual de elementos
 	// cout << "Ingrese el dato que desea buscar: ";
 	// // cout << "Ingrese el dato que desea borrar: ";
 	// cin >> n;
