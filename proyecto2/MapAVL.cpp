@@ -6,7 +6,6 @@ using namespace std;
 
 void MapAVL::recPreOrder() {
 	recPreOrder(raiz);
-
 }
 
 void MapAVL::recPreOrder(nodo* nodoActual) {
@@ -32,7 +31,7 @@ void MapAVL::insert(pair<string, int> p){
 		raiz->par.first = p.first;//añado en la raiz
 		raiz->par.second = p.second;
 		tam++;//aumento el tamaño
-		// std::cout << "insertando nodo "<< tam << '\n';
+		// std::cerr << "insertando nodo "<< tam << '\n';
 	}else{
 		nodo *hijo;
 		hijo = raiz;//comienzo apuntando en la raiz
@@ -49,8 +48,9 @@ void MapAVL::insert(pair<string, int> p){
 					nuevoNodo->padre = hijo;
 					hijo->right = nuevoNodo;
 					tam++;//aumento tamaño
-					// std::cout << "insertando nodo "<< tam << '\n';
+					// std::cerr << "insertando nodo "<< tam << '\n';
 					aumentarAlturas(nuevoNodo);
+					checkBalance(nuevoNodo);
 					break;
 				} else {
 					hijo = hijo->right;
@@ -65,8 +65,9 @@ void MapAVL::insert(pair<string, int> p){
 					nuevoNodo->padre = hijo;
 					hijo->left = nuevoNodo;
 					tam++;//aumento tamaño
-					// std::cout << "insertando nodo "<< tam << '\n';
+					// std::cerr << "insertando nodo "<< tam << '\n';
 					aumentarAlturas(nuevoNodo);
+					checkBalance(nuevoNodo);
 					break;
 				} else {
 					hijo = hijo->left;
@@ -77,6 +78,7 @@ void MapAVL::insert(pair<string, int> p){
 }
 
 void MapAVL::aumentarAlturas(nodo *nodoActual) {
+	// std::cerr << "aumentarAlturas" << '\n';
 	while (nodoActual->padre != NULL && nodoActual->height == nodoActual->padre->height) {
 		nodoActual->padre->height++;
 		nodoActual = nodoActual->padre;
@@ -84,6 +86,7 @@ void MapAVL::aumentarAlturas(nodo *nodoActual) {
 }
 
 void MapAVL::disminuirAlturas(nodo *nodoActual) {
+	// std::cerr << "disminuirAlturas" << '\n';
 	nodo *dad = nodoActual->padre;
 	nodo *bro;
 	if (dad != NULL) {
@@ -92,15 +95,21 @@ void MapAVL::disminuirAlturas(nodo *nodoActual) {
 		} else {
 			bro = dad->left;
 		}
-
-		if (bro->height <= nodoActual->height) {
+		if (bro != NULL) {
+			if (bro->height <= nodoActual->height) {
+				dad->height--;
+				disminuirAlturas(dad);
+			}
+		} else {
 			dad->height--;
 			disminuirAlturas(dad);
 		}
 	}
 }
 
+
 void MapAVL::checkBalance(nodo *nodoActual) {
+	// std::cerr << "checkeando balance" << '\n';
 	nodo *dad = nodoActual->padre;
 	nodo *bro;
 	if (dad != NULL) {
@@ -115,10 +124,12 @@ void MapAVL::checkBalance(nodo *nodoActual) {
 				checkBalance(dad);
 			} else if(nodoActual->height >= 1) {
 				rotar(nodoActual);
+				checkBalance(dad);
 			}
 		} else {
 			if (abs(bro->height - nodoActual->height) > 1) {
 				rotar(nodoActual);
+				checkBalance(dad);
 			} else {
 				checkBalance(dad);
 			}
@@ -126,33 +137,70 @@ void MapAVL::checkBalance(nodo *nodoActual) {
 	}
 }
 
-void MapAVL::rotar(nodo *nodoActual) {
+void MapAVL::rotar(nodo *nodoActual) { //necesita ajustar alturas
+	// std::cerr << "rotando" << '\n';
 	nodo *parent = nodoActual->padre;
 	nodo *child;
-	if((nodoActual->left->height) > (nodoActual->right->height)) {
-		child = nodoActual->left;
-	} else {
-		child = nodoActual->right;
-	}
 
-	if (parent->left == nodoActual) {
-		if (nodoActual->left == child) {
-			rotateLeftLeft(child);
+
+	if(nodoActual->left != NULL) {
+		if (nodoActual->right != NULL) {
+			if((nodoActual->left->height) > (nodoActual->right->height)) {
+				child = nodoActual->left;
+			} else {
+				child = nodoActual->right;
+			}
 		} else {
-			rotateLeftRight(child);
+			child = nodoActual->left;
 		}
 	} else {
-		if(nodoActual->left == child) {
-			rotateRightLeft(child);
+		if (nodoActual->right != NULL) {
+			child = nodoActual->right;
 		} else {
-			rotateRightRight(child);
+			child = NULL;
 		}
 	}
 
+	if (child != NULL) {
+		if (parent->left == nodoActual) {
+			if (nodoActual->left == child) {
+				rotateLeftLeft(child);
+			} else {
+				rotateLeftRight(child);
+			}
+		} else {
+			if(nodoActual->left == child) {
+				rotateRightLeft(child);
+			} else {
+				rotateRightRight(child);
+			}
+		}
+	}
 }
 
+void MapAVL::recalcularAltura(nodo *nodoActual) {
+	// std::cerr << "recalcularAltura" << '\n';
+	if(nodoActual->left != NULL) {
+		if (nodoActual->right != NULL) {
+			if (nodoActual->left->height > nodoActual->right->height) {
+				nodoActual->height = nodoActual->left->height + 1;
+			} else {
+				nodoActual->height = nodoActual->right->height + 1;
+			}
+		} else {
+			nodoActual->height = nodoActual->left->height + 1;
+		}
+	} else {
+		if (nodoActual->right != NULL) {
+			nodoActual->height = nodoActual->right->height + 1;
+		} else {
+			nodoActual->height = 0;
+		}
+	}
+}
 
 void MapAVL::rotateLeftLeft(nodo *nodoActual) {
+	// std::cerr << "rLL" << '\n';
 	nodo *r = nodoActual->padre->padre->padre;
 	nodo *z = nodoActual->padre->padre;
 	nodo *y = nodoActual->padre;
@@ -167,20 +215,31 @@ void MapAVL::rotateLeftLeft(nodo *nodoActual) {
 	if (r != NULL) {
 		if (r->left == z) r->left = y; //estamos al lado izq
 		else r->right = y; //estamos al lado der
+		y->padre = r;
 	} else {
 		raiz = y;
+		y->padre = NULL;
 	}
 //rotando
 	y->right = z;
+	z->padre = y;
 //reasignando sib-arboles
 	// x->left = t1; //no cambia
 	// x->right = t2; //no cambia
 	z->left = t3;
+	if (t3 != NULL) t3->padre = z;
 	// z->right = t4; //no cambia
+//ajustando alturas
+	recalcularAltura(x);
+	recalcularAltura(z);
+	recalcularAltura(y);
 
+	disminuirAlturas(y);
 }
 
+
 void MapAVL::rotateLeftRight(nodo *nodoActual) {
+	// std::cerr << "rLR" << '\n';
 	nodo *r = nodoActual->padre->padre->padre;
 	nodo *z = nodoActual->padre->padre;
 	nodo *y = nodoActual->padre;
@@ -195,20 +254,33 @@ void MapAVL::rotateLeftRight(nodo *nodoActual) {
 	if (r != NULL) {
 		if (r->left == z) r->left = x;
 		else r->right = x;
+		x->padre = r;
 	} else {
 		raiz = x;
+		x->padre = NULL;
 	}
 //rotando
 	x->left = y;
+	y->padre = x;
 	x->right = z;
+	z->padre = x;
 //reasignandoo sub-arboles
-	// y->left = t1;
+	// y->left = t1; //no cambia
 	y->right = t2;
+	if (t2 != NULL) t2->padre = y;
 	z->left = t3;
-	// z->right = t4;
+	if (t3 != NULL) t3->padre = z;
+	// z->right = t4; //no cambia
+//ajustando alturas
+	recalcularAltura(y);
+	recalcularAltura(z);
+	recalcularAltura(x);
+
+	disminuirAlturas(x);
 }
 
 void MapAVL::rotateRightLeft(nodo *nodoActual) {
+	// std::cerr << "rRL" << '\n';
 	nodo *r = nodoActual->padre->padre->padre;
 	nodo *z = nodoActual->padre->padre;
 	nodo *y = nodoActual->padre;
@@ -219,9 +291,38 @@ void MapAVL::rotateRightLeft(nodo *nodoActual) {
 	nodo *t2 = x->left;
 	nodo *t3 = x->right;
 	nodo *t4 = y->right;
+
+	if (r != NULL) {
+		if (r->left == z) r->left = x;
+		else r->right = x;
+		x->padre = r;
+	} else {
+		raiz = x;
+		x->padre = NULL;
+	}
+
+//rotando
+	x->left = z;
+	z->padre = x;
+	x->right = y;
+	y->padre = x;
+//reasignando sub-arboles
+	// z->left = t1; //no cambia
+	z->right = t2;
+	if (t2 != NULL) t2->padre = z;
+	y->left = t3;
+	if (t3 != NULL) t3->padre = y;
+	// y->right = t4; //no cambia
+//ajustando alturas
+	recalcularAltura(y);
+	recalcularAltura(z);
+	recalcularAltura(x);
+
+	disminuirAlturas(x);
 }
 
 void MapAVL::rotateRightRight(nodo *nodoActual) {
+	// std::cerr << "rRR" << '\n';
 	nodo *r = nodoActual->padre->padre->padre;
 	nodo *z = nodoActual->padre->padre;
 	nodo *y = nodoActual->padre;
@@ -233,6 +334,29 @@ void MapAVL::rotateRightRight(nodo *nodoActual) {
 	nodo *t3 = x->left;
 	nodo *t4 = x->right;
 
+	if (r != NULL) {
+		if (r->left == y) r->left = y;
+		else r->right = y;
+		y->padre = r;
+	} else {
+		raiz = y;
+		y->padre = NULL;
+	}
+//rotando
+	y->left = z;
+	z->padre = y;
+//reasignando sub-arboles
+	// z->left = t1;
+	z->right = t2;
+	if (t2 != NULL)	t2->padre = z;
+	// x->left = t3;
+	// x->right = t4;
+//ajustando alturas
+	recalcularAltura(z);
+	recalcularAltura(x);
+	recalcularAltura(y);
+
+	disminuirAlturas(y);
 }
 
 int MapAVL::at(string clave){
@@ -242,7 +366,7 @@ int MapAVL::at(string clave){
 	}else{
 		nodo *hijo;
 		hijo = raiz;//comienzo apuntando en la raiz
-		while(1){
+		while(true){
 			if((hijo->par.first).compare(clave) == 0) return hijo->par.second;
 			else if((hijo->par.first).compare(clave) < 0) {//debe ir a la derecha
 				if(hijo->right == NULL){

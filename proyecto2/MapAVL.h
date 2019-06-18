@@ -19,6 +19,7 @@ private:
 	void recPreOrder(nodo *);
 	void checkBalance(nodo *);
 	void rotar(nodo *);
+	void recalcularAltura(nodo *);
 	void rotateLeftLeft(nodo *);
 	void rotateLeftRight(nodo *);
 	void rotateRightLeft(nodo *);
