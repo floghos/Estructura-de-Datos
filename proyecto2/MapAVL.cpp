@@ -37,27 +37,28 @@ void MapAVL::insert(pair<string, int> p){
 		hijo = raiz;//comienzo apuntando en la raiz
 		while(true){
 			if((hijo->par.first).compare(p.first) == 0) {
-				cout<<"Hay valor asociado a la clave: "<< p.second << ")" <<endl;
+				cout<<"Ya hay un valor asociado a la clave: "<< p.second << ")" <<endl;
 				break;
 			}else if((hijo->par.first).compare(p.first) < 0) {//debe ir a la derecha
-				//cout<<"der"<<endl;
+				// cout<<"der"<<endl;
 				if(hijo->right == NULL){//si es nulo, puedo añadir
 					nodo *nuevoNodo = new nodo;//creo un nodo nuevo
 					nuevoNodo->par.first = p.first;
 					nuevoNodo->par.second = p.second;
 					nuevoNodo->padre = hijo;
 					hijo->right = nuevoNodo;
-					tam++;//aumento tamaño
+					tam++; //aumento tamaño
 					// std::cerr << "insertando nodo "<< tam << '\n';
 					aumentarAlturas(nuevoNodo);
 					checkBalance(nuevoNodo);
+
 					break;
 				} else {
 					hijo = hijo->right;
 				}
 
-			}else if((hijo->par.first).compare(p.first) > 0) {//debe ir a la izquierda
-				//cout<<"izq"<<endl;
+			}else if((hijo->par.first).compare(p.first) > 0) {//debe ir a la izquier	da
+				// cout<<"izq"<<endl;
 				if(hijo->left == NULL){//si es nulo, puedo añadir
 					nodo *nuevoNodo = new nodo;//creo un nodo nuevo
 					nuevoNodo->par.first = p.first;
@@ -68,6 +69,7 @@ void MapAVL::insert(pair<string, int> p){
 					// std::cerr << "insertando nodo "<< tam << '\n';
 					aumentarAlturas(nuevoNodo);
 					checkBalance(nuevoNodo);
+
 					break;
 				} else {
 					hijo = hijo->left;
@@ -160,6 +162,7 @@ void MapAVL::rotar(nodo *nodoActual) { //necesita ajustar alturas
 			child = NULL;
 		}
 	}
+	// cout<<"nodo actual: "<<nodoActual->par.first<<" hijo de: "<<parent->par.first<<endl;
 
 	if (child != NULL) {
 		if (parent->left == nodoActual) {
@@ -201,10 +204,10 @@ void MapAVL::recalcularAltura(nodo *nodoActual) {
 
 void MapAVL::rotateLeftLeft(nodo *nodoActual) {
 	// std::cerr << "rLL" << '\n';
-	nodo *r = nodoActual->padre->padre->padre;
-	nodo *z = nodoActual->padre->padre;
-	nodo *y = nodoActual->padre;
 	nodo *x = nodoActual;
+	nodo *y = x->padre;
+	nodo *z = y->padre;
+	nodo *r = z->padre;
 
 //guardando sub-arboles
 	nodo *t1 = x->left;
@@ -240,10 +243,10 @@ void MapAVL::rotateLeftLeft(nodo *nodoActual) {
 
 void MapAVL::rotateLeftRight(nodo *nodoActual) {
 	// std::cerr << "rLR" << '\n';
-	nodo *r = nodoActual->padre->padre->padre;
-	nodo *z = nodoActual->padre->padre;
-	nodo *y = nodoActual->padre;
 	nodo *x = nodoActual;
+	nodo *y = x->padre;
+	nodo *z = y->padre;
+	nodo *r = z->padre;
 
 //guardando sub-arboles
 	nodo *t1 = y->left;
@@ -281,10 +284,10 @@ void MapAVL::rotateLeftRight(nodo *nodoActual) {
 
 void MapAVL::rotateRightLeft(nodo *nodoActual) {
 	// std::cerr << "rRL" << '\n';
-	nodo *r = nodoActual->padre->padre->padre;
-	nodo *z = nodoActual->padre->padre;
-	nodo *y = nodoActual->padre;
 	nodo *x = nodoActual;
+	nodo *y = x->padre;
+	nodo *z = y->padre;
+	nodo *r = z->padre;
 
 //guardando sub-arboles
 	nodo *t1 = z->left;
@@ -323,10 +326,10 @@ void MapAVL::rotateRightLeft(nodo *nodoActual) {
 
 void MapAVL::rotateRightRight(nodo *nodoActual) {
 	// std::cerr << "rRR" << '\n';
-	nodo *r = nodoActual->padre->padre->padre;
-	nodo *z = nodoActual->padre->padre;
-	nodo *y = nodoActual->padre;
 	nodo *x = nodoActual;
+	nodo *y = x->padre;
+	nodo *z = y->padre;
+	nodo *r = z->padre;
 
 //guardando sub-arboles
 	nodo *t1 = z->left;
