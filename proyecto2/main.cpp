@@ -8,6 +8,7 @@
 
 using namespace std;
 
+void paresOrdenados(int n, vector<pair<string, int> >& v);
 void paresAleatorios(int n, vector<pair<string, int> >& v);
 int main(int argc, char const *argv[]) {
 	int val_limit = 1000;
@@ -22,43 +23,10 @@ int main(int argc, char const *argv[]) {
 
 	cerr << "INGRESE LA CANTIDAD DE PARES A INGRESAR"<<endl;
 	cin >> n;
-	// paresAleatorios(n, data); //creacion aleatoria de datos
+	paresAleatorios(n, data); //creacion aleatoria de datos
+	// paresOrdenados(n, data); //creacion de datos ordenados alfabeticamente
 
-	cout<<"PARES ORDENADOS"<<endl;
-	pair<string, int> entry;
-
-	int range = (int)ceil(pow(n, 1.f/5));
-	cout << "range: " << range << '\n';
-	char c1, c2, c3, c4 ,c5;
-	for (int i = 0; i < range; i ++) { //creacion automatica de datos ordenados
-		c1 = 'a' + i;
-		for (int j = 0; j < range; j++) {
-			c2 = 'a' + j;
-			for (int k = 0; k < range; k++) {
-				c3 = 'a' + k;
-				for (int l = 0; l < range; l++) {
-					c4 = 'a' + l;
-					for (int m = 0; m < range; m++) {
-						c5 = 'a' + m;
-
-						key.push_back(c1);
-						key.push_back(c2);
-						key.push_back(c3);
-						key.push_back(c4);
-						key.push_back(c5);
-
-						entry.first = key;
-						entry.second = rand() % val_limit;
-
-						data.push_back(entry);
-						key.clear();
-					}
-				}
-			}
-		}
-	}
-
-//impresion de los pares generados
+// impresion de los pares generados
 	// cout << "los datos creados son:" << '\n';
 	// for (int i=0; i<n; i++){
 	// 	cout<< i << ": " << "("<<data[i].first<<","<<data[i].second<<")"<<endl;
@@ -118,6 +86,43 @@ int main(int argc, char const *argv[]) {
 	// }
 
 	return 0;
+}
+
+void paresOrdenados(int n, vector<pair<string, int> >& v) {
+	pair<string, int> entry;
+	int range = (int)ceil(pow(n, 1.f/5));
+	int val_limit = 1000;
+	// cout << "range: " << range << '\n';
+	char c1, c2, c3, c4 ,c5;
+	for (int i = 0; i < range; i ++) { //creacion automatica de datos ordenados
+		c1 = 'a' + i;
+		for (int j = 0; j < range; j++) {
+			c2 = 'a' + j;
+			for (int k = 0; k < range; k++) {
+				c3 = 'a' + k;
+				for (int l = 0; l < range; l++) {
+					c4 = 'a' + l;
+					for (int m = 0; m < range; m++) {
+						string key;
+						c5 = 'a' + m;
+
+						key.push_back(c1);
+						key.push_back(c2);
+						key.push_back(c3);
+						key.push_back(c4);
+						key.push_back(c5);
+
+						entry.first = key;
+						entry.second = rand() % val_limit;
+
+						v.push_back(entry);
+						// key.clear();
+					}
+				}
+			}
+		}
+	}
+
 }
 
 void paresAleatorios(int n, vector<pair<string, int> >& v){
