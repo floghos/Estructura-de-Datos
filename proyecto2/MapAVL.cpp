@@ -335,7 +335,7 @@ void MapAVL::rotateRightRight(nodo *nodoActual) {
 	nodo *t4 = x->right;
 
 	if (r != NULL) {
-		if (r->left == y) r->left = y;
+		if (r->left == z) r->left = y;
 		else r->right = y;
 		y->padre = r;
 	} else {
