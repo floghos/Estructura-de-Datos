@@ -8,6 +8,7 @@
 
 using namespace std;
 
+void buscarTodo(vector<pair<string, int> >& data, MapAVL map, int n);
 void paresOrdenados(int n, vector<pair<string, int> >& v);
 void paresAleatorios(int n, vector<pair<string, int> >& v);
 int main(int argc, char const *argv[]) {
@@ -27,19 +28,16 @@ int main(int argc, char const *argv[]) {
 	// paresOrdenados(n, data); //creacion de datos ordenados alfabeticamente
 
 // impresion de los pares generados
-	// cout << "los datos creados son:" << '\n';
-	// for (int i=0; i<n; i++){
-	// 	cout<< i << ": " << "("<<data[i].first<<","<<data[i].second<<")"<<endl;
-	// }
+	imprimirDatos(data, n);
 
-	// for (int i = 0; i < n; i++) { //ingreso manual de datos
+
+	//ingreso manual de datos
+	// for (int i = 0; i < n; i++) {
 	// 	cin >> dato.first >> dato.second;
 	// 	data.push_back(dato);
 	// }
-
-//Insertar elementos
-
-
+	
+	//Insertar elementos
 	cout << "is empty: " << myMap.empty() << '\n';
 	for (int i = 0; i < n; i++) {
 		// std::cout << "insertando elemento " << i << '\n';
@@ -49,22 +47,18 @@ int main(int argc, char const *argv[]) {
 	}
 	cerr << "_size: " << myMap.size() << '\n';
 
+	buscarTodo(data, myMap, n);
+
+	int aBorrar = rand()%n;
+	std::cout << "Borraremos el elemento " << data[aBorrar].first << '\n';
+	myMap.erase(data[aBorrar].first);
+
 	//myMap.recPreOrder();
 
 //borrar todo
-	std::cerr << "borrando" << '\n';
-	for (int i = 0; i < n; i++) {
-	 	// cerr << "borrando " << data[i].first <<endl;
-		// cerr << '\n';
-		// myMap.recPreOrder();
-		// std::cerr << "borrando elemento " << i << " " << data[i].first <<endl;
-		myMap.erase(data[i].first);
-	}
-	cerr << "_size: " << myMap.size() << '\n';
+	borrarTodo(data, myMap, n);
 
 	// myMap.recPreOrder(); //imprimir recorrido pre-order
-
-	// cout << "is empty: " << myMap.empty() << '\n';
 
 	// std::cout << "Datos en el mapa:" << '\n';
 	// for (int i=0; i<myMap.map.size(); i++){
@@ -72,13 +66,7 @@ int main(int argc, char const *argv[]) {
 	// }
 
 // Busqueda automatica de todos los elementos
-	std::cout << "Buscando todos los elementos" << '\n';
-	for (int i = 0; i < n; i++) {
-		// cout << "Dato " << i <<" encontrado. Valor = " << myMap.at(data[i].first) <<'\n';
-		if (myMap.at(data[i].first) == -1) {
-			cout << "Dato " << i <<" NO encontrado" << '\n';
-		}
-	}
+	buscarTodo(data, myMap, n);
 
 //Busqueda manual de elementos
 	// cout << "Ingrese el dato que desea buscar: ";
@@ -103,6 +91,35 @@ int main(int argc, char const *argv[]) {
 	// }
 
 	return 0;
+}
+
+void imprimirDatos(vector<pair<string, int> >& data, int n) {
+	cout << "los datos creados son:" << '\n';
+	for (int i=0; i<n; i++){
+		cout<< i << ": " << "("<<data[i].first<<","<<data[i].second<<")"<<endl;
+	}
+}
+
+void borrarTodo(vector<pair<string, int> >& data, MapAVL map, int n) {
+	std::cerr << "borrando" << '\n';
+	for (int i = 0; i < n; i++) {
+	 	// cerr << "borrando " << data[i].first <<endl;
+		// cerr << '\n';
+		// myMap.recPreOrder();
+		// std::cerr << "borrando elemento " << i << " " << data[i].first <<endl;
+		myMap.erase(data[i].first);
+	}
+	cerr << "_size: " << myMap.size() << '\n';
+}
+
+void buscarTodo(vector<pair<string, int> >& data, MapAVL map, int n) {
+	std::cout << "Buscando todos los elementos" << '\n';
+	for (int i = 0; i < n; i++) {
+		// cout << "Dato " << i <<" encontrado. Valor = " << myMap.at(data[i].first) <<'\n';
+		if (map.at(data[i].first) == -1) {
+			cout << "Dato " << i <<" NO encontrado (" << data[i].first << ")" << '\n';
+		}
+	}
 }
 
 void paresOrdenados(int n, vector<pair<string, int> >& v) {
