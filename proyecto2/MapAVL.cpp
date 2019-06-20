@@ -39,7 +39,7 @@ void MapAVL::insert(pair<string, int> p){
 		hijo = raiz;//comienzo apuntando en la raiz
 		while(true){
 			if((hijo->par.first).compare(p.first) == 0) {
-				cout<<"Ya hay un valor asociado a la clave: "<< p.second << ")" <<endl;
+				cout<<"Ya hay un valor asociado a la clave: "<< p.first <<endl;
 				break;
 			}else if((hijo->par.first).compare(p.first) < 0) {//debe ir a la derecha
 				// cout<<"der"<<endl;
