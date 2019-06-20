@@ -32,7 +32,7 @@ void MapAVL::insert(pair<string, int> p){
 		raiz->par.second = p.second;
 		tam++;//aumento el tamaño
 		// std::cerr << "insertando nodo "<< tam << '\n';
-	}else{
+	} else {
 		nodo *hijo;
 		hijo = raiz;//comienzo apuntando en la raiz
 		while(true){
