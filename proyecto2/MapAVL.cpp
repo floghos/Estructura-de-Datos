@@ -388,6 +388,65 @@ int MapAVL::at(string clave){
 
 
 void MapAVL::erase(string key) {
+	if(tam == 0){
+		// cout<<"No hay valor asociado a la clave: ("<<clave<<")"<<endl;
+	} else {
+		nodo *hijo;
+		hijo = raiz;//comienzo apuntando en la raiz
+		while(true){
+			if((hijo->par.first).compare(key) == 0) {
+				std::cerr << "elemento encontrado" << '\n';
+				//debemos borrarlo
+				if (hijo->left != NULL && hijo->right != NULL) { //"hijo" es nodo externo (hoja)
+					nodo *aux = hijo->right;
+					while (aux->left != NULL) {
+						aux = aux->left;
+					}
+					hijo->par = aux->par;
+					hijo = aux;
+				}
+				if (hijo->left == NULL && hijo->right == NULL) {
+					if (hijo->padre->left == hijo) hijo->padre->left = NULL;
+					else hijo->padre->right == NULL;
+					//balancear
+					disminuirAlturas(hijo);
+					checkBalance(hijo);
+					delete hijo;
+				} else {
+					nodo *porBorrar = hijo;
+					if (hijo->left == NULL) { //solo existe el derecho
+						if (hijo->padre->left == hijo) hijo->padre->left = hijo->right;
+						else hijo->padre->right == hijo->right;
+
+						hijo->right->padre = hijo->padre;
+						// hijo = hijo->right;
+					} else {
+						if (hijo->padre->left == hijo) hijo->padre->left = hijo->left;
+						else hijo->padre->right == hijo->left;
+
+						hijo->left->padre = hijo->padre;
+						// hijo = hijo->left;
+					}
+					disminuirAlturas(porBorrar);
+					checkBalance(porBorrar);
+					delete porBorrar;
+				}
+				// else { // "hijo" es nodo interno
+				// 	// break;
+				// }
+
+
+			} else if((hijo->par.first).compare(key) < 0) {//debe ir a la derecha
+				if(hijo->right == NULL){
+					break;// no está
+				} else hijo = hijo->right; //sigue buscando por la derecha
+			}else if((hijo->par.first).compare(key) > 0) {//debe ir a la izquierda
+				if(hijo->left == NULL){
+					break;// no está
+				}else hijo = hijo->left; //sigue buscando por la izq
+			}
+		}
+	}
 
 }
 
