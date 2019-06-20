@@ -101,11 +101,14 @@ void MapAVL::disminuirAlturas(nodo *nodoActual) {
 		}
 		if (bro != NULL) {
 			if (bro->height <= nodoActual->height) {
-				dad->height--;
+				// dad->height--;
+				dad->height = nodoActual->height + 1; //esta opcion deberia ser mas segura
+
 				disminuirAlturas(dad);
 			}
 		} else {
-			dad->height--;
+			// dad->height--; //no estamos 100% seguros de que la diferencia de tamaño al cambiar algo sea siempre 1
+			dad->height = nodoActual->height + 1; //esta opcion deberia ser mas segura
 			disminuirAlturas(dad);
 		}
 	}
@@ -403,48 +406,90 @@ void MapAVL::erase(string key) {
 		hijo = raiz;//comienzo apuntando en la raiz
 		while(true){
 			if((hijo->par.first).compare(key) == 0) {
-				std::cerr << "elemento encontrado" << '\n';
+				// std::cerr << "elemento encontrado" << '\n';
 				//debemos borrarlo
-				if (hijo->left != NULL && hijo->right != NULL) { //"hijo" es nodo externo (hoja)
+				if (hijo->left != NULL && hijo->right != NULL) { //"hijo" es nodo interno, con 2 hijos
+					// std::cerr << "Tiene 2 hijos, buscamos el de mas a la izquierda" << '\n';
 					nodo *aux = hijo->right;
 					while (aux->left != NULL) {
+
 						aux = aux->left;
 					}
+					// std::cerr << "encontramos el de mas a la izq" << '\n';
 					hijo->par = aux->par;
 					hijo = aux;
 				}
 				if (hijo->left == NULL && hijo->right == NULL) {
-					if (hijo->padre->left == hijo) hijo->padre->left = NULL;
-					else hijo->padre->right == NULL;
-					//balancear
-					disminuirAlturas(hijo);
-					checkBalance(hijo);
+					// std::cerr << "es externo, borrado simple " << '\n';
+					if (hijo->padre != NULL) {
+						// std::cerr << "tiene padre, no es la raiz" << '\n';
+						//hacemos que el hijo del padre del nodo a borrar apunte a NULL
+						if (hijo->padre->left == hijo) hijo->padre->left = NULL;
+						else hijo->padre->right = NULL;
+						// std::cerr << "su padre ya no apunta a este nodo" << '\n';
+						// std::cerr << "ajustando el arbol" << '\n';
+						if (hijo->padre->left != NULL) {
+							disminuirAlturas(hijo->padre->left);
+							// std::cerr << "alturas disminuidas" << '\n';
+							checkBalance(hijo->padre->left);
+						} else if (hijo->padre->right != NULL) {
+							disminuirAlturas(hijo->padre->right);
+							// std::cerr << "alturas disminuidas" << '\n';
+							checkBalance(hijo->padre->right);
+						} else {
+							hijo->padre->height--;
+							// std::cout << hijo->padre->height << '\n';
+							disminuirAlturas(hijo->padre);
+							// std::cerr << "alturas disminuidas" << '\n';
+							checkBalance(hijo->padre);
+						}
+						// std::cerr << "Balance checkeado" << '\n';
+					} else {
+						// std::cerr << "es la raiz... borrando" << '\n';
+						raiz = NULL;
+					}
 					delete hijo;
+					// std::cerr << "'hijo' borrado de la faz de la tierra" << '\n';
+					//balancear
 				} else {
+					// std::cerr << "tiene un hijo, lo movemos a nuestra posicion" << '\n';
 					nodo *porBorrar = hijo;
 					if (hijo->left == NULL) { //solo existe el derecho
-						if (hijo->padre->left == hijo) hijo->padre->left = hijo->right;
-						else hijo->padre->right == hijo->right;
+						if (hijo->padre != NULL) {
+							if (hijo->padre->left == hijo) hijo->padre->left = hijo->right;
+							else hijo->padre->right = hijo->right;
+							//reasignamos el padre de nuestro hijo
+							hijo->right->padre = hijo->padre;
+							// hijo = hijo->right; //no sabemos para que usar esto, pero estaba en el diagrama
+							disminuirAlturas(hijo->right);
+							checkBalance(hijo->right);
+						} else { // si no tiene padre, se trata de la raiz
+							// std::cerr << "es la raiz... borrando" << '\n';
+							//raiz solo tiene hijo derecho
+							raiz = hijo->right;
+							raiz->padre = NULL;
+						}
+					} else { //solo existe el izquierdo
+						if (hijo->padre != NULL) {
+							if (hijo->padre->left == hijo) hijo->padre->left = hijo->left;
+							else hijo->padre->right = hijo->left;
+							//reasignamos el padre de nuestro hijo
+							hijo->left->padre = hijo->padre;
+							// hijo = hijo->left; //no sabemos para que usar esto, pero estaba en el diagrama
+							disminuirAlturas(hijo->left);
+							checkBalance(hijo->left);
+						} else {
+							// std::cerr << "es la raiz... borrando" << '\n';
+							raiz = hijo->left;
+							raiz->padre = NULL;
+						}
 
-						hijo->right->padre = hijo->padre;
-						// hijo = hijo->right;
-					} else {
-						if (hijo->padre->left == hijo) hijo->padre->left = hijo->left;
-						else hijo->padre->right == hijo->left;
-
-						hijo->left->padre = hijo->padre;
-						// hijo = hijo->left;
 					}
-					disminuirAlturas(porBorrar);
-					checkBalance(porBorrar);
 					delete porBorrar;
 				}
-				// else { // "hijo" es nodo interno
-				// 	// break;
-				// }
-
-
-			} else if((hijo->par.first).compare(key) < 0) {//debe ir a la derecha
+				tam--;
+				break;
+			} else if((hijo->par.first).compare(key) < 0) { //debe ir a la derecha
 				if(hijo->right == NULL){
 					break;// no está
 				} else hijo = hijo->right; //sigue buscando por la derecha
