@@ -39,25 +39,28 @@ int main(int argc, char const *argv[]) {
 
 //Insertar elementos
 
+
 	cout << "is empty: " << myMap.empty() << '\n';
-	for (int i = n-1; i >= 0; i--) {
+	for (int i = 0; i < n; i++) {
 		// std::cout << "insertando elemento " << i << '\n';
 		// cout << "Insertndo " << data[i].first <<endl;
 		myMap.insert(data[i]);
 		// cout << '\n';
 	}
-	cout << "_size: " << myMap.size() << '\n';
+	cerr << "_size: " << myMap.size() << '\n';
 
+	//myMap.recPreOrder();
 
 //borrar todo
-	std::cout << "borrando" << '\n';
+	std::cerr << "borrando" << '\n';
 	for (int i = 0; i < n; i++) {
-		std::cout << "borrando elemento " << i << '\n';
-		// cout << "borrando " << data[i].first <<endl;
+	 	// cerr << "borrando " << data[i].first <<endl;
+		// cerr << '\n';
+		// myMap.recPreOrder();
+		// std::cerr << "borrando elemento " << i << " " << data[i].first <<endl;
 		myMap.erase(data[i].first);
-		// cout << '\n';
 	}
-	cout << "_size: " << myMap.size() << '\n';
+	cerr << "_size: " << myMap.size() << '\n';
 
 	// myMap.recPreOrder(); //imprimir recorrido pre-order
 
