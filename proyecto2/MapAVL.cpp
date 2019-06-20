@@ -132,7 +132,13 @@ void MapAVL::checkBalance(nodo *nodoActual) {
 			}
 		} else {
 			if (abs(bro->height - nodoActual->height) > 1) {
-				rotar(nodoActual);
+				if (bro->height <= nodoActual->height) {
+					rotar(nodoActual);
+				} else {
+					//para que pueda funcionar al eliminar nodos
+					//hay veces en las que llamamos la funcion rotar() con el hermano de menor altura
+					rotar(bro);
+				}
 				checkBalance(dad);
 			} else {
 				checkBalance(dad);
