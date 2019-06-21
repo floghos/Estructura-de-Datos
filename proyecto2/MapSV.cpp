@@ -32,7 +32,6 @@ void MapSV::insert(pair<string, int> entry) {
 		_size++;
 	} else {
 		int pos = busquedaBinaria(entry.first);
-		// cout << "debemos insertar en: " << pos << '\n';
 		if (pos < _size && map[pos].first.compare(entry.first) == 0) { //la clave ingresada ya existe
 			cout << "'" << entry.first <<  "' ya existe" << '\n';
 		} else if (pos == _size) {
@@ -55,7 +54,7 @@ int MapSV::at(string key) {
 		return map[pos].second;
 	} else {
 		cout << "'" << key <<  "' no existe" << '\n';
-		return 0;
+		return -1;
 	}
 }
 
