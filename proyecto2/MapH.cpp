@@ -22,8 +22,7 @@ void MapH::insert(pair<string, int> par){
 	int desp = fPol2(par.first);
 	for(int i=0; i<capacidad; i++){
 		if(array[pos].first == "\n" || array[pos].first == "1"){
-			array[pos].second = par.second;
-			array[pos].first = par.first;
+			array[pos] = par;
 			tam++;
 			break;
 		}else if(array[pos].first == par.first){
