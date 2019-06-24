@@ -4,24 +4,6 @@
 using namespace std;
 
 
-void MapAVL::recPreOrder() {
-	recPreOrder(raiz);
-}
-
-void MapAVL::recPreOrder(nodo* nodoActual) {
-	if (nodoActual != NULL) {
-		cerr << nodoActual->par.first <<" se encuentra a altura " << nodoActual->height << '\n';
-		if (nodoActual->left != NULL) {
-			cerr<<nodoActual->left->par.first<<" es hijo Izq de: "<<nodoActual->par.first<<endl;
-			recPreOrder(nodoActual->left);
-		}
-		if (nodoActual->right != NULL) {
-			cerr<<nodoActual->right->par.first<<" es hijo Der de: "<<nodoActual->par.first<<endl;
-			recPreOrder(nodoActual->right);
-		}
-	}
-}
-
 MapAVL::MapAVL(){
 	tam = 0;
 	raiz = NULL;

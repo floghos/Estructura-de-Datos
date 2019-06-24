@@ -31,5 +31,4 @@ public:
 	int at(string); //Encontrar el valor asociado a una llave k
 	int size(); //Obtener cantidad de elementos almacenados
 	bool empty(); //Verificar si estávacía
-	void recPreOrder();
 };
