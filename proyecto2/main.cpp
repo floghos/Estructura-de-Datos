@@ -40,15 +40,14 @@ int main(int argc, char const *argv[]) {
 	paresAleatorios(n, data); //creacion aleatoria de datos
 	// paresOrdenados(n, data); //creacion de datos ordenados alfabeticamente
 
-// impresion de los pares generados
-	// imprimirDatos(data, n);
-
-
 	//ingreso manual de datos
 	// for (int i = 0; i < n; i++) {
 	// 	cin >> dato.first >> dato.second;
 	// 	data.push_back(dato);
 	// }
+
+// impresion de los pares generados
+	imprimirDatos(data, n);
 
 	//Insertar elementos
 	cout << "is empty: " << myMap.empty() << '\n';
@@ -60,19 +59,14 @@ int main(int argc, char const *argv[]) {
 	}
 	cerr << "_size: " << myMap.size() << '\n';
 
-	// buscarTodo(data, myMap, n);
-
-//borrar un elemento aleatorio
-	// int aBorrar = rand()%n;
-	// std::cout << "Borraremos el elemento " << data[aBorrar].first << '\n';
-	// myMap.erase(data[aBorrar].first);
-
-	//myMap.recPreOrder();
+// borrar un elemento aleatorio
+	int aBorrar = rand()%n;
+	std::cout << "Borraremos el elemento " << data[aBorrar].first << '\n';
+	myMap.erase(data[aBorrar].first);
 
 //borrar todo
 	borrarTodo(data, myMap, n);
 	std::cout << "real size: " << myMap.size() << '\n';
-	// myMap.recPreOrder(); //imprimir recorrido pre-order
 
 	// std::cout << "Datos en el mapa:" << '\n';
 	// for (int i=0; i<myMap.map.size(); i++){
@@ -119,7 +113,6 @@ void borrarTodo(vector<pair<string, int> >& data, MapH &map, int n) {
 	for (int i = 0; i < n; i++) {
 	 	// cerr << "borrando " << data[i].first <<endl;
 		// cerr << '\n';
-		// map.recPreOrder();
 		// std::cerr << "borrando elemento " << i << " " << data[i].first <<endl;
 		map.erase(data[i].first);
 	}
@@ -140,7 +133,6 @@ void borrarTodo(vector<pair<string, int> >& data, MapSV &map, int n) {
 	for (int i = 0; i < n; i++) {
 	 	// cerr << "borrando " << data[i].first <<endl;
 		// cerr << '\n';
-		// myMap.recPreOrder();
 		// std::cerr << "borrando elemento " << i << " " << data[i].first <<endl;
 		map.erase(data[i].first);
 	}
@@ -162,7 +154,6 @@ void borrarTodo(vector<pair<string, int> >& data, MapAVL &map, int n) {
 	for (int i = 0; i < n; i++) {
 	 	// cerr << "borrando " << data[i].first <<endl;
 		// cerr << '\n';
-		// map.recPreOrder();
 		// std::cerr << "borrando elemento " << i << " " << data[i].first <<endl;
 		map.erase(data[i].first);
 	}
